@@ -761,7 +761,7 @@ const TACTIP={
  buyout:'劝对方别当了，直接卖断给你。成不成看性格，窘迫、天真的容易答应。',
  coin:'一半一半。赢了对方大让一步，输了价格往反方向走。',
  pitch:'成色是「轻微使用」或「近乎全新」，或者是稀有款，才管用，多出两成左右。',
- warranty:'买家多出两成半；但如果是赝品，当晚全额退款、大掉声望。',
+ warranty:'买家多出两成半。代价：真品也有约一成半的可能第二天被退货（成交价比实际价值高出三成以上时翻倍），你要退还货款、货回到库存；赝品则当晚全额退款、大掉声望。',
  lore:'古董、艺术类的货才管用，多出一成。',
  last:'库存里这类货只有这一件才管用，多出一成不到。',
  cert:'扫描过的真品才管用，多出一成半；拿赝品的扫描单出来会把人气走。'};
@@ -1198,6 +1198,11 @@ function startDay(){
   if(Math.random()<.85)G.evs.push(ri(1,n-1));
   if(Math.random()<.4){const e=ri(1,n-1);if(!G.evs.includes(e))G.evs.push(e);}
   const morning=[];
+  const rets=G.returns||[];G.returns=[];
+  for(const r of rets){const it=r.it;it.safe=0;G.credits-=r.price;addRep(1,'包退的货被退回，照办了');
+    if(G.inv.length<G.cap){G.inv.push(it);morning.push([`买走「${it.name}」的顾客后悔了，上门退货：退还 ${fmt(r.price)}，货回到库存，声望 +1`,'warn']);}
+    else{const v=Math.max(1,Math.round(realVal(it)*.4));G.credits+=v;morning.push([`买走「${it.name}」的顾客来退货：退还 ${fmt(r.price)}。库存放不下，只能当场甩卖 ${fmt(v)}，声望 +1`,'bad']);}
+    log(`包退退货「${it.name}」 −${fmt(r.price)}`,'r');}
   if(G.gift){G.gift=false;const it=makeItem(true);it.fake=false;it.cost=0;G.inv.push(it);morning.push([`流浪儿送来了捡到的「${it.name}」，说是谢礼`,'good']);}
   G.pawns=G.pawns.filter(p=>{
     if(p.due>G.day)return true;
@@ -1215,7 +1220,7 @@ function startDay(){
   }
   if(G.free&&G.star>=3&&!G.collector){const nb=G.inv.filter(i=>!i.ban);G.collector=nb.length?pick(nb).cat:pick(CATS);}
   const moves=CATS.filter(c=>Math.abs(G.market[c]-1)>.08).map(c=>`${c}${G.market[c]>1?'涨':'跌'}${Math.abs(Math.round((G.market[c]-1)*100))}%（${trendDays(c)>1?'还有 '+trendDays(c)+' 天':'只有今天'}）`);
-  G.news=`今天预计来 ${n} 位顾客。`+(G.day===1&&!G.free?'新店开张，头一天上门的都是便宜货；声望越高，上门的货越值钱。':'')+(moves.length?'行情：'+moves.join('，')+'。':'行情平稳。')+(G.collector?`传闻有收藏家在找${G.collector}类物品。`:'')
+  G.news=(rets.length?`昨天包退卖出的货被退回了 ${rets.length} 件，货款已退还。`:'')+`今天预计来 ${n} 位顾客。`+(G.day===1&&!G.free?'新店开张，头一天上门的都是便宜货；声望越高，上门的货越值钱。':'')+(moves.length?'行情：'+moves.join('，')+'。':'行情平稳。')+(G.collector?`传闻有收藏家在找${G.collector}类物品。`:'')
     +(G.order?`${ordName(G.order)}：${ordWhat(G.order)}，报酬 ${fmt(G.order.pay)}，第 ${G.order.due} 天截止。`:'')
     +(G.day>=4&&G.day<=6&&!G.bankDone?'银行第 6 天回访：已还三成半减免 ₡100，否则加收 ₡80。':'');
   log(`第 ${G.day} 天开门营业`,'y');
@@ -1275,7 +1280,7 @@ function dealSell(price){
   G.credits+=price;
   const profit=price-it.cost;
   G.stat.sold++;G.stat.earned+=price;
-  G.sales.push({name:it.name,price,fake:it.fake,stolen:it.stolen,warranty:!!c.warranty});
+  G.sales.push({name:it.name,price,fake:it.fake,stolen:it.stolen,warranty:!!c.warranty,over:price>apparent(it)*1.3,it:c.warranty&&!it.fake?it:null});
   const rd=it.ban?0:c.collector?3:it.scanned&&!it.fake?2:1;
   if(rd)addRep(rd,c.collector?'卖给收藏家':rd===2?'卖出验过的真品，顾客放心':'卖出货品，顾客满意');
   if(it.ban)align(-3);
@@ -1499,7 +1504,7 @@ function closeShop(){
   const m=[],E=(i,c,h,t,o)=>m.push({i,c,h,t,...o}),t0=repT();UI.muteRep=true;
   let wn=0;
   for(const s of G.sales){
-    if(s.warranty&&!s.fake)wn++;
+    if(s.warranty&&!s.fake){if(s.it&&(G.free||G.day<G.maxDay)&&Math.random()<(s.over?.3:.15))(G.returns=G.returns||[]).push({it:s.it,price:s.price});else wn++;}
     if(s.fake&&s.warranty){G.credits-=s.price;addRep(-10,'包退的货被验出是赝品');
       E('angry','bad','顾客上门退货',`你承诺包退的「${s.name}」被验出是赝品，只能全额退款。`,{cash:-s.price,rep:-10});}
     else if(s.fake&&Math.random()<.55){const r=Math.round(s.price*.5);G.credits-=r;addRep(-8,'卖出的赝品被发现');
@@ -1864,7 +1869,7 @@ function openRep(){
   if(!G)return;const T=repT();
   openSheet('rep','声望',`<div class="help"><p>现在是 <b>${Math.round(G.rep)}</b>（${T.n}）。声望决定上门的货值不值钱、每天来多少顾客、买家肯出多少钱，悬赏报酬也跟着涨。新店从「无名小店」做起。</p></div>
    <div class="tiers">${REPT.map((t,i)=>`<div class="tier ${t===T?'cur':''}"><i>${'★'.repeat(t.s)}</i><b>${t.n}<br><small class="num">${i?t.min+'–'+(REPT[i-1].min-1):t.min+' 以上'}</small></b><span>${repFx(t)}</span></div>`).join('')}</div>
-   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1（对天真的顾客 +2）；拒收问题货或违禁品 +1；包退的货是真品 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
+   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1（对天真的顾客 +2）；拒收问题货或违禁品 +1；包退的货是真品 +1，被退货时照办也 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
    <p><b>怎么掉</b>　把顾客谈崩 −1，出价离谱气走人 −3；收货压价太狠 −1（对天真的顾客 −2）；赶走流浪儿 −1；赶走稽查员 −2；卖出的赝品被发现 −8，包退的 −10；海关查出赃物 −6；卖出的赃物被失主认出 −3；悬赏交赝品 −5。</p>
    <p>声望低于 10 时，每天早上自动回升 2。</p></div>
    <h3 style="margin-top:6px">最近变化</h3>${G.repLog.length?G.repLog.map(r=>`<div class="rlog"><span>第${r.day}天　${r.why}</span><b class="num ${r.d>0?'g':'r'}">${r.d>0?'+':'−'}${Math.abs(r.d)}</b></div>`).join(''):'<div class="sub">还没有变化。</div>'}`);
@@ -1899,7 +1904,7 @@ function openHelp(){
    <p><b>送客和揽客</b>　不想谈就点「送客」，不掉声望。顾客没成交就走了的话，可以花 ₡10 起到门口再揽一位新顾客，每天最多 4 次，一次比一次贵。</p>
    <p><b>话术</b>　每位顾客随机给你四种，每种只能用一次，用对了价格会明显松动，用错了扣耐心。点顾客的名牌能看这四招各自什么时候管用。只有轻松难度会用金边标出当前管用的招。<br>
    收货时：挑毛病（货旧才管用）、盘问来历（卖家心虚才管用）、套近乎（看性格）、哭穷（你现金不到要价两倍才可信）、比价（这类货在跌价，或你已有同类货）、晾一晾（对方耐心 3 点以上）。<br>
-   卖货时：夸货（成色好或稀有款）、承诺包退（赝品要全额退款）、套近乎、讲来历（古董、艺术类）、只剩一件（库存里这类只有一件）、亮鉴定（扫描过的真品）。<br>
+   卖货时：夸货（成色好或稀有款）、承诺包退（真品也可能第二天被退货，赝品要全额退款）、套近乎、讲来历（古董、艺术类）、只剩一件（库存里这类只有一件）、亮鉴定（扫描过的真品）。<br>
    来典当的顾客多一招「劝卖」：劝对方直接卖断给你，成不成看性格。</p>
    <p><b>性格</b>　写在顾客名牌上，每种有自己的规矩。<br>贪婪：作势送客，对方会叫住你并让一大步。<br>天真：说什么都信，但说瞎话每次声望 −1；公道价声望 +2，压太狠 −2。<br>窘迫：价够到底线就立刻成交。<br>精明：多数话术要先扫描才管用。<br>急躁：只有第一口价好谈，之后一分不让。<br>话痨：套近乎必成、能用两次；挑毛病会翻脸。<br>赌徒：可以抛硬币赌价。<br>倔强：还价没用，只有话术能说动。</p>
    <p><b>库存</b>　右上角的「库存」按钮。收来的货都在里面，可以扫描、放进橱窗、放进保险箱、修复、甩卖换现金、交悬赏。</p>
