@@ -635,6 +635,74 @@ h3{margin:20px 0 8px;font-size:14px;color:var(--cyan);letter-spacing:1px;display
   .chip{height:30px}
 }
 
+/* ---------- 对话回复 ---------- */
+#bubble .cue{margin-top:3px;font-size:12.5px;font-style:italic;color:#8a2058}
+#bubble .cue:before{content:"〔";font-style:normal}#bubble .cue:after{content:"〕";font-style:normal}
+#bubble .fb{margin-top:4px;font-size:12px;font-weight:700;border-radius:7px;padding:2px 7px;display:inline-block}
+#bubble .fb.good{background:#d7f3e2;color:#14613a}#bubble .fb.bad{background:#ffe1e4;color:#a02038}
+.rep{display:flex;flex-direction:column;gap:5px}
+.rep>small{font-size:11px;color:var(--dim)}
+.rp{display:flex;align-items:center;gap:7px;width:100%;min-height:36px;padding:5px 10px;border-radius:11px;background:#141d42;border:1px solid #3a4a8a;color:#e6ebff;font-size:13.5px;line-height:1.35;text-align:left}
+.rp:active{background:#22306a}
+.rp i{flex:none;font-style:normal;font-size:10.5px;font-weight:800;color:var(--ink);background:var(--cyan);border-radius:6px;padding:1px 5px}
+.rp span{flex:1;min-width:0}
+
+/* ---------- 价格输入 ---------- */
+.pnum{font-size:17px;font-weight:800;color:var(--gold);line-height:1.1;padding:2px 10px;border-radius:8px;border:1px dashed #6b5420;background:#1c1a36}
+.pnum:after{content:"✎";font-size:11px;margin-left:5px;color:#b9a25f;font-weight:400}
+.numd{font-size:30px;font-weight:900;color:var(--gold);text-align:center;padding:8px 0 2px}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+.numpad .btn{min-height:46px;font-size:19px}
+.center{text-align:center}
+
+/* ---------- 每天的引导卡、目标 ---------- */
+.gcard{background:linear-gradient(135deg,#3a2a08,#1c1a36);border:1.5px solid var(--gold);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.gcard>b{font-size:16px;color:var(--gold)}
+.gcard p{margin:6px 0 0;font-size:13.5px;line-height:1.65;color:#f1e9d2}
+.gcard .gg{border-top:1px dashed #6b5420;padding-top:6px;font-weight:700}
+.gcard .gg em{font-style:normal;font-weight:400;color:var(--gold);margin-left:8px;font-size:12px}
+#strip.goal{background:linear-gradient(90deg,#3a2a08,#1c1a36)}
+#strip.goal.ok{background:linear-gradient(90deg,#0f3324,#1c1a36);border-bottom-color:#1f6a4a}
+#strip.goal.ok .ic,#strip.goal.ok em,#strip.goal.ok b{color:var(--green)}
+
+/* ---------- 引导：指着点 ---------- */
+#tour.act{pointer-events:none}
+#tour.act #tourCard{pointer-events:none}
+#tour.act #tourCard .skip{pointer-events:auto}
+#tourCard .skip{position:static;font-size:12px;color:var(--dim);text-decoration:underline;padding:4px 0}
+#tourHole{animation:holePulse 1.4s ease-in-out infinite}
+@keyframes holePulse{50%{box-shadow:0 0 0 9999px #050814e0,0 0 0 3px var(--gold),0 0 26px 6px #ffc857cc}}
+
+/* ---------- 顶栏、底部：没开放的先不占位 ---------- */
+.hud-stats{display:flex;gap:5px}
+.hud-stats .stat{flex:1 1 0}
+.hud-stats .stat.money{flex:1.4 1 0}.hud-stats .stat.debt,.hud-stats #bDebt{flex:1.3 1 0}
+.stat[hidden]{display:none}
+#nav{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+#nav button[hidden]{display:none}
+.nb.dot{background:var(--red);color:#fff}
+.mcard b .nb{font-style:normal;font-size:10px;border-radius:6px;padding:0 5px;margin-left:4px;vertical-align:2px}
+
+/* ---------- 地契 ---------- */
+#deedWall{position:absolute;left:14px;top:40px;width:34px;height:42px;z-index:1}
+#deedWall svg{width:100%;height:100%;filter:drop-shadow(0 2px 3px #000a)}
+.invrow.deed{border-color:var(--gold)}
+.deedbox{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#18224a;border:1.5px solid var(--gold);border-radius:14px;padding:10px;margin:12px 0}
+.deedbox b{display:block;font-size:15px;color:var(--gold)}
+.deedbox span{font-size:12px;color:var(--dim)}
+.deedbox p{margin:5px 0 0;font-size:13px;line-height:1.6;color:#d6ddf7}
+.cost{font-style:normal;font-size:11px;color:var(--dim);margin-left:4px}
+
+/* ---------- 图鉴详情 ---------- */
+button.cc{color:var(--text)}
+button.cc:active .ibox{border-color:var(--cyan)}
+.cxtop{display:flex;gap:12px;align-items:center}
+.cxtop .ibox{width:64px;height:64px}
+.cxtop b{display:block;font-size:17px}
+.cxtop span{display:block;font-size:12.5px;color:var(--dim);line-height:1.6}
+.rp.skip{background:transparent;border-style:dashed;color:var(--dim);justify-content:center;min-height:32px;font-size:12.5px}
+.rp.skip span{flex:none}
+
 </style>
 </head>
 <body>
@@ -703,6 +771,7 @@ h3{margin:20px 0 8px;font-size:14px;color:var(--cyan);letter-spacing:1px;display
         </svg>
         <div class="cone"></div>
         <div class="signbox neon">灰港当铺</div>
+        <div id="deedWall"></div>
         <div id="chWrap"></div>
         <div id="plateL"></div>
         <div id="moodTag" hidden></div>
@@ -1319,6 +1388,35 @@ const L={
   naiveK:['是不懂……那 {p}？'],
  },
  tellNo:['你什么意思？！','少来这套。','我听不懂你在说什么。'],
+ /* 不点破，客气地带过去 */
+ pass:{
+  urgent:['不急，咱们慢慢谈。','先坐，喝口水。'],
+  stolen:['来路我不问。','我只看货，不问出处。'],
+  fake:['放心，我只是看看。','行，我不多问。'],
+  addict:['你想找点什么？','慢慢说，要什么？'],
+  cop:['随便看，本店都是正经货。','欢迎光临，想看点什么？'],
+  rich:['您慢慢看。','看上哪件跟我说。'],
+  naiveK:['没关系，我帮你看看，给你个公道价。','不懂不要紧，我不会坑你。'],
+ },
+ passRe:{
+  urgent:['……行，那快点谈。','好吧。'],stolen:['嗯，这样最好。','……好。'],fake:['嗯。','那就好。'],
+  addict:['……随便看看。','没什么。'],cop:['嗯。','好。'],rich:['嗯。','好。'],
+  naiveK:['那太好了，谢谢你！','你人真好。'],
+ },
+ /* 你回的话 */
+ re:{
+  flaw:['你看这儿，成色差了点，值不了这个价。','这做工一般，顶多算次一等的货。','实话说，品相不怎么样。'],
+  poor:['我也是小本生意，手头紧，让一点吧。','最近生意不好，实在出不起这个价。'],
+  stall:['（不接话，低头慢慢擦柜台）','嗯……让我再想想。（半天不说话）'],
+  chat:['别急嘛，喝口水，咱们交个朋友。','看你面善，以后常来，价钱好商量。'],
+  coinS:['要不抛硬币？我赢了你让一大步，你赢了我多给。'],
+  coinB:['要不抛硬币？我赢了你多出一些，你赢了我便宜卖。'],
+  last:['最后一口价：{p}。成就成，不成就算了。'],
+  pitch:['这件成色好，少说也是 {g} 级。','{g} 级的好货，这条街找不出第二件。'],
+  warranty:['不满意三天内包退。','有问题你拿回来，我退钱。'],
+  cert:['有鉴定所的鉴定书，你看。'],
+  honest:['东西就这样，好坏你自己看。','我不多夸，你自己掂量。'],
+ },
  /* 话术 */
  tac:{
   chatOk:['哈哈，你这人还挺有意思。行，好说。','难得遇到聊得来的掌柜。'],
@@ -1337,6 +1435,7 @@ const L={
   warranty:['包退？那我放心多了。{p}。','有保证就好说。我出 {p}。'],
   coinNo:['赌？我不玩这个。','别闹了，好好谈。'],
   coinYes:['好！来！','有意思，抛！'],
+  honestOk:['实在人。行，我心里有数了。','你倒是不乱夸，我信你。'],
  },
 };
 
@@ -1516,7 +1615,7 @@ const BAGGAGE={
  favor:{n:'欠木水一个人情',d:'还债期内，木水每周日来收 ₡150',cash:500,score:.1},
  broke:{n:'穷光蛋',d:'开局现金减半',cash:0,score:.15},
 };
-const DIFFS={easy:{n:'轻松',debt:1700,cash:900,rep:30,heat:.8,fine:.7},normal:{n:'标准',debt:2800,cash:700,rep:20,heat:1,fine:1},hard:{n:'硬核',debt:5000,cash:500,rep:15,heat:1.2,fine:1.3},free:{n:'自由',debt:0,cash:1000,rep:20,heat:1,fine:1}};
+const DIFFS={easy:{n:'轻松',debt:1700,cash:900,rep:30,heat:.8,fine:.7},normal:{n:'标准',debt:2800,cash:700,rep:20,heat:1,fine:1},hard:{n:'硬核',debt:3600,cash:500,rep:15,heat:1.2,fine:1.3},free:{n:'自由',debt:0,cash:1000,rep:20,heat:1,fine:1}};
 const DEBT_DAYS=14;
 
 /* 称号：按做过的事给 */
@@ -1532,6 +1631,7 @@ const TITLES={
 let G=null,uid=0;
 const SLOTK=n=>'huigang-slot'+n,METAK='huigang-meta';
 let META=jget(METAK,null)||{codex:{},legends:{},met:{},titles:{},hall:[],runs:0};
+META.seen=META.seen||{};
 const saveMeta=()=>ls.set(METAK,JSON.stringify(META));
 
 /* 日历 */
@@ -1575,6 +1675,8 @@ function newGame(o){
   if(o.prof==='scav'){G.upg.bag=1;G.upg.lamp=1;}
   MAINS.forEach(m=>G.mainNext[m.id]=ri(2,6));
   G.mainNext.tangxin=2;
+  /* 带引导开局：朋友们第十天起才陆续上门 */
+  if(guideOn()){MAINS.forEach(m=>G.mainNext[m.id]=10+ri(0,5));G.mainNext.tangxin=10;}
   META.runs++;saveMeta();
   startDay(true);
   save();
@@ -1592,7 +1694,9 @@ function maxId(g){let m=0;const f=it=>{if(it&&it.id>m)m=it.id;};
   return m;}
 function loadSlot(n){
   const g=jget(SLOTK(n),null);if(!g||g.v!==1)return false;
-  G=g;G.slot=n;uid=maxId(G)+1;G.cust=null;return true;
+  G=g;G.slot=n;uid=maxId(G)+1;G.cust=null;
+  if(G.freed&&!G.deed)giveDeed();
+  return true;
 }
 function slotInfo(n){
   const g=jget(SLOTK(n),null);if(!g||g.v!==1)return null;
@@ -1613,6 +1717,8 @@ function importText(n,txt){
     ls.set(SLOTK(n),JSON.stringify(o.s));
     if(o.m){ // 跨存档记录取并集
       for(const k of ['codex','legends','met','titles'])META[k]={...o.m[k],...META[k]};
+      for(const k in o.m.seen||{})META.seen[k]=Math.max(META.seen[k]||0,o.m.seen[k]);
+      if(o.m.deed)META.deed=1;
       for(const k in o.m.codex||{})META.codex[k]=(META.codex[k]||0)|o.m.codex[k];
       META.hall=[...META.hall,...(o.m.hall||[])].sort((a,b)=>b.score-a.score).slice(0,10);
       saveMeta();
@@ -1622,6 +1728,14 @@ function importText(n,txt){
 }
 
 /* 跨存档：图鉴、称号 */
+/* 经手过一次，图鉴里就记下名字和样子 */
+const cxSeen=k=>!!(META.seen[k]||META.codex[k]);
+function codexTouch(it){
+  if(!it||it.legend||!IT[it.k])return;
+  const was=cxSeen(it.k);META.seen[it.k]=(META.seen[it.k]||0)+1;
+  if(!was){META.newc=1;setTimeout(()=>{if(G)toast(`图鉴新增：${it.name}`,'good');},1300);if(Object.keys(META.seen).length>=50)title('t_codex');}
+  saveMeta();
+}
 function codexSee(it){
   if(!it||it.fake||!it.gKnown&&!it.legend)return;
   if(it.legend){if(!it.cert)return;gotLegend(it);}
@@ -1823,6 +1937,7 @@ const winCap=()=>1+Math.min(2,upLv('window'));
 const inWin=it=>G.win.includes(it.id);
 const invItem=id=>G.inv.find(x=>x.id==id);
 function addItem(it){
+  codexTouch(it);
   if(it.k.startsWith('toba')&&!it.stolen){
     const st=G.inv.find(x=>x.k===it.k&&!x.stolen&&!x.safe&&x.g===it.g);
     if(st){st.qty+=it.qty;st.cost=(st.cost||0)+(it.cost||0);return st;}
@@ -1894,6 +2009,9 @@ function custCount(){
   if(c.wd===0)n-=1;if(c.wd>=5)n+=2;
   n+=fx.cust||0;
   if(mainLv('tangxin')>=3)n+=2;
+  if(G.deed&&G.deed.on)n+=1;
+  /* 引导期头三天客人少一点；第一天另有三位教学客人 */
+  if(guideOn()){if(G.day===1)return 2;if(G.day===2)n=Math.min(n,6);if(G.day===3)n=Math.min(n,7);}
   return Math.max(4,n);
 }
 
@@ -1921,13 +2039,27 @@ function sellerItem(c,o={}){
   let tw=[...(trans?TIERW[2]:TIERW[R.s-1])];
   if(G.star>=3)tw=[tw[0]*.7,tw[1],tw[2]*1.6];
   if(fx.estate){tw[2]*=3;}
+  if(guideOn()&&G.day<=1)tw=[1,0,0];
   let gw=trans?GP:R.gw;
   if(o.sLuck)gw=gw.map((x,i)=>i===4?x*5:x);
-  const it=o.ban?makeItem({ban:1,sub:o.sub,w:banW(),fakeP:.06,stolenP:0})
-    :o.cat?makeItem({cat:o.cat,gw,fakeP:o.fakeP??R.fake,stolenP:o.stolenP??R.shady})
-    :makeItem({tier:wpick([0,1,2],tw),gw,fakeP:o.fakeP??R.fake,stolenP:o.stolenP??R.shady});
-  if(o.fake!=null){it.fake=o.fake;if(o.fake)it.pt=.5;}
-  if(o.stolen){it.stolen=true;it.hot=rand(.6,1);it.fake=false;}
+  /* 引导期：假货、赃物到了那一天才出现 */
+  const fk=GD('fake')?1:0,st=GD('stolen')?1:0;
+  const fakeP=(o.fakeP??R.fake)*fk,stolenP=(o.stolenP??R.shady)*st;
+  const mk=cheap=>o.ban?makeItem({ban:1,sub:o.sub,w:banW(),fakeP:.06*fk,stolenP:0})
+    :o.cat?makeItem({cat:o.cat,gw,fakeP,stolenP,wx:cheap?1.5:undefined})
+    :makeItem({tier:cheap>1?0:wpick([0,1,2],tw),gw,fakeP,stolenP,wx:cheap?1:undefined});
+  let it=mk(0);
+  /* 一星小店：大部分货在你买得起的范围里；贵货一天最多放进来一件，也不是天天有 */
+  if(!o.ban&&G.star===1){
+    const cap=Math.max(250,G.cash*1.5);
+    if(faceVal(it)>cap){
+      if(GD('fake')&&G.bigDay!==G.day&&chance(.3))G.bigDay=G.day;
+      else for(let n=1;n<=6&&faceVal(it)>cap;n++)it=mk(n>3?2:1);
+    }
+  }
+  if(!o.ban){if(!GD('grade'))it.gKnown=1;if(!GD('fake')){it.auth=4;it.authLv=9;}}
+  if(o.fake!=null&&fk){it.fake=o.fake;if(o.fake)it.pt=.5;}
+  if(o.stolen&&st){it.stolen=true;it.hot=rand(.6,1);it.fake=false;}
   if(it.stolen)it.owner='o'+uid;
   return it;
 }
@@ -1936,7 +2068,9 @@ function banW(){
   const dark=clamp(-G.align/100,0,1);
   return t=>{const tier=t.tier;return tier===0?1:tier===1?.12+.6*dark:.02+.35*dark;};
 }
-const banShare=()=>clamp(.12-G.align*.003,.03,.45)*(G.prof==='excop'?.6:1)*(evFx().banCheap?1.8:1);
+const banShare=()=>!GD('ban')?0:clamp(.04-G.align*.005,.015,.45)*(G.prof==='excop'?.6:1)*(evFx().banCheap?1.8:1);
+/* 一天最多来几位带违禁品或找违禁品的客人：还债期一位，立场偏黑两位，还清以后三位 */
+const banCap=()=>G.freed?3:G.align<=-30?2:1;
 
 /* 卖家心里的价 */
 function sellerValue(c,it){
@@ -1998,6 +2132,7 @@ function priceBuyer(c,it){
 /* 线索：真的和假的 */
 function makeTells(c){
   const t=[],it=c.item;
+  if(!GD('dlg')){c.tells=t;return;}
   const add=(k,real)=>{if(t.length<2&&!t.some(x=>x.k===k))t.push({k,real,txt:pick(L.tell[k])});};
   if(c.urgent&&chance(.7))add('urgent',1);
   if(c.type==='sell'&&it){
@@ -2026,12 +2161,14 @@ function baseCust(o){
   c.shownRich=shownRich(c);
   return c;
 }
-function randomCust(){
+function randomCust(o={}){
   const fx=evFx(),trans=chance(.3+(fx.trans||0));
-  const pers=fx.gamble&&chance(.35)?'gambler':pick(PKEYS);
+  const early=guideOn()&&G.day<=3;
+  const pers=fx.gamble&&chance(.35)?'gambler':pick(early?['naive','chatty','desperate','greedy','shrewd']:PKEYS);
   const know=rollKnow(trans),rich=rollRich(trans);
   const r=Math.random();
-  const type=r<.54?'sell':r<.92?'buy':'pawn';
+  let type=o.type||(r<.54?'sell':r<.92?'buy':'pawn');
+  if(type==='pawn'&&!GD('pawn'))type='sell';
   const c=baseCust({kind:'rand',pers,know,rich,trans,type,urgent:chance(pers==='desperate'?.8:.15)});
   if(type==='sell'){
     const ban=chance(banShare());
@@ -2049,8 +2186,13 @@ function randomCust(){
 /* 买家想要什么 */
 function setupBuyer(c,o={}){
   const fx=evFx();
-  const banP=clamp(.08-G.align*.002,.02,.3)*(fx.smoke?.4:1);
+  const banP=GD('ban')?clamp(.03-G.align*.003,.01,.3)*(fx.smoke?.4:1):0;
   if(o.want){c.want=o.want;}
+  else if(guideOn()&&G.day<=3){
+    /* 头三天的买家不挑：多半什么都看，方便把货卖出去 */
+    const cats=[...new Set(G.inv.filter(i=>!i.ban&&!i.safe).map(i=>i.cat))];
+    c.want=cats.length&&chance(.4)?pick(cats):'any';
+  }
   else if(chance(banP)){c.want=BAN;c.wantSub=chance(.4)?null:wpick(BANS,G.align<=-40?[.3,.4,.3]:[.35,.5,.15]);c.cop=c.kind==='rand'&&chance(copP());if(c.cop){c.know=1;}}
   else{
     const wins=G.win.map(invItem).filter(Boolean);
@@ -2187,11 +2329,12 @@ function mainCust(id){
 /* 固定路人今天来不来 */
 function pickFixed(){
   const c=cal(),out=[];
+  if(!GD('people'))return out;
   for(const f of FIXED){
     const p=G.people[f.id];if(p.gone)continue;
     if(G.day-p.last<2)continue;
     let w=.12+(p.rel||0)/400;
-    if(f.id==='xiaoma'&&p.addict)w+=.15*p.addict;
+    if(f.id==='xiaoma'&&p.addict)w+=(G.freed?.15:.05)*p.addict;
     if(evFx().visit===f.id)w+=.5;
     if(f.role==='collector'&&G.star<3)w*=.25;
     if(p.rel<=-60){w=.02;}
@@ -2201,7 +2344,7 @@ function pickFixed(){
 }
 /* 成交后，随机路人有小概率变熟客 */
 function maybeRegular(c,fair){
-  if(c.kind!=='rand'||c.cop||c.trans&&chance(.6))return;
+  if(c.kind!=='rand'||c.cop||!GD('people')||c.trans&&chance(.6))return;
   if(!chance(.05+(fair?.06:0)))return;
   if(G.regs.length>=10){G.regs.sort((a,b)=>a.last-b.last);const gone=G.regs.shift();log(`${gone.n}离开了星港`);}
   const r={id:'r'+c.id,n:c.name,look:c.look,pers:c.pers,know:c.know,rich:c.rich,al:0,rel:15,last:G.day,met:1,seen:1,known:{pers:0,know:0},kind:'reg'};
@@ -2236,7 +2379,7 @@ const TACTIP={
 };
 const sellSide=c=>c.type==='sell'||c.type==='pawn';
 const moodOf=c=>{
-  if(c.done==='deal')return 'happy';if(c.done)return 'angry';
+  if(c.done==='deal')return 'happy';if(c.done)return c.angry?'angry':'neutral';
   const r=c.patience/Math.max(1,c.patMax);
   return r>.66?'neutral':r>.34?'nervous':'angry';
 };
@@ -2245,9 +2388,11 @@ const moodTxt=c=>c.patience<=1&&!c.done?'要走了':MOODN[moodOf(c)];
 const repMul=()=>[0,.3,.6,1,1.2,1.5][repT().s];
 
 function finish(kind){
-  const c=G.cust;c.done=kind;G.stat.served=(G.stat.served||0)+1;
+  const c=G.cust;c.done=kind;c.dlg=null;G.stat.served=(G.stat.served||0)+1;
   metPerson(c);
-  if(c.kind==='rand'&&kind!=='deal'||c.kind==='rand'&&kind==='deal')c.reveal=revealLine(c);
+  if(c.tutI!=null)G.g1=(G.g1||0)+1;
+  if(c.kind==='rand'&&c.tutI==null&&GD('dlg'))c.reveal=revealLine(c);
+  goalCheck();
   save();render();
 }
 function leave(insulted){
@@ -2265,9 +2410,16 @@ function offerToSeller(o){
   const c=G.cust;if(!c||c.done||!(o>0))return;
   if(c.type!=='pawn'&&freeSlots()<c.item.size){toast('仓库满了，先清理库存','bad');return;}
   if(o>G.cash){toast('现金不够','bad');return;}
+  c.dlg=null;c.fb='';
   if(o>=c.ask)return dealBuy(c.ask);
   const P=P_(c),first=!c.tries;c.tries=(c.tries||0)+1;
-  const hold=t=>{c.line=say(t,{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);render();};
+  /* 第一天的教学客人：不会走，第二次出价过了底线就成交 */
+  if(c.fix){
+    if(o>=c.min&&c.tries>1)return dealBuy(o);
+    c.ask=Math.max(c.min,Math.round((c.ask+Math.max(o,c.min))/2));
+    c.line=say(['太少了吧……{p} 行不行？','再加一点嘛，{p}？'],{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);return render();
+  }
+  const hold=t=>{c.line=say(t,{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);dlgPush(c);render();};
   if(c.final){c.patience--;if(c.patience<=0)return leave(false);return hold(['我说了，{p}。','{p}，最后的价。']);}
   if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(o>=c.min&&chance(.25))return dealBuy(o);return hold(L.push.stubborn);}
   if((c.pers==='desperate'||c.urgent)&&o>=c.min)return dealBuy(o);
@@ -2284,25 +2436,32 @@ function offerToSeller(o){
   else c.ask=Math.max(c.min,niceRound(c.ask-span*rand(.08,.22)));
   c.line=ins?pick(L.insult)+' '+say(L.push[c.pers],{p:c.ask}):o>=c.min*.85?nearLine(c,c.ask):say(L.push[c.pers],{p:c.ask});
   c.flash=ins?'insult':'counter';ins?sfx.bad():sfx.click();
-  UI.price=Math.min(UI.price,c.ask);render();
+  UI.price=Math.min(UI.price,c.ask);dlgPush(c);render();
 }
 
 /* ---------- 卖货：玩家报价给买家 ---------- */
 function showItem(id){
   const c=G.cust,it=invItem(id);if(!it||!c||c.done||c.type!=='buy'||!wants(c,it))return;
-  c.item=it;c.tries=0;c.final=0;c.claim=null;c.used={};
+  c.item=it;c.tries=0;c.final=0;c.claim=null;c.used={};c.dlg=null;c.fb='';
   priceBuyer(c,it);
+  if(c.fix){c.max=Math.max(2,Math.round(faceVal(it)*1.5));c.offer=Math.max(1,Math.round(faceVal(it)*1.1));c.spotFake=0;}
   if(c.spotFake){c.line='这东西……是假的吧？我不要。';c.item=null;c.spotFake=0;c.patience--;toast('对方看出这件是假货','bad');closeSheet();if(c.patience<=0)return leave(false);render();return;}
   const [,hi]=estRange(it);
   c.sliderMax=Math.max(c.offer*2,Math.round(hi*2.2),c.offer+10);
   UI.price=clamp(niceRound(Math.max(hi*1.05,c.offer*1.3)),c.offer,c.sliderMax);
-  c.line=say(L.look[c.pers],{item:it.name,p:c.offer});c.flash='';sfx.click();closeSheet();render();
+  c.line=say(L.look[c.pers],{item:it.name,p:c.offer});c.flash='';sfx.click();closeSheet();dlgItem(c);render();
 }
 function priceToBuyer(p){
   const c=G.cust;if(!c||c.done||!c.item||!(p>0))return;
+  c.dlg=null;c.fb='';
   if(p<=c.offer)return dealSell(c.offer);
   const first=!c.tries;c.tries=(c.tries||0)+1;
-  const hold=t=>{c.line=say(t,{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);render();};
+  if(c.fix){
+    if(p<=c.max&&c.tries>1)return dealSell(p);
+    c.offer=Math.min(c.max,Math.round((c.offer+Math.min(p,c.max))/2));
+    c.line=say(['贵了点……{p} 怎么样？','我最多再加一点，{p}。'],{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);return render();
+  }
+  const hold=t=>{c.line=say(t,{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);dlgPush(c);render();};
   if(c.final){c.patience--;if(c.patience<=0)return leave(false);return hold(['{p}，不能再多了。','我说了，{p}。']);}
   if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(p<=c.max&&chance(.25))return dealSell(p);return hold(L.pushBuy.stubborn);}
   if((c.pers==='desperate'||c.urgent||c.addict)&&p<=c.max)return dealSell(p);
@@ -2319,10 +2478,78 @@ function priceToBuyer(p){
   else c.offer=Math.min(c.max,niceRound(c.offer+span*rand(.08,.22)));
   c.line=ins?pick(L.insult)+' '+say(L.pushBuy[c.pers],{p:c.offer}):p<=c.max*1.15?nearLine(c,c.offer):say(L.pushBuy[c.pers],{p:c.offer});
   c.flash=ins?'insult':'counter';ins?sfx.bad():sfx.click();
-  UI.price=Math.max(UI.price,c.offer);render();
+  UI.price=Math.max(UI.price,c.offer);dlgPush(c);render();
 }
 
-/* ---------- 话术 ---------- */
+/* ---------- 对话：客人多说一句，你选一句回 ---------- */
+const TACN={flaw:'挑毛病',poor:'哭穷',last:'最后一口价',chat:'套近乎',stall:'晾一晾',coin:'抛硬币',pitch:'夸货',cert:'亮鉴定书',warranty:'包退',honest:'说实话'};
+function tacOpts(c,keys){
+  const it=c.item,sell=sellSide(c);
+  return keys.map(k=>{
+    const g=it?GN[Math.min(3,it.gKnown?it.g:gRange(it)[1])]:'';
+    return {k:'tac',a:k,n:TACN[k],t:say(L.re[k==='coin'?(sell?'coinS':'coinB'):k],{g,p:UI.price})};
+  });
+}
+/* 客人进门：带着线索的会多说一句；没线索的一半多不说话，只谈价 */
+function dlgStart(c){
+  c.dlgN=0;c.dlg=null;c.fb='';
+  if(!GD('dlg')||!['sell','buy','pawn'].includes(c.type)){c.quiet=1;return;}
+  if(c.tells&&c.tells.length){c.quiet=0;dlgTell(c);}
+  else c.quiet=chance(.55)?1:0;
+}
+function dlgTell(c){
+  const i=(c.tells||[]).findIndex(t=>!t.used&&!t.shown);if(i<0)return false;
+  const tl=c.tells[i];tl.shown=1;c.dlgN++;
+  c.dlg={cue:tl.txt,opts:[{k:'tell',a:i,n:'',t:L.tellAct[tl.k]},{k:'pass',a:tl.k,n:'',t:pick(L.pass[tl.k])}]};
+  return true;
+}
+/* 客人还价之后 */
+function dlgPush(c){
+  if(c.done||c.dlg||c.quiet||c.final||c.fix||!GD('dlg'))return;
+  const sell=sellSide(c),last=sell&&c.patience<=1&&!c.used.last;
+  if(c.dlgN>=(last?3:2))return;
+  if(c.dlgN>=1&&!last&&!chance(.5))return;
+  if(!last&&dlgTell(c))return;
+  let pool=shuffle((sell?['flaw','poor','stall','chat']:['pitch','warranty','chat','stall']).filter(k=>!c.used[k]));
+  if((c.pers==='gambler'||evFx().gamble)&&!c.used.coin)pool.unshift('coin');
+  if(!sell&&c.item&&c.item.cert&&!c.used.cert)pool.unshift('cert');
+  pool=pool.slice(0,3);
+  if(last){pool=pool.slice(0,2);pool.push('last');}
+  if(!pool.length)return;
+  c.dlgN++;c.dlg={cue:'',opts:tacOpts(c,pool)};
+}
+/* 把货拿给买家看的时候 */
+function dlgItem(c){
+  if(c.done||c.quiet||c.fix||c.dlgN>=2||!c.item||!GD('dlg'))return;
+  const pool=[];
+  if(c.item.cert)pool.push('cert');
+  pool.push('pitch','honest');if(pool.length<3)pool.push('warranty');
+  c.dlgN++;c.dlg={cue:'',opts:tacOpts(c,pool)};
+}
+let HOLD=0;
+function reply(i){
+  const c=G.cust;if(!c||c.done||!c.dlg)return;
+  const o=c.dlg.opts[i];if(!o)return;c.dlg=null;
+  const sell=sellSide(c),has=sell||!!c.item,b0=sell?c.ask:c.offer,p0=c.patience,m0=c.payMul||1;
+  c.fb='';tot('reply');gs('reply');
+  HOLD=1;
+  try{
+    if(o.k==='tell')tellAct(o.a);
+    else if(o.k==='tac')tactic(o.a);
+    else{c.line=pick(L.passRe[o.a]||['嗯。']);if(o.a==='naiveK')c.patience=Math.min(c.patMax+1,c.patience+1);c.flash='';sfx.click();}
+  }finally{HOLD=0;}
+  if(!c.done){
+    const b1=sell?c.ask:c.offer,better=has?(sell?b1<b0:b1>b0):(c.payMul||1)>m0,worse=has&&(sell?b1>b0:b1<b0);
+    if(better){c.fb=has?`这句管用了：对方的${sell?'要价':'出价'}从 ${fmt(b0)} ${sell?'降到':'涨到'} ${fmt(b1)}`:'这句管用了：对方愿意多出一些';c.fbc='good';}
+    else if(worse){c.fb=`弄巧成拙：对方的${sell?'要价涨到':'出价降到'} ${fmt(b1)}`;c.fbc='bad';}
+    else if(c.patience<p0){c.fb='这句没管用，对方更不耐烦了';c.fbc='bad';}
+    else if(c.patience>p0){c.fb='对方的脸色好了一些';c.fbc='good';}
+    else c.fb='';
+  }
+  goalCheck();render();
+}
+
+/* ---------- 话术（对话选项背后的规则） ---------- */
 function tactic(t){
   const c=G.cust;if(!c||c.done||c.used[t])return;
   if(!sellSide(c)&&!c.item&&t!=='chat')return toast('先拿一件货给对方看','warn');
@@ -2373,6 +2600,10 @@ function tactic(t){
     else{c.line='鉴定书我看过了，我自己也看得出来。';}
   }else if(t==='warranty'){
     c.warranty=1;upB(['shrewd','stubborn'].includes(c.pers)?1.25:1.12,1.08);c.line=say(L.tac.warranty,P$());
+  }else if(t==='honest'){
+    /* 不夸货：懂行的人领情，多出一点；不懂的人更放心 */
+    if(c.know>=1)upB(1.05,1.04);else c.patience=Math.min(c.patMax+1,c.patience+1);
+    c.line=pick(L.tac.honestOk);c.used.pitch=c.used.pitch||3;
   }
   c.used[t]=ok?1:2;
   c.patience-=cost;
@@ -2389,21 +2620,24 @@ function tellAct(i){
   const sell=sellSide(c),it=c.item;
   const angry=()=>{c.patience-=2;c.line=pick(L.tellNo);c.flash='insult';sfx.bad();if(c.patience<=0||chance(.25))return leave(false),1;};
   const p$=()=>({p:sell?c.ask:c.offer});
+  /* 买家还没看货时，先记下他愿意多出多少 */
+  const upMax=(m,o)=>{if(it){c.max=Math.round(c.max*m);c.offer=Math.min(c.max,niceRound(c.offer*o));}else c.payMul=(c.payMul||1)*m;};
+  const lineB=k=>{c.line=it?say(L.tellOk[k],p$()):pick({urgent:['……被你看出来了。有合适的就快拿出来吧。'],rich:['哈，那倒是。有好货尽管拿。']}[k]);};
   if(!tl.real){if(angry())return;if(sell){c.ask=niceRound(c.ask*1.1);}render();return;}
   if((c.pers==='stubborn'||c.pers==='impatient')&&chance(.3)&&tl.k!=='cop'){if(angry())return;render();return;}
   switch(tl.k){
-    case 'urgent':if(sell){c.ask=Math.max(1,niceRound(c.ask*.8));c.min=Math.round(c.min*.85);}else{c.max=Math.round(c.max*1.15);c.offer=Math.min(c.max,niceRound(c.offer*1.1));}c.line=say(L.tellOk.urgent,p$());break;
+    case 'urgent':if(sell){c.ask=Math.max(1,niceRound(c.ask*.8));c.min=Math.round(c.min*.85);c.line=say(L.tellOk.urgent,p$());}else{upMax(1.15,1.1);lineB('urgent');}break;
     case 'stolen':c.ask=Math.max(1,niceRound(c.ask*.65));c.min=Math.round(c.min*.6);it.sk=1;c.line=say(L.tellOk.stolen,p$());if(c.pid&&FIX[c.pid]){G.people[c.pid].hits++;checkReveal(c.pid);}break;
     case 'fake':
       if(c.knowsFake){c.ask=Math.max(1,niceRound(c.ask*.4));c.min=Math.max(1,Math.round(c.min*.35));it.auth=0;it.authLv=9;c.line=say(L.tellOk.fake,p$());}
       else{c.ask=Math.max(1,niceRound(c.ask*.8));c.line=say(['啊？我也不知道……那 {p}？'],p$());}
       if(c.pid&&FIX[c.pid]){G.people[c.pid].hits++;checkReveal(c.pid);}break;
-    case 'addict':if(!sell){c.max=Math.round(c.max*1.3);c.addictPushed=1;}c.line=say(L.tellOk.addict,p$());break;
+    case 'addict':if(!sell){upMax(1.3,1);c.addictPushed=1;}c.line=say(L.tellOk.addict,p$());break;
     case 'cop':
       c.line=pick(L.tellOk.cop)+' 对方咳了一声，走了。';c.result='你识破了海关便衣。';
       if(G.inv.some(i=>i.ban&&!i.safe)){addRep(1,'识破了海关便衣');align(2,'没上便衣的钩');}
       sfx.good();return finish('left');
-    case 'rich':if(!sell){c.max=Math.round(c.max*1.2);c.offer=Math.min(c.max,niceRound(c.offer*1.1));}c.line=say(L.tellOk.rich,p$());break;
+    case 'rich':if(!sell){upMax(1.2,1.1);lineB('rich');}else c.line=say(L.tellOk.rich,p$());break;
     case 'naiveK':if(sell){c.ask=Math.max(1,niceRound(c.ask*.85));c.min=Math.round(c.min*.85);if(c.pers==='naive')c.lied=1;}c.line=say(L.tellOk.naiveK,p$());break;
   }
   c.flash='good';sfx.good();
@@ -2428,7 +2662,7 @@ function dealBuy(price){
     G.pawns.push({it,loan:price,due:G.day+c.days,redeemP:c.redeemP,name:c.name,pid:c.pid,snack:c.snack});
     it.cost=price;
     c.result=`借出 ${fmt(price)}，「${it.name}」进了当品柜，${dayShort(G.day+c.days)}到期。`;
-    log(`收当「${it.name}」，借出 ${fmt(price)}`,'r');tot('pawn')>=20&&title('t_pawn');
+    log(`收当「${it.name}」，借出 ${fmt(price)}`,'r');tot('pawn')>=20&&title('t_pawn');gs('pawn');
     if(c.snack)addFeel('tangxin',4);
   }else{
     it.cost=price;it.from=c.pid||'';addItem(it);
@@ -2446,7 +2680,7 @@ function dealBuy(price){
     if(it.stolen&&c.pid==='ahui'){G.people.ahui.al=clamp(G.people.ahui.al-4,-100,100);}
     checkNotice(it);
     if(orderFits(it))setTimeout(()=>toast('这件符合悬赏的要求','good'),700);
-    c.result=txt;log(`收下「${it.name}」 −${fmt(price)}`,'r');
+    c.result=txt;log(`收下「${it.name}」 −${fmt(price)}`,'r');gs('buy');
   }
   sfx.coin();finish('deal');
 }
@@ -2473,7 +2707,7 @@ function dealSell(price){
   if(c.pid==='xiaoma'||c.addict){if(it.sub==='陀巴寇'){const p=per(c.pid);if(p&&p.addict!=null){p.addict=Math.min(3,p.addict+(chance(.4)?1:0));p.rich=Math.max(0,p.rich-(chance(.3)?1:0));}}}
   else if(it.sub==='陀巴寇'&&c.pid&&FIX[c.pid]&&FIX[c.pid].mut.includes('addict')&&chance(.25)){G.people[c.pid].addict=Math.max(1,G.people[c.pid].addict);log(`${c.name}好像对陀巴寇上瘾了`,'y');}
   G.sales.push({name:it.name,price,fake:it.fake,stolen:it.stolen,hot:it.hot,over:c.over||0,warranty:c.warranty||0,day:G.day,know:c.know,pid:c.pid,it:c.warranty?{...it}:null});
-  c.result=txt;log(`卖出「${it.name}」 +${fmt(price)}`,'g');
+  c.result=txt;log(`卖出「${it.name}」 +${fmt(price)}`,'g');gs('sell');
   if(it.legend&&!it.fake)gotLegend(it);
   sfx.coin();finish('deal');
 }
@@ -2560,6 +2794,7 @@ function startEvent(k,from){
 }
 function planEvents(news){
   const c=cal();
+  if(!GD('event'))return;
   /* 固定日期：每季对应周的周一开始；每季最后一天大拍卖会 */
   const fx=FIXEV.find(f=>f.s===c.s&&f.w===c.w&&c.wd===0);
   if(fx&&!evNow()){startEvent(fx.k,G.day);news.push({i:'bell',c:'warn',t:EVENTS[fx.k].n,d:EVENTS[fx.k].news});G.evNext=null;return;}
@@ -2579,6 +2814,7 @@ function planEvents(news){
 /* 行情：季节底色 × 走势 × 大事 */
 function rollMarket(news){
   const fx=evFx(),s=cal().s,changed=[];
+  if(!GD('mkt')){for(const c of CATS)G.mk[c]=1;for(const b of BANS)G.mk[BAN+b]=1;return;}
   for(const c of CATS){
     let t=G.trend[c];
     if(!t||G.day>t.to){t=G.trend[c]=chance(.3)?{m:+rand(.75,1.35).toFixed(2),to:G.day+ri(0,3)}:{m:1,to:G.day};}
@@ -2654,7 +2890,7 @@ function raidResolve(how){
 
 /* 夜里的小偷 */
 function theft(){
-  const gl=upLv('guard');if(gl>=3)return null;
+  const gl=upLv('guard');if(gl>=3||!GD('theft'))return null;
   if(!chance(.08))return null;
   if(gl===1&&chance(.5))return {i:'bot',c:'good',t:'有贼',d:'安保机器人把一个小偷赶跑了。'};
   if(gl===2&&chance(.75))return {i:'bot',c:'good',t:'有贼',d:'安保机器人把一个小偷赶跑了。'};
@@ -2808,7 +3044,8 @@ function startDay(first){
     const dec=Math.round((G.dirtyY?5:10)*(G.prof==='fence'?.6:1));G.heat=clamp(G.heat-dec);
   }
   planEvents(news);rollMarket(news);
-  if(!first){makeNotices(news);const o=makeOrder();if(o)news.push(o);}
+  if(!first&&GD('stolen')){makeNotices(news);const o=makeOrder();if(o)news.push(o);}
+  G.gs={};
   if(G.ev&&evFx().heatFloor)G.heat=Math.max(G.heat,evFx().heatFloor);
   G.queue=[];
   morningChores(news);
@@ -2820,7 +3057,7 @@ function startDay(first){
   G.fixedToday=pickFixed();
   {const o=G.people.ahui.order;if(o&&G.day>=o.day&&!G.fixedToday.includes('ahui'))G.fixedToday.unshift('ahui');}
   G.regToday=G.regs.filter(r=>G.day-r.last>=2&&chance(.25)).slice(0,1).map(r=>r.id);
-  G.mainToday=MAINS.filter(m=>(G.mainNext[m.id]||99)<=G.day||(m.id==='dapanji'&&cal().wd===4&&mainLv('dapanji')>=0&&chance(.7))).map(m=>m.id).slice(0,2);
+  G.mainToday=!GD('people')?[]:MAINS.filter(m=>(G.mainNext[m.id]||99)<=G.day||(m.id==='dapanji'&&cal().wd===4&&mainLv('dapanji')>=0&&chance(.7))).map(m=>m.id).slice(0,2);
   G.mainToday.forEach(id=>G.mainNext[id]=G.day+ri(4,7));
   G.yuShot=0;
   G.treasure=upLv('window')>=3&&G.win.some(id=>{const it=invItem(id);return it&&it.legend;});
@@ -2832,11 +3069,13 @@ function startDay(first){
 }
 /* 下一位客人 */
 function nextCustomer(){
-  if(G.left<=0&&!G.queue.length){G.cust=null;render();return;}
+  if(!moreCust()){G.cust=null;render();return;}
   let c=null;
-  const q=G.queue.shift();
+  if(tutLeft())c=tutCust(G.g1||0);
+  const q=c?null:G.queue.shift();
   if(q&&q.special==='owner')c=ownerCust(q.id);
   else if(q&&q.special==='borrow')c=borrowCust(q.id);
+  if(!c&&G.left<=0){G.cust=null;render();return;}
   if(!c){
     G.left--;
     const slot=G.dayN-G.left;
@@ -2844,10 +3083,17 @@ function nextCustomer(){
     else if(G.fixedToday.length&&chance(.3))c=fixedCust(G.fixedToday.shift());
     else if(G.regToday.length&&chance(.3)){const r=G.regs.find(x=>x.id===G.regToday.shift());if(r)c=regCust(r);}
     if(!c&&G.left<=1){if(G.mainToday.length)c=mainCust(G.mainToday.shift());else if(G.fixedToday.length)c=fixedCust(G.fixedToday.shift());}
-    if(!c){c=randomCust();if(c.type==='sell'&&c.item.stolen){const n=noticeItem();if(n){c.item=n;priceSeller(c);makeTells(c);}}
-      if((c.type==='sell'&&c.item.ban||c.type==='buy'&&c.want===BAN)&&(G.banX||0)<3){G.banX=(G.banX||0)+1;G.left++;G.dayN++;}}
+    /* 街坊和朋友带来的违禁品生意，也算进当天的上限；超了今天就不来 */
+    if(c&&(c.type==='sell'&&c.item.ban||c.type==='buy'&&c.want===BAN)){if((G.banX||0)>=banCap()||!GD('ban'))c=null;else G.banX=(G.banX||0)+1;}
+    if(!c){
+      const isBan=x=>x.type==='sell'&&x.item.ban||x.type==='buy'&&x.want===BAN;
+      c=randomCust(guideOn()&&G.day===1?{type:G.inv.some(i=>!i.ban)?'buy':'sell'}:{});
+      /* 违禁品客人一天有上限，超了就换一位普通客人 */
+      for(let n=0;n<8&&isBan(c)&&(G.banX||0)>=banCap();n++)c=randomCust();
+      if(c.type==='sell'&&c.item.stolen){const n=noticeItem();if(n){c.item=n;priceSeller(c);makeTells(c);}}
+      if(isBan(c)&&(G.banX||0)<banCap()){G.banX=(G.banX||0)+1;G.left++;G.dayN++;}}
   }
-  G.cust=c;greet(c);
+  G.cust=c;if(c.tutI==null)greet(c);dlgStart(c);
   UI.price=c.type==='buy'?0:Math.max(1,Math.min(G.cash,niceRound(c.ask*.7||1)));
   sfx.door();render();
 }
@@ -2869,8 +3115,8 @@ function closeShop(){
   G.cust=null;G.phase='close';
   const out=[];
   if(G.debt>0&&!G.freed&&G.day>=G.debtDue){return gameOver('债务到期，你没能还清。');}
-  if(chance(raidBase()/4)){const r=raid('close');if(r)out.push(r);}
-  G.raidTonight=G.forceRaid||(G.raidPre!=null?G.raidPre:chance(raidBase()));G.forceRaid=0;G.raidPre=null;
+  if(GD('raid')&&chance(raidBase()/4)){const r=raid('close');if(r)out.push(r);}
+  G.raidTonight=GD('raid')&&(G.forceRaid||(G.raidPre!=null?G.raidPre:chance(raidBase())));G.forceRaid=0;G.raidPre=null;
   if(G.raidTonight&&mainLv('funi')>=2)out.push({i:'shield',c:'warn',t:'福妮',d:'福妮路过，压低声音说：「今晚可能有人来查，你自己当心。」'});
   G.dirtyY=!!G.stat.dirty;
   G.night={step:'menu',out,go:null};
@@ -2970,7 +3216,7 @@ const safeRounds=()=>3+(upLv('jet')>=2?1:0)+(evFx().scavSafe||0);
 const scavOpen=k=>k==='dump'||k==='wreck'&&upLv('jet')>=1||k==='zone'&&mainLv('dapanji')>=1;
 function scavStart(k){
   if(!scavOpen(k)||evFx().scavOff)return;
-  G.night.go='scav';G.night.scav={k,round:0,found:[],bag:[],lost:[],caught:0,done:0};tot('scav')>=15&&title('t_scav');
+  G.night.go='scav';G.night.scav={k,round:0,found:[],bag:[],lost:[],caught:0,done:0};tot('scav')>=15&&title('t_scav');gs('scav');
   scavRound();
 }
 function scavRisk(){const s=G.night.scav,x=s.round-safeRounds();if(x<0)return 0;return clamp(.12+.1*x+(SCAV[s.k].risk>=2?.06:0)+(evFx().scavGood&&s.k==='wreck'?.05:0),0,.9);}
@@ -2979,7 +3225,7 @@ function scavItem(k){
   if(k==='zone'&&chance(.25)){const it=makeItem({ban:1,w:banW()});it.scav=1;return it;}
   if(k==='zone'&&chance(.004)){const pool=LEGENDS.filter(l=>!G.legends[l.k]&&!(G.lgSeen||{})[l.k]&&(l.tag==='any'||l.tag==='dark'));if(pool.length){(G.lgSeen=G.lgSeen||{})[pool[0].k]=1;const it=makeLegendItem(pool[0].k,{fakeP:.2});it.scav=1;return it;}}
   let tw=S.tw,gw=S.gw;if(fx.scavGood&&k==='wreck'){tw=[.25,.65,.1];gw=[.2,.33,.33,.11,.03];}
-  const it=makeItem({tier:wpick([0,1,2],tw),gw,wx:S.wx,fakeP:.08,stolenP:k==='wreck'?.1:k==='zone'?.15:0,hot:.3});
+  const it=makeItem({tier:wpick([0,1,2],tw),gw,wx:S.wx,fakeP:GD('fake')?.08:0,stolenP:!GD('stolen')?0:k==='wreck'?.1:k==='zone'?.15:0,hot:.3});
   it.scav=1;return it;
 }
 function scavRound(){
@@ -3057,6 +3303,7 @@ function buyUpg(id){
   G.cash-=cost;G.upg[id]=lv+1;G.prog[id]=[];
   if(id==='sign')addRep(lv===2?4:3,'挂上了新招牌');
   if(id==='scan')G.scans+=lv===0||lv>=2?1:0;
+  gs('upg');
   toast(`${UP[id].n}升到 ${lv+1} 级：${row[1]}`,'good');log(`升级${UP[id].n} −${fmt(cost)}`,'r');sfx.good();afterInv();
 }
 /* 星级 */
@@ -3086,8 +3333,8 @@ function buyStar(){
 /* 还开局的债 */
 function repay(a){
   a=Math.min(a,G.debt,G.cash);if(a<=0)return;
-  G.cash-=a;G.debt-=a;log(`还债 ${fmt(a)}`,'r');sfx.coin();
-  if(G.debt<=0){G.debt=0;G.freed=true;G.freeDay=G.day;
+  G.cash-=a;G.debt-=a;log(`还债 ${fmt(a)}`,'r');sfx.coin();gs('repay');
+  if(G.debt<=0){G.debt=0;G.freed=true;G.freeDay=G.day;giveDeed();
     title('t_paid');if(G.day<=7)title('t_fast');if(G.day===1)title('t_first');
     closeSheet();save();return showFreed();}
   afterInv();
@@ -3199,7 +3446,7 @@ function checkBroke(){
 const UI={tab:'counter',price:0,open:null,pick:null,lastFlash:''};
 
 function render(){
-  if(!G)return;
+  if(!G||HOLD)return;
   renderHud();renderNav();
   const night=G.phase!=='day';
   const counter=UI.tab==='counter'&&!night;
@@ -3208,6 +3455,7 @@ function render(){
   else{const pg=$('#page'),k=UI.tab==='counter'?'night':UI.tab,keep=pg.dataset.k===k?pg.scrollTop:0;
     pg.innerHTML=UI.tab==='counter'?renderNight():UI.tab==='inv'?pageInv():UI.tab==='people'?pagePeople():UI.tab==='shop'?pageShop():pageMore();
     pg.dataset.k=k;pg.scrollTop=keep;}
+  coachSync();
 }
 function afterInv(){save();render();if(sheetKind&&SHEETS[sheetKind])SHEETS[sheetKind](sheetArg);}
 
@@ -3222,8 +3470,11 @@ function renderHud(){
   $('#sRep').textContent=G.rep;
   const a=$('#sAl');a.textContent=(G.align>0?'+':G.align<0?'−':'')+Math.abs(G.align);a.className='num '+(G.align>=30?'law':G.align<=-30?'dark':'');
   const h=$('#sHeat');h.textContent=G.heat;h.className='num '+(G.heat>=60?'hot':G.heat>=30?'warm':'');
-  const s=$('#strip');
-  if(G.order){s.hidden=false;s.className=G.order.src;s.innerHTML=`${ic('bell')}<span><b>${ordName(G.order)}</b>　${ordWhat(G.order)}</span><em>${fmt(G.order.pay)} · ${dayShort(G.order.due)}止</em>`;}
+  /* 引导期：还没讲到的数字先不显示 */
+  $('#bRep').hidden=!GD('rep');$('#bAl').hidden=!GD('align')&&!G.align;$('#bHeat').hidden=!GD('heat')&&!G.heat;
+  const s=$('#strip'),goal=goalNow();
+  if(G.order){s.hidden=false;s.dataset.act='order';s.className=G.order.src;s.innerHTML=`${ic('bell')}<span><b>${ordName(G.order)}</b>　${ordWhat(G.order)}</span><em>${fmt(G.order.pay)} · ${dayShort(G.order.due)}止</em>`;}
+  else if(goal){const ok=G.goalDone===G.day;s.hidden=false;s.dataset.act='goal';s.className='goal'+(ok?' ok':'');s.innerHTML=`${ic(ok?'heart':'bell')}<span><b>今天的目标</b>　${goal.t}</span><em>${ok?'完成了':goal.n(G.gs||{})||'红包 '+fmt(goal.pay)}</em>`;}
   else s.hidden=true;
 }
 function renderNav(){
@@ -3233,7 +3484,9 @@ function renderNav(){
   n('#tInv','inv','box','库存',`<i class="nb">${used()}/${capOf()}</i>`);
   n('#tPeople','people','users','人物');
   n('#tShop','shop','store','店铺');
-  n('#tMore','more','more','更多');
+  n('#tMore','more','more','更多',META.newc?'<i class="nb dot">新</i>':'');
+  $('#tPeople').hidden=!GD('people')&&!Object.values(G.people).some(p=>p.met)&&!G.regs.length;
+  $('#tShop').hidden=!GD('shop');
 }
 
 /* ---------- 柜台 ---------- */
@@ -3257,13 +3510,15 @@ function renderCounter(){
   $('#plateL').innerHTML=c?`<span class="cl">衣着${RICHN[c.shownRich]}</span>${relTag(c)}`:'';
   const mt=$('#moodTag');mt.hidden=!c||!!c.done;if(c&&!c.done){mt.textContent='表情：'+moodTxt(c);mt.className=moodOf(c);}
   $('#ctItem').innerHTML=c&&c.item?ibox(c.item,'ct'):'';
+  $('#deedWall').innerHTML=G.deed&&G.deed.on?deedSvg():'';
   /* 对话 */
   const b=$('#bubble');
-  if(!c){b.className='sys';b.innerHTML=G.left>0||G.queue.length?`今天还有 <b>${G.left+G.queue.length}</b> 位客人。`:'今天的客人都走了，可以打烊了。';}
+  if(!c){b.className='sys';b.innerHTML=moreCust()?`今天还有 <b>${G.left+G.queue.length+tutLeft()}</b> 位客人。`:'今天的客人都走了，可以打烊了。';}
   else{
     b.className='';
     let h=esc(c.line||'');
-    if(c.tells&&c.tells.length&&!c.done)h+=`<div class="tells">${c.tells.map((t,i)=>`<button class="tl ${t.used?'used':''}" data-act="tell" data-a="${i}"${t.used?' disabled':''}>${esc(t.txt)}<em>${t.used?'':'点它说事'}</em></button>`).join('')}</div>`;
+    if(c.dlg&&c.dlg.cue&&!c.done)h+=`<div class="cue">${esc(c.dlg.cue)}</div>`;
+    if(c.fb&&!c.done)h+=`<div class="fb ${c.fbc||''}">${esc(c.fb)}</div>`;
     if(c.done&&c.result)h+=`<div class="res">${esc(c.result)}</div>`;
     if(c.done&&c.reveal)h+=`<div class="rv">${esc(c.reveal)}</div>`;
     b.innerHTML=h;
@@ -3272,10 +3527,15 @@ function renderCounter(){
   $('#panel').innerHTML=panel(c);
   const r=$('#rng');if(r)fillRange(r);
 }
+/* 一件货的等级、估价、真假（引导期还没讲到的先不显示） */
+function itemInfo(it){
+  if(!GD('grade'))return `<span class="num">转手约值 ${fmt(faceVal(it))}</span>`;
+  return `${gBadge(it)}<span class="num">${estText(it)}</span>${GD('fake')?`<span class="au ${authCls(it)}">${authTxt(it)}</span>`:''}`;
+}
 function icard(it,c){
   const tags=tagsOf(it);
-  const scanBtn=canScan(it)&&!it.legend&&G.scans>0&&!c.done?`<button class="btn sm" data-act="scan" data-a="${it.id}">${ic('scan')}鉴定<small>剩${G.scans}次</small></button>`:'';
-  return `${ibox(it)}<div class="ic-b"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><div class="ic-r">${gBadge(it)}<span class="num">${estText(it)}</span><span class="au ${authCls(it)}">${authTxt(it)}</span></div><div>${tags}</div></div>${scanBtn}`;
+  const scanBtn=GD('scan')&&canScan(it)&&!it.legend&&G.scans>0&&!c.done?`<button class="btn sm" data-act="scan" data-a="${it.id}">${ic('scan')}鉴定<small>剩${G.scans}次</small></button>`:'';
+  return `${ibox(it)}<div class="ic-b"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><div class="ic-r">${itemInfo(it)}</div><div>${tags}</div></div>${scanBtn}`;
 }
 function tagsOf(it){
   let t='';
@@ -3297,18 +3557,20 @@ function priceBounds(){const c=G.cust;if(sellSide(c))return [1,Math.max(2,c.ask)
 function fillRange(r){r.style.setProperty('--f',(r.value/10)+'%');}
 function priceRow(){
   const [lo,hi]=priceBounds();
-  return `<div class="prow"><button class="btn sq" data-act="pstep" data-a="-1">−</button><div class="pmid"><b class="num" id="pVal">${fmtFull(UI.price)}</b><input type="range" id="rng" min="0" max="1000" value="${P2S(UI.price,lo,hi)}" aria-label="价格"></div><button class="btn sq" data-act="pstep" data-a="1">+</button></div>`;
+  return `<div class="prow"><button class="btn sq" data-act="pstep" data-a="-1">−</button><div class="pmid"><button class="pnum num" id="pVal" data-act="pnum" aria-label="点这里直接输入价格">${fmtFull(UI.price)}</button><input type="range" id="rng" min="0" max="1000" value="${P2S(UI.price,lo,hi)}" aria-label="价格"></div><button class="btn sq" data-act="pstep" data-a="1">+</button></div>`;
 }
-function tacChips(c){
-  const side=sellSide(c)?'sell':'buy';
-  return `<div class="chips">${TACS[side].map(([k,n])=>{const u=c.used[k];const dis=u||(k==='cert'&&!(c.item&&c.item.cert))||(side==='buy'&&!c.item);return `<button class="chip ${u===1?'ok':u===2?'no':''}" data-act="tac" data-a="${k}"${dis?' disabled':''}>${n}</button>`;}).join('')}</div>`;
+/* 客人多说了一句：你能回的话 */
+function replyBox(c){
+  if(!c.dlg||c.done)return '';
+  const what=sellSide(c)?'直接出价':c.item?'直接要价':'直接拿货';
+  return `<div class="rep"><small>对方多说了一句，你怎么回？</small>${c.dlg.opts.map((o,i)=>`<button class="rp" data-act="reply" data-a="${i}">${o.n?`<i>${o.n}</i>`:''}<span>${esc(o.t)}</span></button>`).join('')}<button class="rp skip" data-act="noReply"><span>不回，${what}</span></button></div>`;
 }
 function panel(c){
   if(!c){
-    if(G.left>0||G.queue.length)return `<div class="row">${btn('next',`${ic('door')}请下一位客人`,'pri grow')}${btn('close','打烊','sm')}</div>`;
+    if(moreCust())return `<div class="row">${btn('next',`${ic('door')}请下一位客人`,'pri grow')}${tutLeft()?'':btn('close','打烊','sm')}</div>`;
     return `<div class="row">${btn('close',`${ic('moon')}打烊`,'pri grow')}</div>`;
   }
-  if(c.done)return `<div class="row">${G.left>0||G.queue.length?btn('next',`${ic('door')}下一位`,'pri grow'):btn('close',`${ic('moon')}打烊`,'pri grow')}</div>`;
+  if(c.done)return `<div class="row">${moreCust()?btn('next',`${ic('door')}下一位`,'pri grow'):btn('close',`${ic('moon')}打烊`,'pri grow')}</div>`;
   if(c.bust)return `<div class="note bad">${ic('alert')}对方是海关便衣！货值 ${fmt(c.bust.v)}，认罚要交 ${fmt(c.bust.fine)}，货没收。</div><div class="row">${btn('bustPay','认罚','grow')}${btn('bustBribe',`贿赂 ${fmt(c.bust.cost)}<small>成功率约 ${pct(c.bust.p)}</small>`,'warn grow')}</div>`;
   if(c.type==='owner')return `<div class="row col">${btn('owner','白还给他<small>声望、立场上升</small>','good','give')}${btn('owner',`让他赎回去<small>他付 ${fmt(c.redeem)}</small>`,'','sell')}${btn('owner','说没见过<small>'+(c.item.safe?'货在保险箱里，他看不见':'他可能不信，去报案')+'</small>','warn','lie')}</div>`;
   if(c.type==='loan')return `<div class="note">${c.name}想借 ${fmt(c.amt)}，七天后还。利息你来定：利息越高，越可能还不上，关系也会变差。</div><div class="row">${btn('lend','借<small>利息 5%</small>','good grow','0.05')}${btn('lend','借<small>利息 15%</small>','grow','0.15')}${btn('lend','借<small>利息 30%</small>','warn grow','0.3')}${btn('lend','不借','sq','-1')}</div>`;
@@ -3316,12 +3578,15 @@ function panel(c){
   if(c.type==='info')return infoPanel(c);
   if(c.type==='buy'&&!c.item){
     const n=sellable(c).length;
+    if(c.dlg)return replyBox(c);
     return `<div class="row">${btn('showPick',`${ic('box')}拿货给对方看<small>${n?n+' 件合适':'库存里没有合适的'}</small>`,'pri grow','',!n)}${btn('decline','没有，请回','sm')}</div>`;
   }
+  /* 对方多说了一句：先回话（或者选不回），再定价 */
+  if(c.dlg)return replyBox(c);
   const sell=sellSide(c);
   const main=sell?btn('offer',`出价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow'):btn('ask',`要价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow');
   const extra=c.type==='pawn'?btn('buyout','买断','sm','',!!c.used.buyout):sell?'':btn('showPick','换一件','sm');
-  return `${tacChips(c)}${priceRow()}<div class="row">${main}${extra}${btn('decline','送客','sq')}</div>`;
+  return `${priceRow()}<div class="row">${main}${extra}${btn('decline','送客','sq')}</div>`;
 }
 function talkPanel(c){
   if(c.pid==='funi')return `<div class="row col">${btn('talk','聊几句','grow','chat',!!c.used.chat)}${btn('talk',`请他喝杯茶<small>${fmt(teaCost())}</small>`,'grow','tea',!!c.used.tea)}${btn('talk','送他出门','sm','bye')}</div>`;
@@ -3338,7 +3603,8 @@ function infoPanel(c){
 function pageInv(){
   const items=[...G.inv].sort((a,b)=>(b.safe?1:0)-(a.safe?1:0)||estMid(b)-estMid(a));
   let h=`<div class="pghead"><b>库存</b><span>${used()}/${capOf()} 格 · 保险箱 ${safeN()}/${safeCap()} · 橱窗 ${G.win.length}/${winCap()}</span></div>`;
-  h+=`<div class="sub hint">点一件货展开操作。保险箱里的货不占库存格，搜查和小偷都找不到；橱窗里的货会吸引想要它的客人。</div>`;
+  h+=`<div class="sub hint">点一件货展开操作。${GD('safe')?'保险箱里的货不占库存格，搜查和小偷都找不到；':''}${GD('win')?'橱窗里的货会吸引想要它的客人。':''}</div>`;
+  if(G.deed)h+=`<div class="invrow deed"><div class="top">${`<div class="ibox legend">${deedSvg()}</div>`}<div class="ib"><b>${DEED.n}</b><span class="ic-r"><span class="gb g5 ok">SSR</span>${tag('非卖品','legend')}${G.deed.on?tag('挂在墙上','win'):''}</span><span>${DEED.d}</span></div></div><div class="acts">${btn('deed',G.deed.on?'收起来':'挂到墙上<small>每天多来一位客人</small>','sm')}</div></div>`;
   if(!items.length)h+=`<div class="empty">库存是空的。</div>`;
   h+=items.map(invRow).join('');
   if(G.pawns.length)h+=`<h3>${ic('lock')}当品柜</h3>`+G.pawns.map(p=>`<div class="invrow"><div class="top">${ibox(p.it)}<div class="ib"><b>${esc(p.it.name)}</b><span>${esc(p.name)}押的，借出 ${fmt(p.loan)}，${dayShort(p.due)}到期</span></div></div></div>`).join('');
@@ -3347,19 +3613,19 @@ function pageInv(){
 }
 function invRow(it){
   const open=UI.open===it.id;
-  const top=`<div class="top" data-act="invOpen" data-a="${it.id}">${ibox(it)}<div class="ib"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><span class="ic-r">${gBadge(it)}<span class="num">${estText(it)}</span><span class="au ${authCls(it)}">${authTxt(it)}</span></span><span>${tagsOf(it)}</span></div></div>`;
+  const top=`<div class="top" data-act="invOpen" data-a="${it.id}">${ibox(it)}<div class="ib"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><span class="ic-r">${itemInfo(it)}</span><span>${tagsOf(it)}${it.cost?`<em class="cost">收价 ${fmt(it.cost/(it.qty||1))}</em>`:''}</span></div></div>`;
   return `<div class="invrow ${open?'open':''} ${orderFits(it)?'match':''}">${top}${open?`<div class="acts">${invActs(it)}</div>${it.desc!==''?`<div class="sub desc">${esc(tplOf(it)?.d||'')}${it.stolen&&knownStolen(it)?' '+hotWord(it)+'。':''}</div>`:''}`:''}</div>`;
 }
 function invActs(it){
   const a=[],day=G.phase==='day',busy=G.cust&&!G.cust.done&&G.cust.item===it;
   if(busy)return '<span class="sub">正在柜台上谈。</span>';
-  if(canScan(it)&&!it.legend&&day)a.push(btn('scan',`${ic('scan')}鉴定<small>剩${G.scans}次</small>`,'sm',it.id,G.scans<=0));
-  a.push(btn('safe',it.safe?'从保险箱取出':'放进保险箱','sm',it.id,!it.safe&&safeN()>=safeCap()));
-  if(!it.safe)a.push(btn('win',inWin(it)?'撤下橱窗':'放进橱窗','sm',it.id,!inWin(it)&&G.win.length>=winCap()));
+  if(GD('scan')&&canScan(it)&&!it.legend&&day)a.push(btn('scan',`${ic('scan')}鉴定<small>剩${G.scans}次</small>`,'sm',it.id,G.scans<=0));
+  if(GD('safe')||it.safe)a.push(btn('safe',it.safe?'从保险箱取出':'放进保险箱','sm',it.id,!it.safe&&safeN()>=safeCap()));
+  if(!it.safe&&GD('win'))a.push(btn('win',inWin(it)?'撤下橱窗':'放进橱窗','sm',it.id,!inWin(it)&&G.win.length>=winCap()));
   if(upLv('bench')>=1&&!it.legend&&!it.ban)a.push(btn('repair',`修复<small>${fmt(repairCost(it))}</small>`,'sm',it.id));
   if(upLv('bench')>=2&&knownStolen(it))a.push(btn('launder',`洗白<small>${fmt(launderCost(it))}</small>`,'sm',it.id));
   if(upLv('bench')>=3&&it.auth===0&&!it.forged)a.push(btn('forge',`做旧<small>${fmt(forgeCost(it))}</small>`,'sm',it.id));
-  if(day)a.push(btn('lab',`送鉴定所<small>${fmt(labCost(it))}</small>`,'sm',it.id,G.lab.length>=labCap()||it.cert));
+  if(day&&GD('lab'))a.push(btn('lab',`送鉴定所<small>${fmt(labCost(it))}</small>`,'sm',it.id,G.lab.length>=labCap()||it.cert));
   if(mainLv('xiaoyumi')>=2&&!G.yuShot&&it.auth!==4&&it.auth!==0)a.push(btn('yuLook','请小玉米看一眼','sm',it.id));
   if(mainLv('xiaoyumi')>=3&&!it.cert)a.push(btn('yuCert',`请小玉米开鉴定书<small>${fmt(niceRound(faceVal(it)*.1))}</small>`,'sm warn',it.id));
   if(it.k==='toba200'||it.k==='toba10')a.push(btn('split',it.k==='toba200'?'拆成 20 条':'拆成 10 包','sm',it.id));
@@ -3442,7 +3708,7 @@ function matPickSheet(key){
 function pageMore(){
   const b=(act,icn,t,s,arg='')=>`<button class="mcard" data-act="${act}"${arg?` data-a="${arg}"`:''}>${ic(icn)}<div><b>${t}</b><span>${s}</span></div></button>`;
   return `<div class="pghead"><b>更多</b><span>${ORIGINS[G.prof].n} · ${DIFFS[G.diff].n}</span></div>`+
-   b('codex','book','图鉴',`见过 ${Object.keys(META.codex).length} 种货，传奇 ${Object.keys(META.legends).length}/${LEGENDS.length}`)+
+   b('codex','book','图鉴'+(META.newc?' <i class="nb dot">新</i>':''),`经手过 ${Object.keys(META.seen).length}/${ITEMS.length} 种货，传奇 ${Object.keys(META.legends).length}/${LEGENDS.length}`)+
    b('titles','crown','称号',`${Object.keys(META.titles).length}/${Object.keys(TITLES).length}`)+
    b('hall','trophy','名人堂','历次退休和结束的评分')+
    b('log','log','日志','最近发生的事')+
@@ -3464,11 +3730,11 @@ function renderNight(){
   if(N.go==='market')return marketHtml();
   let h=`<div class="pghead"><b>${ic('moon')}打烊了</b><span>${dateStr()}</span></div>${nightSum()}`;
   h+=(N.out||[]).map(evCard).join('');
-  h+=`<h3>今晚去哪儿（只能去一个地方）</h3>`;
-  const B=bmLv(),fx=evFx();
-  h+=`<button class="mcard" data-act="goMarket">${ic('cart')}<div><b>去集市</b><span>商行：买鉴定过的正经货，也收你的货。${B&&!fx.bmShut?`黑市：第 ${B} 层开放，收违禁品和赃物。`:fx.bmShut?'黑市今晚关门。':'黑市：立场再黑一点才对你开放。'}</span></div></button>`;
-  h+=`<div class="mcard col">${ic('bag')}<div><b>去拾荒</b><span>包 ${bagCap()} 格，前 ${safeRounds()} 轮安全。${fx.scavOff?'太阳风暴，今晚出不了港。':''}</span><div class="row">${Object.entries(SCAV).map(([k,S])=>btn('scav',`${S.n}<small>${scavOpen(k)?['无风险','轻度风险','重度风险'][S.risk]:S.need}</small>`,'sm grow',k,!scavOpen(k)||!!fx.scavOff)).join('')}</div></div></div>`;
-  h+=`<button class="mcard" data-act="sleep">${ic('home')}<div><b>直接回家睡觉</b><span>什么都不做。</span></div></button>`;
+  const B=bmLv(),fx=evFx(),gm=GD('market'),gsv=GD('scav');
+  h+=gm?`<h3>今晚去哪儿（只能去一个地方）</h3>`:`<h3>今晚</h3><div class="sub">第一天先回家睡觉。从明天起，晚上可以去集市。</div>`;
+  if(gm)h+=`<button class="mcard" data-act="goMarket">${ic('cart')}<div><b>去集市</b><span>商行：买鉴定过的正经货，也收你的货。${!GD('ban')?'':B&&!fx.bmShut?`黑市：第 ${B} 层开放，收违禁品和赃物。`:fx.bmShut?'黑市今晚关门。':'黑市：立场再黑一点才对你开放。'}</span></div></button>`;
+  if(gsv)h+=`<div class="mcard col">${ic('bag')}<div><b>去拾荒</b><span>包 ${bagCap()} 格，前 ${safeRounds()} 轮安全。${fx.scavOff?'太阳风暴，今晚出不了港。':''}</span><div class="row">${Object.entries(SCAV).map(([k,S])=>btn('scav',`${S.n}<small>${scavOpen(k)?['无风险','轻度风险','重度风险'][S.risk]:S.need}</small>`,'sm grow',k,!scavOpen(k)||!!fx.scavOff)).join('')}</div></div></div>`;
+  h+=`<button class="mcard" data-act="sleep">${ic('home')}<div><b>${gm?'直接回家睡觉':'回家睡觉'}</b><span>${gm?'什么都不做。':'明天见。'}</span></div></button>`;
   if(exposedOf().some(i=>i.ban||knownStolen(i)))h+=`<div class="note bad">${ic('alert')}有 ${exposedOf().filter(i=>i.ban||knownStolen(i)).length} 件违禁品或赃物没进保险箱。风声${heatWord(G.heat)}，深夜可能有人来查。</div>`;
   return h;
 }
@@ -3511,6 +3777,7 @@ function renderScav(){save();render();}
 function showMorning(out){
   const news=G.news||[];
   let h=`<div class="scroll"><div class="mhead">${ic('sun')}<b>${dateStr()}</b><span>${cal().wd>=5?'周末，客人会多一些':cal().wd===0?'周一，客人少一些':''}</span></div>`;
+  h+=guideCard();
   if(out&&out.length)h+=`<h3>昨夜</h3>`+out.map(evCard).join('');
   h+=`<h3>早报</h3>`+(news.length?news.map(evCard).join(''):'<div class="empty">今天没什么新闻。</div>');
   if(mainLv('tangxin')>=1){const f=forecast();if(f.length)h+=evCard({i:'chat',t:'唐心说',d:'我店里的客人都在聊：'+f.slice(0,3).join('，')+'。'});}
@@ -3533,7 +3800,7 @@ function showPend(){
   }
 }
 function showFreed(){
-  showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('crown')}</div><h1>债还清了！</h1><p class="pp">${dateStr()}，你还清了全部债务。这家店现在完完全全是你的了。</p><p class="pp">接下来没有必须完成的目标：可以扩建门面、收集传奇货、和朋友们处成至交，也可以借钱给别人、向银行借钱做大买卖。每周日要交租金和维护费，店越大租金越高；欠账一周还不上就会破产。什么时候想停，都可以在「更多」里退休，结算评分。</p></div></div><div class="foot">${btn('freedOk','继续经营','pri grow')}</div>`,'freed');
+  showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('crown')}</div><h1>债还清了！</h1><p class="pp">${dateStr()}，你还清了全部债务。这家店现在完完全全是你的了。</p>${G.deed&&G.deed.day===G.day?`<div class="deedbox"><div class="ibox legend">${deedSvg()}</div><div><b>${DEED.n}</b><span><span class="gb g5 ok">SSR</span> 非卖品</span><p>债主把抵押的地契送了回来。它不能卖，也不占库存；在「库存」页可以把它挂到墙上，每天多来一位客人。</p></div></div>`:''}<p class="pp">接下来没有必须完成的目标：可以扩建门面、收集传奇货、和朋友们处成至交，也可以借钱给别人、向银行借钱做大买卖。每周日要交租金和维护费，店越大租金越高；欠账一周还不上就会破产。什么时候想停，都可以在「更多」里退休，结算评分。</p></div></div><div class="foot">${btn('freedOk','继续经营','pri grow')}</div>`,'freed');
   sfx.big();
 }
 function showEnd(){
@@ -3566,7 +3833,8 @@ function setupRender(){
 /* ---------- 信息弹层 ---------- */
 const SHEETS={
   person:personSheet,mat:matPickSheet,
-  pick:()=>{const c=G.cust;const l=c?sellable(c):[];openSheet('pick','拿哪件给对方看',l.length?l.map(it=>`<div class="invrow"><div class="top">${ibox(it)}<div class="ib"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><span class="ic-r">${gBadge(it)}<span class="num">${estText(it)}</span><span class="au ${authCls(it)}">${authTxt(it)}</span></span><span>${tagsOf(it)}</span></div>${btn('show','给他看','sm pri',it.id)}</div></div>`).join(''):'<div class="empty">没有合适的货。</div>');},
+  pick:()=>{const c=G.cust;const l=c?sellable(c):[];openSheet('pick','拿哪件给对方看',l.length?l.map(it=>`<div class="invrow"><div class="top">${ibox(it)}<div class="ib"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><span class="ic-r">${itemInfo(it)}</span><span>${tagsOf(it)}${it.cost?`<em class="cost">收价 ${fmt(it.cost/(it.qty||1))}</em>`:''}</span></div>${btn('show','给他看','sm pri',it.id)}</div></div>`).join(''):'<div class="empty">没有合适的货。</div>');},
+  num:()=>{},goal:()=>goalSheet(),
 };
 function infoSheet(k){
   if(k==='rep'){const t=repT();openSheet('info','声望',`<div class="big num">${G.rep}<small>${t.n}</small></div><div class="help"><p>声望是客人信不信你。它决定<b>来什么样的人</b>：声望高，正经货主和讲究的买家多，好货多，但坑人的代价大；声望低，急着脱手的人多，赃物、假货、低等级的货多，要价也低，坑人的代价小。过路客不看声望，声望再差也照常来。</p></div><h3>最近的变化</h3>${G.repLog.map(l=>`<div class="logrow ${l.d>0?'g':'r'}">${l.d>0?'+':''}${l.d}　${esc(l.why)}</div>`).join('')||'<div class="empty">还没有。</div>'}`);}
@@ -3582,14 +3850,29 @@ function infoSheet(k){
 /* ==== 11meta.js ==== */
 /* 图鉴、称号、名人堂、日志、帮助、设置、新手引导 */
 function codexSheet(){
-  let h=`<div class="sub">跨存档保留。见过真货、知道等级的才算。</div><h3>传奇（${Object.keys(META.legends).length}/${LEGENDS.length}）</h3><div class="cgrid">`;
-  h+=LEGENDS.map(l=>META.legends[l.k]?`<div class="cc on"><div class="ibox legend">${ART[IT[l.base].a]?`<svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]}</svg>`:''}</div><b>${l.n}</b></div>`:`<div class="cc"><div class="ibox sil"><svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]||''}</svg></div><b>？？？</b><span>${l.rum}</span></div>`).join('');
-  h+=`</div>`;
+  if(META.newc){META.newc=0;saveMeta();if(G)render();}
+  const seenN=ITEMS.filter(t=>cxSeen(t.k)).length;
+  let h=`<div class="sub">跨存档保留。一件货经手过一次，就记下名字和样子；确认过等级的真货，点亮对应的等级，并记下它的标准价。点一件看详情。已记下 ${seenN}/${ITEMS.length} 种。</div><h3>传奇（${Object.keys(META.legends).length}/${LEGENDS.length}）</h3><div class="cgrid">`;
+  h+=LEGENDS.map(l=>META.legends[l.k]?`<button class="cc on" data-act="cx" data-a="${l.k}"><div class="ibox legend">${ART[IT[l.base].a]?`<svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]}</svg>`:''}</div><b>${l.n}</b></button>`:`<div class="cc"><div class="ibox sil"><svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]||''}</svg></div><b>？？？</b><span>${l.rum}</span></div>`).join('');
+  h+=`</div><h3>非卖品</h3><div class="cgrid">`+(META.deed?`<button class="cc on" data-act="cx" data-a="deed"><div class="ibox legend">${deedSvg()}</div><b>${DEED.n}</b></button>`:`<div class="cc"><div class="ibox sil">${deedSvg()}</div><b>？？？</b><span>听说还清开局的债，债主会送回一样东西。</span></div>`)+`</div>`;
   for(const c of [...CATS,BAN]){
     const list=ITEMS.filter(t=>t.c===c);
-    h+=`<h3>${c}</h3><div class="cgrid">`+list.map(t=>{const m=META.codex[t.k]||0;return `<div class="cc ${m?'on':''}"><div class="ibox ${m?'':'sil'}"><svg class="isv" viewBox="0 0 64 64">${ART[t.a]||fallbackArt(t)}</svg></div><b>${m?t.n:'？？？'}</b><span>${[0,1,2,3,4].map(g=>`<i class="${m&1<<g?'on':''}">${GN[g]}</i>`).join('')}</span></div>`;}).join('')+`</div>`;
+    h+=`<h3>${c}（${list.filter(t=>cxSeen(t.k)).length}/${list.length}）</h3><div class="cgrid">`+list.map(t=>{const m=META.codex[t.k]||0,s=cxSeen(t.k);const svg=`<svg class="isv" viewBox="0 0 64 64">${ART[t.a]||fallbackArt(t)}</svg>`;
+      return s?`<button class="cc on" data-act="cx" data-a="${t.k}"><div class="ibox">${svg}</div><b>${t.n}</b><span>${[0,1,2,3,4].map(g=>`<i class="${m&1<<g?'on':''}">${GN[g]}</i>`).join('')}</span></button>`
+        :`<div class="cc"><div class="ibox sil">${svg}</div><b>？？？</b></div>`;}).join('')+`</div>`;
   }
   openSheet('codex','图鉴',h);
+}
+function codexDetail(k){
+  const back=btn('codex','回到图鉴','grow');
+  if(k==='deed'){if(!META.deed)return;return openSheet('cx',DEED.n,`<div class="cxtop"><div class="ibox legend">${deedSvg()}</div><div><b>${DEED.n}</b><span><span class="gb g5 ok">SSR</span> 非卖品</span></div></div><p class="pp">${DEED.d}</p><div class="sub">每个存档还清开局的债务时得到一次。不能卖、不能当、不能交物资，也不算进资产和评分。挂到墙上，每天多来一位客人。</div>${back}`);}
+  const l=LG[k];
+  if(l){if(!META.legends[k])return;const t=IT[l.base];return openSheet('cx',l.n,`<div class="cxtop"><div class="ibox legend"><svg class="isv" viewBox="0 0 64 64">${ART[t.a]||fallbackArt(t)}</svg></div><div><b>${l.n}</b><span><span class="gb g5 ok">SSR</span> ${t.c}</span><span>${fmt(l.p)}</span></div></div><p class="pp">${l.d}</p><div class="sub">${l.rum}</div>${back}`);}
+  const t=IT[k];if(!t||!cxSeen(k))return;
+  const m=META.codex[k]||0,n=META.seen[k]||0,gs_=[0,1,2,3,4].filter(g=>m&1<<g).map(g=>GN[g]);
+  openSheet('cx',t.n,`<div class="cxtop"><div class="ibox"><svg class="isv" viewBox="0 0 64 64">${ART[t.a]||fallbackArt(t)}</svg></div><div><b>${t.n}</b><span>${t.ban?BAN+' · '+t.sub:t.c+' · '+TIERN[CTIER[t.c]]}</span><span>占 ${t.z} 格库存</span></div></div><p class="pp">${t.d||''}</p>
+  <div class="kv"><span>经手</span><span>${n?n+' 次':'以前的记录'}</span><span>确认过的等级</span><span>${gs_.length?gs_.join('、'):'还没有'}</span><span>标准价（B 级）</span><span>${m?fmt(t.v[0])+'–'+fmt(t.v[1]):'确认过一次等级后记下'}</span></div>
+  <div class="sub">${m?'同一种货，每一件的标准价都在这个范围里。D 级是标准价的四成，C 级七成，A 级两倍，S 级五倍以上；行情会让价钱再上下浮动。':'用鉴定仪（二级以上）或鉴定所确认过一次真货的等级，这里就会记下它的标准价。'}</div>${back}`);
 }
 function titlesSheet(){
   openSheet('titles','称号',`<div class="sub">按做过的事给，跨存档保留。有的称号能解锁新出身。</div>`+Object.entries(TITLES).map(([k,t])=>{const o=Object.values(ORIGINS).find(x=>x.unlock===k);return `<div class="logrow ${META.titles[k]?'g':''}">${META.titles[k]?'✓':'·'}　${t}${o?`<em class="sub">　解锁出身：${o.n}</em>`:''}</div>`;}).join(''));
@@ -3611,24 +3894,26 @@ function importSheet(){
   openSheet('import','导入存档',`<div class="sub">把导出的那段文字粘贴进来，选一个存档位。会覆盖那个存档位。</div><textarea class="ta" id="imTa" placeholder="HG1:……"></textarea><div class="row">${[1,2,3].map(n=>btn('doImport','存到 '+n,'grow',n)).join('')}</div>`);
 }
 const HELP=[
- ['基本玩法','<p>谈不拢、客气地送客都不掉声望；出价离谱把人气走才掉。</p><p>白天开门，客人一个个进来：有人卖货给你，有人来买货，有人来当东西借钱。拖滑块定价，点「出价」或「要价」。对方的耐心看表情，表情越难看越快要走。</p><p>晚上打烊后选一个地方去：集市（商行和黑市）或者拾荒。然后回家睡觉，深夜可能有搜查和小偷。</p>'],
+ ['新手引导','<p>开局勾了「新手引导」，还债的这段日子就是教程：第一天一步一步教收货和卖货，之后每天早上多开放一样东西（等级、行情、假货、对话、当品、拾荒、升级、赃物、违禁品、街坊），第十一天起全部开放。还清债务，或者在提示里关掉引导，没讲到的内容会立刻全部开放。</p>'],
+ ['基本玩法','<p>谈不拢、客气地送客都不掉声望；出价离谱把人气走才掉。</p><p>白天开门，客人一个个进来：有人卖货给你，有人来买货，有人来当东西借钱。拖滑块定价，或者点「−」「+」微调，也可以点价格数字直接输入；然后点「出价」或「要价」。对方的耐心看表情，表情越难看越快要走。</p><p>晚上打烊后选一个地方去：集市（商行和黑市）或者拾荒。然后回家睡觉，深夜可能有搜查和小偷。</p>'],
  ['等级和估价','<p>货分 D、C、B、A、S 五级，B 是标准价；A 两倍，S 五倍以上，极少数到一百倍。传奇货是 SSR，至少一亿。</p><p>等级一眼看不准，只能看到一个区间（比如 C–A），区间一定包含真实等级。放大镜升级能把区间收窄。鉴定仪二级以上能鉴定出准确等级。</p>'],
  ['真假和鉴定','<p>鉴定一次，会告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。这个数字是算数的：显示 75% 的货，四件里有三件是真的。贵货更难认。</p><p>没把握的可以送鉴定所（白天在库存里送），等两三天出鉴定书，任何买家都认。传奇货自己鉴定不了，只能送鉴定所。送赃物去会被扣下。</p>'],
- ['看人','<p>柜台上只看得到衣着、说的话和表情。性格、懂不懂行、急不急、是不是便衣，都要从说话里判断。客人走后会告诉你他是什么样的人。</p><p>不懂行的卖家可能贱卖好货，也可能把破烂当宝；很懂行的人要价准、骗不了。对话框下面的线索可以点，拿它说事；但有的线索是装的，点错了对方会生气。</p>'],
- ['话术','<p>收货时：挑毛病、哭穷、最后一口价、套近乎、晾一晾、抛硬币。卖货时：夸货、亮鉴定书、承诺包退、套近乎、晾一晾、抛硬币。</p><p>话术不一定管用，对什么人管用要你自己判断；失败了对方会不耐烦。每种对每个客人只能用一次。</p>'],
+ ['看人','<p>柜台上只看得到衣着、说的话和表情。性格、懂不懂行、急不急、是不是便衣，都要从说话里判断。客人走后会告诉你他是什么样的人。</p><p>不懂行的卖家可能贱卖好货，也可能把破烂当宝；很懂行的人要价准、骗不了。</p>'],
+ ['对话','<p>客人有时会多说一句，或者露出一点破绽（比如一直看时间、不停回头看门口）。这时下面会出现两三句你能回的话，选一句回。回对了对方会让价，回错了对方会不耐烦，甚至扭头就走。拿不准就点「不回」，接着谈价。差不多一半的客人不多说话，只谈价。</p><p>每句话前面的小字是它的意思。收货时会遇到：挑毛病（说货不好）、哭穷、晾一晾（不说话等对方让）、套近乎、抛硬币、最后一口价。卖货时会遇到：夸货（最高只能说到 A 级，说过头了客人事后会回来闹）、说实话、包退、亮鉴定书、套近乎、晾一晾。</p><p>哪句管用，取决于对方是什么样的人：比如急着用钱的人经不起晾，倔的人不吃挑毛病那一套，话多的人喜欢套近乎。有的破绽是装出来的，点破了对方会生气。回完以后，对话框里会写这句有没有管用。</p>'],
  ['声望、立场、风声','<p>声望是客人信不信你，决定来什么样的人。立场是守法还是犯法，决定违禁品多不多、黑市开不开。风声是海关盯你多紧，决定搜查和便衣多不多。点顶栏的数字可以看详细说明。</p>'],
  ['违禁品和赃物','<p>违禁品有三类：武器、陀巴寇、人体器官。利润高，但在柜台卖一次风声就涨一大截。带违禁品上门的卖家、专找违禁品的买家都是额外多来的，每天最多三位，不占正常客人的名额，不想碰就客气地送走。陀巴寇分一包、一条、一箱，可以拆开零卖，有人会上瘾。</p><p>赃物刚偷来的最烫手，收价极低，拿着和卖出去都危险；放几天就凉了。失主可能找上门；每天早上有失窃通告，上交能领赏。工作台二级能洗白赃物。</p><p>保险箱里的东西搜查和小偷都找不到，卖的时候可以直接从保险箱里拿给客人看。黑市收得便宜，只是个安全的出路；想赚得多要在柜台卖，那就得担风险。</p>'],
  ['人物','<p>六位朋友各管一块玩法，感情越好给的好处越大。二十位街坊各有各的身份，有的一开始看不出真面目。处得好的随机客人可能变成熟客。</p>'],
  ['升级和扩建','<p>前一两级只要钱，再往上还要交物资：某一类、某个等级以上的货。物资可以分几次交。还清债务后可以扩建门面，五星是灰港第一当铺。</p>'],
  ['拾荒','<p>晚上可以去拾荒。每轮翻出三件，挑着装进包；包满了可以换。前几轮安全，再往后每多搜一轮都可能出事。头灯决定夜里看得清多少。</p>'],
  ['日历和大事','<p>一周 7 天、一季 4 周、一年四季。有的大事每年固定日子来，有的随机。大事会改变行情和规则，比如边境冲突时武器翻倍。</p>'],
+ ['图鉴和地契','<p>「更多」里的图鉴跨存档保留。一件货经手过一次就记下名字和样子；确认过等级的真货会点亮对应的等级，并记下标准价，以后再遇到这种货，心里就有数了。</p><p>还清开局的债务时，债主会把抵押的地契送回来。地契是非卖品，不占库存，不算进资产；在「库存」页挂到墙上，每天多来一位客人。</p>'],
  ['借贷和结束','<p>还清债务后可以借钱给熟人、向银行借钱。每周日交租金，现金是负数、一周补不上就破产。手头没钱没货的时候，可以去拾荒捡点东西卖，或者找放贷人。卖出的假货被发现要全额退款。任何时候可以在「更多」里退休，结算评分。</p>'],
 ];
 function helpSheet(){openSheet('help','帮助',HELP.map(([t,h])=>`<h3>${t}</h3><div class="help">${h}</div>`).join(''));}
 
 /* 第一次碰到某件事时讲一句 */
 const TEACH={
- sell:['有人来卖货','对方报了个价。拖滑块出个价，点「出价」。上面的线索可以点，下面是话术。不想要就「送客」。'],
+ sell:['有人来卖货','对方报了个价。拖滑块出个价（也可以点数字直接输入），点「出价」。对方有时会多说一句，下面会出现你能回的话。不想要就「送客」。'],
  buy:['有人来买货','点「拿货给对方看」，选一件，再拖滑块要价。'],
  pawn:['有人来当东西','对方押一件货借钱，到期来赎、多付三成。不来赎，货归你。特别喜欢可以点「买断」。'],
  scan:['鉴定','鉴定一次会告诉你真假的把握，鉴定仪升级后还能看出准确等级。每天次数有限。'],
@@ -3637,8 +3922,231 @@ const TEACH={
  ban:['违禁品','违禁品利润高，但在柜台卖一次风声就涨。没进保险箱留过夜，可能被搜出来。'],
 };
 function teach(k){
-  if(!G||!G.tut||!TEACH[k]||G.seen[k])return;G.seen[k]=1;const [t,h]=TEACH[k];
-  setTimeout(()=>openSheet('teach',t,`<div class="help"><p>${h}</p></div>${btn('closeSheet','知道了','pri grow')}<label class="tg"><input type="checkbox" data-act="tutOff"> 不再提示</label>`),120);
+  if(!G||!G.tut||!TEACH[k]||G.seen[k])return;
+  /* 引导期里，收货、卖货、打烊、鉴定由每天的引导来讲 */
+  if(guideOn()&&['sell','buy','night','scan'].includes(k))return;
+  G.seen[k]=1;const [t,h]=TEACH[k];
+  setTimeout(()=>{openSheet('teach',t,`<div class="help"><p>${h}</p></div>${btn('closeSheet','知道了','pri grow')}<label class="tg"><input type="checkbox" data-act="tutOff"> ${guideOn()?'关掉新手引导（没讲到的内容会立刻全部开放）':'不再提示'}</label>`);coachSync();},120);
+}
+
+/* ==== 11guide.js ==== */
+/* 新手引导：还债期当教程。每天多开放一样东西；第一天一步一步指着点。
+   只在开局勾了「新手引导」、债还没还清时生效；还清或关掉引导，全部立刻开放。 */
+const GDAY={grade:2,market:2,rep:2,win:3,shop:3,mkt:3,fake:4,scan:4,lab:4,dlg:5,pawn:6,scav:6,theft:7,stolen:8,heat:8,align:8,raid:8,safe:8,ban:9,people:10,event:11};
+const guideOn=()=>!!(G&&G.tut&&!G.freed);
+const GD=k=>!guideOn()||G.day>=GDAY[k];
+
+/* 每天早上的一张卡：今天多了什么 */
+const GUIDE=[null,
+ {t:'第一天：收货和卖货',d:'当铺的生意只有一句话：低价收，高价卖。今天只来几位客人，会一步一步教你。'},
+ {t:'今天多了：等级和估价',d:'从今天起，货的好坏要靠眼力。每件货标着一个等级区间（比如 C–A）和一个估价区间，真实的等级一定在区间里。按区间低的那头出价最稳。<br>晚上可以去集市了：商行按六成价收你卖不掉的货，也卖带鉴定书的真货。'},
+ {t:'今天多了：行情和还债',d:'每类货的价钱天天在变，早报会说哪类涨了、哪类跌了。涨的时候卖，跌的时候收。<br>底部多了「店铺」页：债在那里还，升级也在那里。手头宽裕就先还一点。'},
+ {t:'今天多了：假货和鉴定',d:'从今天起会有假货，假货几乎不值钱。货卡上多了「鉴定」按钮，每天能用几次。它告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。把握低的货，要么把价压得很低，要么不收。'},
+ {t:'今天多了：对话',d:'从今天起，客人有时会多说一句，下面会出现两三句你能回的话。回对了对方会让价，回错了对方会不耐烦。哪句管用，要看对方是什么样的人。拿不准就点「不回」，接着谈价。<br>客人走了以后，会告诉你他是什么样的人。'},
+ {t:'今天多了：当东西的客人和拾荒',d:'有的客人不卖货，只是把货押给你借钱。到期来赎，你多赚三成；不来赎，货归你。<br>晚上除了集市，还可以去拾荒：东西白捡，但搜得越久越容易出事。没有头灯的话，夜里看不清捡到的是什么。'},
+ {t:'今天是周日：租金和升级',d:'每周日要交这周的租金。<br>「店铺」页里可以升级：放大镜让等级区间变窄，鉴定仪让鉴定更准，仓库能放更多货。钱不够就先不升，还债要紧。'},
+ {t:'今天多了：赃物和风声',d:'从今天起，会有人拿偷来的东西来卖。赃物很便宜，但留在店里有风险：海关可能来搜查，查到就没收加罚款。锁进保险箱的东西查不到。<br>顶栏多了「风声」和「立场」：做这类生意，风声会涨，越高越容易被查；立场会偏黑。<br>每天早上有失窃通告，认出来可以上交领赏。不想碰，就客气地送客。'},
+ {t:'今天多了：违禁品和黑市',d:'从今天起，偶尔有人带违禁品来，也有人专门来买。利润很高，风险也最大：买家可能是便衣，卖一次风声就大涨。<br>不想碰就客气地送走，没有任何损失。碰了，立场会变黑，黑市会对你开放。'},
+ {t:'今天多了：街坊和朋友',d:'星港有二十位街坊和六位朋友，从今天起会陆续上门。公道地对待他们，关系会变好，会带来各种好处。底部多了「人物」页，记着你见过的人。'},
+ {t:'全都放开了',d:'该教的都教完了，各种大事也会开始发生。剩下的日子只有一件事：到期那天打烊前还清债务。还清以后，这家店就完全是你的。'},
+];
+const GOALS=[null,
+ {t:'收一件货，再卖出一件货',ok:s=>s.buy>=1&&s.sell>=1,n:s=>Math.min(1,s.buy||0)+Math.min(1,s.sell||0)+'/2',pay:30},
+ {t:'卖出 2 件货',ok:s=>s.sell>=2,n:s=>Math.min(2,s.sell||0)+'/2',pay:40},
+ {t:'在「店铺」页还一次债',ok:s=>s.repay>=1,n:()=>'',pay:40},
+ {t:'鉴定一件货',ok:s=>s.scan>=1,n:()=>'',pay:40},
+ {t:'回一次客人的话',ok:s=>s.reply>=1,n:()=>'',pay:40},
+ {t:'收一次当，或者去拾荒一次',ok:s=>s.pawn>=1||s.scav>=1,n:()=>'',pay:50},
+ {t:'升级一项（钱不够就先不升）',ok:s=>s.upg>=1,n:()=>'',pay:50},
+];
+const goalNow=()=>guideOn()&&GOALS[G.day]||null;
+function gs(k){if(!G.gs)G.gs={};G.gs[k]=(G.gs[k]||0)+1;goalCheck();}
+function goalCheck(){
+  const g=goalNow();if(!g||G.goalDone===G.day)return;
+  if(g.ok(G.gs||{})){
+    G.goalDone=G.day;G.cash+=g.pay;log(`完成今天的目标，街坊送来红包 +${fmt(g.pay)}`,'g');
+    setTimeout(()=>{toast(`完成今天的目标！街坊送来红包 ${fmt(g.pay)}`,'good');sfx.big();if(G)renderHud();},900);
+  }
+}
+function guideCard(){
+  const g=guideOn()&&GUIDE[G.day];if(!g)return '';
+  const goal=GOALS[G.day];
+  return `<div class="gcard"><b>${g.t}</b><p>${g.d}</p>${goal?`<p class="gg">今天的目标：${goal.t}<em>完成有红包 ${fmt(goal.pay)}</em></p>`:''}</div>`;
+}
+function goalSheet(){
+  const g=GUIDE[G.day],goal=goalNow();if(!g)return;
+  openSheet('goal',g.t,`<div class="help"><p>${g.d}</p>${goal?`<p><b>今天的目标：</b>${goal.t}。${G.goalDone===G.day?'已经完成了。':'完成有红包 '+fmt(goal.pay)+'。'}</p>`:''}</div><div class="sub">以前几天讲过的内容，都可以在「更多 → 帮助」里再看。</div>`);
+}
+
+/* 第一天的三位教学客人 */
+const tutLeft=()=>guideOn()&&G.day===1?Math.max(0,3-(G.g1||0)):0;
+const moreCust=()=>G.left>0||G.queue.length>0||tutLeft()>0;
+function tutItem(k,base){
+  const it=makeItem({t:IT[k],g:2});
+  it.base=base;it.gKnown=1;it.auth=4;it.authLv=9;it.fake=false;it.stolen=false;it.pt=1;
+  return it;
+}
+function tutCust(i){
+  let c;
+  if(i===0){
+    c=baseCust({kind:'rand',pers:'naive',know:1,rich:1,type:'sell',name:'过路的旅客',trans:1});
+    c.item=tutItem('scarf',20);c.ask=24;c.min=13;c.ask0=24;c.fix=1;
+    c.line='你好，听说你这儿收东西？这条「围巾」，₡24 卖给你。';
+  }else if(i===1){
+    c=baseCust({kind:'rand',pers:'chatty',know:1,rich:1,type:'buy',name:'怕冷的船员',trans:1});
+    c.want='any';c.fix=1;
+    c.line='外面真冷。掌柜的，你这儿有什么能穿戴的吗？';
+  }else{
+    c=baseCust({kind:'rand',pers:'naive',know:1,rich:1,type:'sell',name:'搬家的住户',trans:1});
+    c.item=tutItem('boot',60);c.ask=66;c.min=36;c.ask0=66;c.patMax=6;c.patience=6;
+    c.line='要搬家了，这双「靴子」带不走。₡66，你收不收？';
+  }
+  c.tutI=i;c.tells=[];c.quiet=1;c.dlgN=0;c.dlg=null;
+  return c;
+}
+
+/* ---------- 指着点的引导 ---------- */
+let COACH=null;
+function coachOff(){COACH=null;const t=$('#tour');t.classList.remove('show','act');}
+function coachGroup(){
+  if(!guideOn()||G.seen.noCoach||ovKind())return null;
+  const c=G.cust,d=G.day,S=G.seen,night=G.phase!=='day',it=c&&c.item;
+  const tip=(key,sel,t,dd)=>!S['c_'+key]&&$(sel)?{key,steps:[{sel,t,d:dd}]}:null;
+  if(sheetKind){
+    if(d===1&&sheetKind==='pick'&&c&&c.tutI===1&&!c.item)return {key:'d1f',steps:[{sel:'#sheet [data-act=show]',t:'选一件',d:'点「给他看」。',act:'show'}]};
+    return null;
+  }
+  if(night){
+    if(G.phase!=='night'||UI.tab!=='counter'||!G.night||G.night.go)return null;
+    return (d>=6&&tip('scav','[data-act=scav]','拾荒','垃圾场没有风险，适合第一次去。每轮翻出三件，挑着装进包；前几轮安全，再往后每多搜一轮都可能出事。'))
+      ||(d>=2&&tip('night','[data-act=goMarket]','晚上只能去一个地方','集市里有商行：货卖不掉、仓库放不下，可以按六成价卖给商行；也能买带鉴定书的真货，第二天加价卖出去。不想去就直接回家睡觉。'))
+      ||null;
+  }
+  if(UI.tab!=='counter')return null;
+  if(d===1){
+    const g=G.g1||0;
+    if(!c){
+      if(g===0)return {key:'d1a',steps:[
+        {sel:'#hud',t:'这是你的当铺',d:`你欠着一笔债：<b>${fmt(G.debt)}</b>，要在 ${DEBT_DAYS} 天内还清（看顶上的「债务」）。办法只有一个：低价收货，高价卖出。`},
+        {sel:'[data-act=next]',t:'开门迎客',d:'点「请下一位客人」。',act:'next'}]};
+      return null;
+    }
+    if(c.tutI===0){
+      if(c.done)return {key:'d1d',steps:[
+        {sel:'#bubble',t:'成交',d:`「围巾」进了库存，花了 ${fmt(it.cost||0)}。接下来要把它卖出去。`},
+        {sel:'[data-act=next]',t:'下一位',d:'点「下一位」。',act:'next'}]};
+      if(!c.tries)return {key:'d1b',steps:[
+        {sel:'#bubble',t:'有人来卖货',d:`这位客人想把围巾卖给你，开价 <b>${fmt(c.ask)}</b>。`},
+        {sel:'#icard',t:'货的卡片',d:`这条围巾转手大概能卖 <b>${fmt(faceVal(it))}</b>。所以收价要比 ${fmt(faceVal(it))} 低；压得越低，赚得越多。`},
+        {sel:'.prow',t:'出价',d:'拖滑块定价，或者点两边的「−」「+」微调，也可以点中间的数字直接输入。已经帮你拨到 <b>₡12</b> 了。',pre:()=>setPrice(12)},
+        {sel:'[data-act=offer]',t:'报给她',d:'点「出价」。',act:'offer'}]};
+      if(c.tries===1)return {key:'d1c',steps:[
+        {sel:'#bubble',t:'她还价了',d:`她不同意，让了一步：<b>${fmt(c.ask)}</b>。砍价就是这样一来一回。`},
+        {sel:'#moodTag',t:'看表情',d:'这里是客人的表情。出价太低、磨得太久，表情会变差；到「要走了」还谈不拢，客人就走了。现在还平静，可以再谈。'},
+        {sel:'[data-act=offer]',t:'再出一次',d:'这次出 <b>₡14</b>。已经帮你拨好了，点「出价」。',act:'offer',pre:()=>setPrice(14)}]};
+      return {key:'d1c'+c.tries,steps:[{sel:'[data-act=offer]',t:'再试一次',d:`出到 ${fmt(c.min)} 以上她就会答应。已经帮你拨好了。`,act:'offer',pre:()=>setPrice(c.min+1)}]};
+    }
+    if(c.tutI===1){
+      if(c.done)return c.done==='deal'?{key:'d1i',steps:[
+        {sel:'.stat.money',t:'赚到了',d:'一收一卖，差价就是你赚的。现金在这里。'},
+        {sel:'[data-act=next]',t:'下一位',d:'点「下一位」。',act:'next'}]}:null;
+      if(!it){
+        if(!sellable(c).length)return null;
+        return {key:'d1e',steps:[
+          {sel:'#bubble',t:'有人来买货',d:'这位是来买东西的。把刚收的围巾拿给他看。'},
+          {sel:'[data-act=showPick]',t:'拿货',d:'点「拿货给对方看」。',act:'showPick'}]};
+      }
+      if(!c.tries)return {key:'d1g',steps:[
+        {sel:'#bubble',t:'他出价了',d:`他愿意出 <b>${fmt(c.offer)}</b>。你是 ${fmt(it.cost||0)} 收的，卖得比这个高就是赚。`},
+        {sel:'.prow',t:'要价',d:`卖货的时候，滑块是你的要价。已经帮你拨到 <b>${fmt(c.max)}</b>。`,pre:()=>setPrice(c.max)},
+        {sel:'[data-act=ask]',t:'报给他',d:'点「要价」。',act:'ask'}]};
+      return {key:'d1h'+c.tries,steps:[
+        {sel:'#bubble',t:'他还价了',d:`他加到 <b>${fmt(c.offer)}</b>。你稍微让一点，他就会答应。`},
+        {sel:'[data-act=ask]',t:'再要一次',d:`已经帮你拨到 <b>${fmt(Math.max(c.offer+1,c.max-2))}</b>，点「要价」。`,act:'ask',pre:()=>setPrice(Math.max(c.offer+1,c.max-2))}]};
+    }
+    if(c.tutI===2){
+      if(!c.done&&!c.tries)return tip('d1j','#panel','这位你自己来','出价别比对方的开价低太多，砍得太狠，表情掉得快。觉得不划算，可以点「送客」：客气地送走客人，没有任何损失。');
+      if(c.done)return tip('d1k','#nav','今天的引导到这里','今天还有两位客人，自己招待。货要卖出去才算赚到钱；收来的货在底下的「库存」页。客人走完了，点「打烊」。以后每天早上，会告诉你今天多了什么新东西。');
+    }
+    return null;
+  }
+  if(c&&!c.done){
+    if(d>=5&&c.dlg){const r=tip('dlg','.rep','回一句话','对方多说了一句。下面是你能回的话，选一句试试：回对了对方会让价，回错了对方会不耐烦。拿不准就点最下面的「不回」，接着谈价。');if(r)return r;}
+    if(d>=4&&it&&sellSide(c)){const r=tip('scan','#icard [data-act=scan]','鉴定','拿不准真假就点「鉴定」，每天次数有限。结果是一个把握，比如「75% 真」，意思是这样的货四件里有三件是真的。');if(r)return r;}
+    if(d>=2&&it&&sellSide(c)&&!it.gKnown){const r=tip('grade','#icard','等级和估价是个区间',`这件货标着「${gTxt(gRange(it))}」：真实等级就在这个区间里，可能是最低的，也可能是最高的。后面的 ${estText(it)} 是对应的估价。按低的那头出价最稳；想赌一把，就出高一点。`);if(r)return r;}
+    return null;
+  }
+  if(!c){
+    return (d>=10&&tip('people','#tPeople','「人物」页开了','见过的街坊和朋友都记在这里，能看到关系和他们带来的好处。'))
+      ||(d>=8&&tip('heat','#bHeat','风声','做赃物和违禁品的生意，风声会涨。风声越高，海关越常来搜查。点它可以看详细说明。'))
+      ||(d>=3&&tip('shop','#tShop','「店铺」页开了','还债和升级都在这里。手头宽裕就先还一点；到期那天要全部还清。'))
+      ||null;
+  }
+  return null;
+}
+function coachSync(){
+  if(!G||G.over){if(COACH)coachOff();return;}
+  const g=coachGroup();
+  if(!g){if(COACH)coachOff();return;}
+  if(!COACH||COACH.key!==g.key)COACH={key:g.key,i:0,steps:g.steps,pre:{}};
+  else COACH.steps=g.steps;
+  coachShow();
+}
+function coachShow(){
+  if(!COACH)return;
+  const st=COACH.steps[COACH.i],tour=$('#tour');
+  if(!st){G.seen['c_'+COACH.key]=1;save();coachOff();return coachSync();}
+  if(st.pre&&!COACH.pre[COACH.i]){COACH.pre[COACH.i]=1;st.pre();}
+  const el=$(st.sel);
+  if(!el){tour.classList.remove('show','act');return;}
+  const a=$('#app').getBoundingClientRect(),r=el.getBoundingClientRect(),hole=$('#tourHole');
+  hole.style.cssText=`left:${r.left-a.left-4}px;top:${r.top-a.top-4}px;width:${r.width+8}px;height:${r.height+8}px`;
+  const last=COACH.i===COACH.steps.length-1;
+  const card=$('#tourCard');
+  card.innerHTML=`<b>${st.t}</b><p>${st.d}</p>${st.act?'<div class="row"><span>点亮着的地方继续</span><button class="skip" id="tourSkip">跳过引导</button></div>':`<div class="row"><button class="skip" id="tourSkip">跳过引导</button><button class="btn sm pri" id="tourNext">${last?'知道了':'下一步'}</button></div>`}`;
+  tour.classList.add('show');tour.classList.toggle('act',!!st.act);
+  const ch=card.offsetHeight;
+  card.style.top=(r.bottom-a.top+ch+20<a.height)?(r.bottom-a.top+12)+'px':Math.max(8,r.top-a.top-ch-12)+'px';
+  const nx=$('#tourNext');if(nx)nx.onclick=()=>{sfx.click();COACH.i++;coachShow();};
+  $('#tourSkip').onclick=()=>{G.seen.noCoach=1;save();coachOff();toast('引导关掉了。每天早上还是会告诉你多了什么。','warn');};
+}
+/* 引导进行中：只让点亮着的那个按钮 */
+function coachBlocks(el){
+  if(!COACH||!$('#tour').classList.contains('show'))return false;
+  const st=COACH.steps[COACH.i];
+  return !st||!st.act||el.dataset.act!==st.act;
+}
+
+/* ---------- 还清债务的纪念：地契（非卖品） ---------- */
+const DEED={n:'灰港当铺的地契',d:'开局那笔债，押的就是这家店。债还清了，地契回到你手里。不卖，也没人买得起。'};
+const DEED_ART='<rect x="13" y="7" width="38" height="50" rx="3" fill="#f1e3bd" stroke="#8a6a2f" stroke-width="2"/><path d="M20 17h24M20 24h24M20 31h24M20 38h13" stroke="#8a6a2f" stroke-width="2" stroke-linecap="round"/><circle cx="40" cy="46" r="7" fill="#c8413a"/><path d="M36.5 46h7M40 42.5v7" stroke="#f6d9c9" stroke-width="1.6" stroke-linecap="round"/>';
+const deedSvg=()=>`<svg class="isv" viewBox="0 0 64 64">${DEED_ART}</svg>`;
+function giveDeed(){
+  if(G.deed||G.diff==='free')return false;
+  G.deed={on:0,day:G.day};
+  if(!META.deed){META.deed=1;saveMeta();}
+  return true;
+}
+function deedToggle(){
+  if(!G.deed)return;G.deed.on=G.deed.on?0:1;
+  toast(G.deed.on?'地契挂上了墙。从明天起，每天多来一位客人。':'地契收起来了。',G.deed.on?'good':'');afterInv();
+}
+
+/* ---------- 直接输入价格 ---------- */
+let NUMV='';
+function numSheet(){
+  const c=G.cust;if(!c||c.done)return;
+  const [lo,hi]=priceBounds();NUMV='';
+  openSheet('num',sellSide(c)?'输入出价':'输入要价',`<div class="numd num" id="numD">—</div><div class="sub center">能输入的范围：${fmtFull(lo)} 到 ${fmtFull(hi)}</div><div class="numpad">${[1,2,3,4,5,6,7,8,9,'00',0,'删'].map(k=>`<button class="btn" data-act="numKey" data-a="${k}">${k}</button>`).join('')}</div><div class="row">${btn('closeSheet','取消','grow')}${btn('numOk','确定','pri grow')}</div>`);
+}
+function numKey(a){
+  if(a==='删')NUMV=NUMV.slice(0,-1);else if(NUMV.length<13)NUMV=(NUMV+a).replace(/^0+/,'');
+  const d=$('#numD');if(d)d.textContent=NUMV?fmtFull(+NUMV):'—';sfx.tick();
+}
+function numOk(){
+  const v=+NUMV;closeSheet();if(!v||!G.cust||G.cust.done)return;
+  const [lo,hi]=priceBounds();setPrice(v);
+  if(v<lo||v>hi)toast(`超出范围，已经调到 ${fmtFull(UI.price)}`,'warn');
 }
 
 /* ==== 12main.js ==== */
@@ -3698,7 +4206,7 @@ function stepOnce(dir){const s=stepOf(UI.price);setPrice(UI.price+dir*s);sfx.tic
 function doScan(id){
   const it=invItem(id)||(G.cust&&G.cust.item&&G.cust.item.id==id?G.cust.item:null);if(!it)return;
   const r=appraise(it);if(r.err)return toast(r.err,'warn');
-  sfx.scan();toast('鉴定结果：'+r.text,it.auth===4?'good':it.auth===0?'bad':'warn');log(`鉴定「${it.name}」：${r.text}`);
+  sfx.scan();toast('鉴定结果：'+r.text,it.auth===4?'good':it.auth===0?'bad':'warn');log(`鉴定「${it.name}」：${r.text}`);gs('scan');
   if(it.stolen){teach('stolen');if(it.from&&FIX[it.from]){G.people[it.from].hits++;checkReveal(it.from);}}
   if(it.fake&&it.auth===0&&it.from&&FIX[it.from]){G.people[it.from].hits++;checkReveal(it.from);}
   checkNotice(it);
@@ -3717,7 +4225,8 @@ const ACT={
   sound:()=>{SET.mute=!SET.mute;saveSet();if(G)render();if(ovKind()==='title')showTitle();if(sheetKind==='settings')settingsSheet();},
   next:()=>{if(G.cust&&!G.cust.done)return;nextCustomer();const c=G.cust;if(c){teach(c.type);if(c.item&&c.item.ban)teach('ban');}},
   close:()=>{if(G.cust&&!G.cust.done)return toast('先把这位客人招待完','warn');closeShop();teach('night');},
-  tell:a=>tellAct(+a),tac:a=>tactic(a),pstep:a=>stepOnce(+a),
+  reply:a=>reply(+a),noReply:()=>{const c=G.cust;if(c&&c.dlg){c.dlg=null;sfx.click();render();}},pstep:a=>stepOnce(+a),pnum:()=>numSheet(),numKey:a=>numKey(a),numOk:()=>numOk(),
+  deed:()=>deedToggle(),goal:()=>goalSheet(),cx:a=>codexDetail(a),
   offer:()=>offerToSeller(UI.price),ask:()=>priceToBuyer(UI.price),decline,
   showPick:()=>SHEETS.pick(),show:a=>showItem(+a),buyout,
   bustPay,bustBribe,owner:a=>ownerAct(a),lend:a=>lendTo(+a),talk,tip,
@@ -3748,7 +4257,7 @@ const ACT={
   sleep:()=>{closeSheet();goSleep();},
   raid:a=>{const r=raidResolve(a);if(r)afterRaid(r);},
   dflt:a=>defaultAct(a),
-  openShop:()=>{hideOverlay();UI.tab='counter';render();if(G.day===1&&G.tut&&!G.seen.tour)startTour();},
+  openShop:()=>{hideOverlay();UI.tab='counter';render();},
   freedOk:()=>{hideOverlay();render();},
   newGame:a=>showSetup(+a),
   load:a=>{if(!loadSlot(+a))return toast('读不出这个存档','bad');hideOverlay();UI.tab='counter';render();if(G.pend)showPend();},
@@ -3756,33 +4265,17 @@ const ACT={
   backTitle:showTitle,
   start:()=>{SETUP.tut=!!$('#tutChk')?.checked;SET.diff=SETUP.diff;SET.tut=SETUP.tut;saveSet();newGame(SETUP);hideOverlay();UI.tab='counter';showMorning([]);},
   closeSheet,
-  tutOff:()=>{if(G)G.tut=false;},
+  tutOff:()=>{if(G){G.tut=false;save();closeSheet();render();toast('新手引导关掉了，所有内容都开放了','warn');}},
 };
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
   const f=ACT[el.dataset.act];if(!f)return;
+  if(coachBlocks(el))return;
   if(el.tagName!=='INPUT')e.preventDefault();
   try{f(el.dataset.a);}catch(err){console.error(err);toast('出错了：'+err.message,'bad');}
+  if(G){coachSync();if(sheetKind)setTimeout(coachSync,340);}
 });
-
-/* 新手引导：只讲最基础的买和卖 */
-const TOUR=[
- ['#hud','顶栏','现金、债务、声望、立场、风声。点任何一个数字都能看说明。'],
- ['#scene','柜台','客人会一个个进来。看他的衣着、说的话和表情，猜他是什么样的人。'],
- ['#panel','出价','拖滑块定价，点「出价」或「要价」。上面一排是话术，不一定管用。'],
- ['#nav','底部菜单','库存、人物、店铺（升级和还债）、更多（图鉴、帮助、存档）。'],
-];
-function startTour(){G.seen.tour=1;tourI=0;tourShow();}
-let tourI=-1;
-function tourShow(){
-  const T=TOUR[tourI],tour=$('#tour');if(!T){tour.classList.remove('show');tourI=-1;return;}
-  const el=$(T[0]),a=$('#app').getBoundingClientRect(),r=el.getBoundingClientRect(),hole=$('#tourHole');
-  hole.style.cssText=`left:${r.left-a.left-4}px;top:${r.top-a.top-4}px;width:${r.width+8}px;height:${r.height+8}px`;
-  const card=$('#tourCard');card.innerHTML=`<b>${T[1]}</b><p>${T[2]}</p><div class="row"><span>${tourI+1}/${TOUR.length}</span><button class="btn sm pri" id="tourNext">${tourI===TOUR.length-1?'开始':'下一步'}</button></div>`;
-  card.style.top=(r.bottom-a.top+card.offsetHeight+20<a.height)?(r.bottom-a.top+12)+'px':Math.max(8,r.top-a.top-card.offsetHeight-12)+'px';
-  tour.classList.add('show');
-  $('#tourNext').onclick=()=>{tourI++;tourShow();};
-}
+window.addEventListener('resize',()=>{if(G&&COACH)coachShow();});
 
 /* 启动 */
 window.addEventListener('error',e=>{try{toast('出错了：'+e.message,'bad')}catch(x){}});
