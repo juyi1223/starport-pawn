@@ -703,6 +703,17 @@ button.cc:active .ibox{border-color:var(--cyan)}
 .rp.skip{background:transparent;border-style:dashed;color:var(--dim);justify-content:center;min-height:32px;font-size:12.5px}
 .rp.skip span{flex:none}
 
+/* ---------- 第二轮反馈：大约值、一键成交、人物图鉴 ---------- */
+.ic-r .rg{font-size:11px;color:var(--dim)}
+#bubble .fb.warn{background:#fff0cc;color:#7a5200}
+.qk{display:block;width:100%;margin-top:6px;min-height:30px;border-radius:10px;border:1px dashed #3a4a8a;background:transparent;color:#aeb9e6;font-size:12.5px}
+.qk b{color:var(--gold)}
+.qk:active{background:#141d42}
+.chips.c2{grid-template-columns:repeat(2,1fr);margin-bottom:8px}
+.pbox{width:46px;height:46px;overflow:hidden;border-radius:12px;background:#1b2148;border:1.5px solid #3a4a8a;display:flex;justify-content:center}
+.pbox .ch{height:56px;animation:none}
+.kv .gd{color:var(--green)}.kv .bd{color:#ff9bb0}
+
 </style>
 </head>
 <body>
@@ -1285,16 +1296,19 @@ const LG=Object.fromEntries(LEGENDS.map(l=>[l.k,l]));
 
 /* 性格（藏在后台，只通过说话判断） */
 const PERS={
- greedy:   {n:'贪财',pat:[3,4],min:[.5,.66],ask:[1.4,1.8],buy:[.95,1.15],chat:.45,coin:.4,stub:.2,soft:.3},
- naive:    {n:'天真',pat:[4,6],min:[.34,.52],ask:[.8,1.2],buy:[1.15,1.5],chat:.95,coin:.5,stub:0,soft:.9},
- desperate:{n:'窘迫',pat:[2,4],min:[.28,.44],ask:[.85,1.2],buy:[.95,1.15],chat:.6,coin:.4,stub:0,soft:.6},
- shrewd:   {n:'精明',pat:[3,4],min:[.54,.7],ask:[1.2,1.5],buy:[1.05,1.25],chat:.3,coin:.25,stub:.3,soft:.2},
- impatient:{n:'急躁',pat:[2,3],min:[.42,.6],ask:[1.1,1.4],buy:[1.1,1.4],chat:.1,coin:.5,stub:.3,soft:.3},
- chatty:   {n:'话多',pat:[4,6],min:[.45,.62],ask:[1.15,1.45],buy:[1.05,1.3],chat:1,coin:.5,stub:0,soft:.7},
- gambler:  {n:'好赌',pat:[3,4],min:[.4,.6],ask:[1.15,1.5],buy:[1,1.3],chat:.55,coin:1,stub:.1,soft:.4},
- stubborn: {n:'倔强',pat:[3,4],min:[.56,.72],ask:[.9,1.1],buy:[1,1.2],chat:.25,coin:.2,stub:.8,soft:.2},
+ greedy:   {n:'贪财',pat:[4,5],min:[.5,.66],ask:[1.4,1.8],buy:[.95,1.15],chat:.45,coin:.4,stub:.2,soft:.3},
+ naive:    {n:'天真',pat:[5,7],min:[.34,.52],ask:[.8,1.2],buy:[1.15,1.5],chat:.95,coin:.5,stub:0,soft:.9},
+ desperate:{n:'窘迫',pat:[3,5],min:[.28,.44],ask:[.85,1.2],buy:[.95,1.15],chat:.6,coin:.4,stub:0,soft:.6},
+ shrewd:   {n:'精明',pat:[4,5],min:[.54,.7],ask:[1.2,1.5],buy:[1.05,1.25],chat:.3,coin:.25,stub:.3,soft:.2},
+ impatient:{n:'急躁',pat:[3,4],min:[.42,.6],ask:[1.1,1.4],buy:[1.1,1.4],chat:.1,coin:.5,stub:.3,soft:.3},
+ chatty:   {n:'话多',pat:[5,7],min:[.45,.62],ask:[1.15,1.45],buy:[1.05,1.3],chat:1,coin:.5,stub:0,soft:.7},
+ gambler:  {n:'好赌',pat:[4,5],min:[.4,.6],ask:[1.15,1.5],buy:[1,1.3],chat:.55,coin:1,stub:.1,soft:.4},
+ stubborn: {n:'倔强',pat:[4,5],min:[.56,.72],ask:[.9,1.1],buy:[1,1.2],chat:.25,coin:.2,stub:.8,soft:.2},
 };
 const PKEYS=Object.keys(PERS);
+/* 一星小店：好说话的人多一些；店做大了，各种人一样多 */
+const PW1={naive:18,chatty:17,desperate:15,gambler:15,greedy:11,shrewd:9,impatient:8,stubborn:7};
+const pickPers=()=>G.star===1?wpick(PKEYS,k=>PW1[k]):pick(PKEYS);
 const KNOWN=['不懂行','略懂','很懂行'];
 const RICHN=['寒酸','普通','体面','阔绰'];
 const WB=[400,4000,60000,3e6]; // 各财富档的预算底数，乘星级倍数
@@ -1577,7 +1591,7 @@ const M=(c,g,n,alt)=>({c,g,n,alt});
 const UPG=[
  {id:'store',n:'仓库',i:'box',lv:[[60,'库存 +3 格'],[200,'库存 +3 格'],[800,'库存 +3 格',M('工具',2,2)],[4000,'库存 +3 格',M('工具',3,2)],[20000,'库存 +4 格',M('工具',3,3)]]},
  {id:'safe',n:'保险箱',i:'lock',lv:[[80,'保险箱 2 格'],[250,'保险箱 3 格'],[900,'保险箱 4 格',M('能源',2,2)],[5000,'保险箱 5 格',M('工具',3,2)],[25000,'保险箱 6 格',M('能源',3,2)]]},
- {id:'eye',n:'放大镜',i:'scan',lv:[[150,'目测等级区间从四级宽收到三级'],[1500,'目测等级区间收到两级',M('工具',3,1)]]},
+ {id:'eye',n:'放大镜',i:'scan',lv:[[150,'目测等级区间从三级宽收到两级'],[1500,'一眼看准等级，不用再猜',M('工具',3,1)]]},
  {id:'scan',n:'鉴定仪',i:'chip',lv:[[200,'每天鉴定 +1 次，结果更干脆'],[1200,'能查出准确等级'],[6000,'每天鉴定 +1 次，结果更干脆',M('电器',3,1)],[30000,'每天鉴定 +1 次，结果几乎都是确定的',M('电器',3,2)]]},
  {id:'bench',n:'工作台',i:'tool',lv:[[100,'能修复：等级往上提一级'],[800,'能洗白赃物',M('工具',2,2)],[5000,'能把假货做得更像',M('能源',3,1)],[25000,'修复、洗白、做旧的成功率更高',M('工具',3,2)]]},
  {id:'sign',n:'招牌',i:'sign',lv:[[150,'每天多来一位客人，声望 +3'],[1500,'每天多来一位客人，声望 +3'],[12000,'每天多来一位客人，声望 +4',M('艺术',3,1)]]},
@@ -1615,7 +1629,7 @@ const BAGGAGE={
  favor:{n:'欠木水一个人情',d:'还债期内，木水每周日来收 ₡150',cash:500,score:.1},
  broke:{n:'穷光蛋',d:'开局现金减半',cash:0,score:.15},
 };
-const DIFFS={easy:{n:'轻松',debt:1700,cash:900,rep:30,heat:.8,fine:.7},normal:{n:'标准',debt:2800,cash:700,rep:20,heat:1,fine:1},hard:{n:'硬核',debt:3600,cash:500,rep:15,heat:1.2,fine:1.3},free:{n:'自由',debt:0,cash:1000,rep:20,heat:1,fine:1}};
+const DIFFS={easy:{n:'轻松',debt:1300,cash:900,rep:30,heat:.8,fine:.7},normal:{n:'标准',debt:2000,cash:700,rep:20,heat:1,fine:1},hard:{n:'硬核',debt:2800,cash:500,rep:15,heat:1.2,fine:1.3},free:{n:'自由',debt:0,cash:1000,rep:20,heat:1,fine:1}};
 const DEBT_DAYS=14;
 
 /* 称号：按做过的事给 */
@@ -1631,7 +1645,7 @@ const TITLES={
 let G=null,uid=0;
 const SLOTK=n=>'huigang-slot'+n,METAK='huigang-meta';
 let META=jget(METAK,null)||{codex:{},legends:{},met:{},titles:{},hall:[],runs:0};
-META.seen=META.seen||{};
+META.seen=META.seen||{};META.role=META.role||{};META.feel=META.feel||{};
 const saveMeta=()=>ls.set(METAK,JSON.stringify(META));
 
 /* 日历 */
@@ -1667,7 +1681,7 @@ function newGame(o){
     ev:null,evNext:null,trend:{},mk:{},shop:null,
     scans:0,cust:null,queue:[],
     stat:{},tot:{},log:[],alLog:[],repLog:[],seen:{},legends:{},bribes:[],bail:-99,consign:[],smug:[],
-    noFind:0,mainNext:{},night:null,tut:!!o.tut,over:null,startCash:cash,sales:[],news:[],negDays:0,fixedToday:[],regToday:[],mainToday:[],left:0,dayN:0,
+    noFind:0,mainNext:{},night:null,tut:!!o.tut,over:null,startCash:cash,debt0:o.diff==='free'?0:debt,cash0:cash,sales:[],news:[],negDays:0,fixedToday:[],regToday:[],mainToday:[],left:0,dayN:0,
   };
   if(o.prof==='appraiser')G.upg.scan=1;
   if(o.prof==='fixer')G.upg.bench=1;
@@ -1719,6 +1733,9 @@ function importText(n,txt){
       for(const k of ['codex','legends','met','titles'])META[k]={...o.m[k],...META[k]};
       for(const k in o.m.seen||{})META.seen[k]=Math.max(META.seen[k]||0,o.m.seen[k]);
       if(o.m.deed)META.deed=1;
+      for(const k in o.m.role||{})META.role[k]=1;
+      for(const k in o.m.feel||{})META.feel[k]=Math.max(META.feel[k]||0,o.m.feel[k]);
+      for(const k in o.m.met||{})META.met[k]=Math.max(META.met[k]||0,o.m.met[k]);
       for(const k in o.m.codex||{})META.codex[k]=(META.codex[k]||0)|o.m.codex[k];
       META.hall=[...META.hall,...(o.m.hall||[])].sort((a,b)=>b.score-a.score).slice(0,10);
       saveMeta();
@@ -1820,7 +1837,8 @@ function makeLegendItem(lk,o={}){
 }
 
 /* 目测等级区间 */
-function eyeW(){return clamp(4-upLv('eye')+(G.prof==='talker'?1:0),2,5);}
+/* 目测区间的宽度：开局三级宽，放大镜一级收到两级，二级一眼看准 */
+function eyeW(){return clamp(3-upLv('eye')+(G.prof==='talker'?1:0),1,5);}
 function gRange(it,night){
   if(it.legend&&LG[it.legend].eye&&!night)return [5,5];
   const gt=it.legend?4:it.g;
@@ -1847,6 +1865,13 @@ function estText(it,night){
   return a===b&&!top?fmt(a):`${fmt(a)}–${fmt(b)}${top?'起':''}`;
 }
 const estMid=it=>{const [a,b]=estRange(it);return Math.sqrt(a*b);};
+/* 「大约值」：按区间里各等级常见的程度算出来的一个中间数，给出价当参考 */
+function aboutVal(it,night){
+  if(it.legend)return estRange(it,night)[0];
+  const [a,b]=gRange(it,night);let s=0,w=0;
+  for(let g=a;g<=b;g++){const m=g<4?GM0[g]:(it.gKnown?gmul(it):8);s+=GP[g]*m;w+=GP[g];}
+  return Math.max(1,Math.round(it.base*mkt(it)*s/w));
+}
 /* 玩家眼里的「保守估价」：用于出售时的参考 */
 const knownLow=it=>estRange(it)[0];
 
@@ -1983,6 +2008,7 @@ const relWord=v=>v<=-40?'仇人':v<=-10?'冷淡':v<25?'一般':v<60?'熟人':'�
 function addFeel(id,d,why){
   const p=G.people[id];if(!p||!d)return;
   const a=feelLv(p.feel);p.feel=clamp(p.feel+d,-50,100);const b=feelLv(p.feel);
+  if(b>a&&b>(META.feel[id]||0)){META.feel[id]=b;saveMeta();}
   if(b>a){const m=MAIN[id];setTimeout(()=>{if(!G)return;openSheet('scene',`${m.n} · ${FEEL[b][1]}`,`<div class="pbig">${charSvg(lookOf(id,m.look),'happy',m.rich)}<div><b>${m.n}</b><span>感情升到「${FEEL[b][1]}」</span></div></div><p class="pp">${SCENES[id][b-1]}</p><p class="perk on">${ic('heart')}<span>${m.perks[b-1]}</span></p>${btn('closeSheet','好','pri grow')}`);sfx.big();},500);log(`和${m.n}成了${FEEL[b][1]}`,'g');if(b===3){title('t_friend');if(MAINS.every(x=>feelLv(G.people[x.id].feel)>=3))title('t_friends');}}
   else if(b<a)setTimeout(()=>toast(`和${MAIN[id].n}的感情掉到「${FEEL[b][1]}」`,'bad'),400);
 }
@@ -1992,6 +2018,7 @@ const roleKnown=id=>!FIX[id]||!FIX[id].hide||!!G.people[id].known.role;
 function reveal(id,why){
   const p=G.people[id],f=FIX[id];if(!f||p.known.role)return;
   p.known.role=1;log(`发现${f.n}其实是${f.real}`,'y');
+  META.role[id]=1;saveMeta();
   setTimeout(()=>toast(`原来${f.n}是${f.real}！${why||''}`,'warn'),700);
 }
 function checkReveal(id){
@@ -2005,19 +2032,19 @@ function checkReveal(id){
 /* 每天来多少客人 */
 function custCount(){
   const c=cal(),fx=evFx();
-  let n=8+(G.star-1)+[0,1,2,3][upLv('sign')];
+  let n=6+(G.star-1)+[0,1,2,3][upLv('sign')];
   if(c.wd===0)n-=1;if(c.wd>=5)n+=2;
   n+=fx.cust||0;
   if(mainLv('tangxin')>=3)n+=2;
   if(G.deed&&G.deed.on)n+=1;
   /* 引导期头三天客人少一点；第一天另有三位教学客人 */
-  if(guideOn()){if(G.day===1)return 2;if(G.day===2)n=Math.min(n,6);if(G.day===3)n=Math.min(n,7);}
+  if(guideOn()){if(G.day===1)return 2;if(G.day===2)n=Math.min(n,5);}
   return Math.max(4,n);
 }
 
 /* 懂行程度 */
 function rollKnow(trans){
-  const fx=evFx();let p2=repT().know+(fx.know||0),p0=.35-(fx.know||0);
+  const fx=evFx(),s1=G.star===1;let p2=(repT().know+(fx.know||0))*(s1?.5:1),p0=.35+(s1?.07:0)-(fx.know||0);
   if(trans){p0+=.15;p2-=.08;}
   p2=clamp(p2,.03,.8);p0=clamp(p0,.05,.8);
   const r=Math.random();return r<p2?2:r<p2+p0?0:1;
@@ -2164,7 +2191,7 @@ function baseCust(o){
 function randomCust(o={}){
   const fx=evFx(),trans=chance(.3+(fx.trans||0));
   const early=guideOn()&&G.day<=3;
-  const pers=fx.gamble&&chance(.35)?'gambler':pick(early?['naive','chatty','desperate','greedy','shrewd']:PKEYS);
+  const pers=fx.gamble&&chance(.35)?'gambler':early?pick(['naive','chatty','desperate','greedy','shrewd']):pickPers();
   const know=rollKnow(trans),rich=rollRich(trans);
   const r=Math.random();
   let type=o.type||(r<.54?'sell':r<.92?'buy':'pawn');
@@ -2363,7 +2390,7 @@ function metPerson(c){
   if(!c.pid)return;const p=per(c.pid);if(!p)return;
   p.met=1;p.seen=(p.seen||0)+1;p.last=G.day;
   if(p.seen>=3&&p.known){p.known.pers=1;p.known.know=1;}
-  META.met[c.pid]=1;saveMeta();
+  META.met[c.pid]=(META.met[c.pid]||0)+1;saveMeta();
 }
 
 /* ==== 06haggle.js ==== */
@@ -2404,6 +2431,25 @@ function leave(insulted){
   c.result=`${c.name}走了。`;sfx.bad();log(`${c.name}谈崩了`);finish('left');
 }
 const nearLine=(c,p)=>say(L.near,{p});
+/* 被拒以后，告诉玩家离对方心里的价还差多远 */
+function gapSell(c,o){
+  const r=o/Math.max(1,c.min);
+  c.fb=r>=1?'对方动心了，再磨一磨就能成':r>=.8?'离对方肯卖的价只差一点了':r>=.5?'离对方肯卖的价还差不少':'这个价太离谱，对方很不高兴';
+  c.fbc=r>=1?'good':r>=.8?'warn':'bad';
+}
+function gapBuy(c,p){
+  const r=p/Math.max(1,c.max);
+  c.fb=r<=1?'对方动心了，再磨一磨就能成':r<=1.25?'比对方肯出的价只高一点了':r<=1.6?'比对方肯出的价高出不少':'这个价太离谱，对方很不高兴';
+  c.fbc=r<=1?'good':r<=1.25?'warn':'bad';
+}
+/* 离谱的价：第一次只扣一点耐心，再犯才重罚 */
+function rude(c,ins){const cost=ins&&c.warned?2:1;if(ins)c.warned=1;c.patience-=cost;return ins&&cost===2;}
+/* 默认出价：对方开价的一半，和「大约值」的七成，取低的 */
+function defOffer(c){
+  const it=c.item,a=it?aboutVal(it):c.ask;
+  const v=c.type==='pawn'?Math.min(c.ask,a*.5):Math.min(c.ask*.5,a*.7);
+  return Math.max(1,Math.min(G.cash,c.ask,niceRound(v)));
+}
 
 /* ---------- 收货：玩家出价给卖家 ---------- */
 function offerToSeller(o){
@@ -2419,24 +2465,27 @@ function offerToSeller(o){
     c.ask=Math.max(c.min,Math.round((c.ask+Math.max(o,c.min))/2));
     c.line=say(['太少了吧……{p} 行不行？','再加一点嘛，{p}？'],{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);return render();
   }
-  const hold=t=>{c.line=say(t,{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);dlgPush(c);render();};
+  const hold=t=>{c.line=say(t,{p:c.ask});c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);gapSell(c,o);dlgPush(c);render();};
   if(c.final){c.patience--;if(c.patience<=0)return leave(false);return hold(['我说了，{p}。','{p}，最后的价。']);}
-  if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(o>=c.min&&chance(.25))return dealBuy(o);return hold(L.push.stubborn);}
+  /* 倔强的人让得很慢，但不是一步不让 */
+  if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(o>=c.min&&chance(.35))return dealBuy(o);c.ask=Math.max(c.min,niceRound(c.ask-(c.ask-c.min)*.1));return hold(L.push.stubborn);}
   if((c.pers==='desperate'||c.urgent)&&o>=c.min)return dealBuy(o);
+  /* 急躁的人：还一次价，第二次就是最后一口价 */
   if(c.pers==='impatient'){
-    if(first&&o>=c.min)return dealBuy(o);
-    const ins=o<c.min*.5;c.patience-=ins?2:1;if(c.patience<=0)return leave(ins);
+    if(o>=c.min&&(first||chance(.5)))return dealBuy(o);
+    const bad=rude(c,o<c.min*.5);if(c.patience<=0)return leave(bad);
+    if(!c.imp){c.imp=1;c.ask=Math.max(c.min,niceRound(c.ask-(c.ask-c.min)*.4));return hold(L.push.impatient);}
     c.final=1;c.ask=Math.max(c.min,Math.round(c.min+(c.ask-c.min)*.4));return hold(['没空跟你磨！{p}，最后一口价。','{p}。行就行，不行我走了。']);
   }
   const span=Math.max(1,c.ask-c.min);
   if(o>=c.min&&(o-c.min)/span>rand(.15,.55))return dealBuy(o);
-  const ins=o<c.min*.5;c.patience-=ins?2:1;
-  if(c.patience<=0)return leave(ins);
+  const ins=o<c.min*.5,bad=rude(c,ins);
+  if(c.patience<=0)return leave(bad);
   if(o>=c.min){c.ask=Math.max(c.min,niceRound(c.ask-(c.ask-o)*rand(.3,.55)));if((c.ask-o)/c.ask<.04)return dealBuy(o);}
   else c.ask=Math.max(c.min,niceRound(c.ask-span*rand(.08,.22)));
   c.line=ins?pick(L.insult)+' '+say(L.push[c.pers],{p:c.ask}):o>=c.min*.85?nearLine(c,c.ask):say(L.push[c.pers],{p:c.ask});
   c.flash=ins?'insult':'counter';ins?sfx.bad():sfx.click();
-  UI.price=Math.min(UI.price,c.ask);dlgPush(c);render();
+  UI.price=Math.min(UI.price,c.ask);gapSell(c,o);dlgPush(c);render();
 }
 
 /* ---------- 卖货：玩家报价给买家 ---------- */
@@ -2446,9 +2495,10 @@ function showItem(id){
   priceBuyer(c,it);
   if(c.fix){c.max=Math.max(2,Math.round(faceVal(it)*1.5));c.offer=Math.max(1,Math.round(faceVal(it)*1.1));c.spotFake=0;}
   if(c.spotFake){c.line='这东西……是假的吧？我不要。';c.item=null;c.spotFake=0;c.patience--;toast('对方看出这件是假货','bad');closeSheet();if(c.patience<=0)return leave(false);render();return;}
-  const [,hi]=estRange(it);
-  c.sliderMax=Math.max(c.offer*2,Math.round(hi*2.2),c.offer+10);
-  UI.price=clamp(niceRound(Math.max(hi*1.05,c.offer*1.3)),c.offer,c.sliderMax);
+  /* 默认要价：比对方出价高两成半，至少比收价高一成半。滑块上限是对方出价的两倍半，再高就是离谱 */
+  const unit=(it.cost||0)/(it.qty||1);
+  c.sliderMax=Math.max(Math.round(c.offer*2.5),Math.round(unit*1.6),c.offer+10);
+  UI.price=clamp(niceRound(Math.max(c.offer*1.25,unit*1.15)),c.offer,c.sliderMax);
   c.line=say(L.look[c.pers],{item:it.name,p:c.offer});c.flash='';sfx.click();closeSheet();dlgItem(c);render();
 }
 function priceToBuyer(p){
@@ -2461,24 +2511,25 @@ function priceToBuyer(p){
     c.offer=Math.min(c.max,Math.round((c.offer+Math.min(p,c.max))/2));
     c.line=say(['贵了点……{p} 怎么样？','我最多再加一点，{p}。'],{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);return render();
   }
-  const hold=t=>{c.line=say(t,{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);dlgPush(c);render();};
+  const hold=t=>{c.line=say(t,{p:c.offer});c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);gapBuy(c,p);dlgPush(c);render();};
   if(c.final){c.patience--;if(c.patience<=0)return leave(false);return hold(['{p}，不能再多了。','我说了，{p}。']);}
-  if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(p<=c.max&&chance(.25))return dealSell(p);return hold(L.pushBuy.stubborn);}
+  if(c.pers==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);if(p<=c.max&&chance(.35))return dealSell(p);c.offer=Math.min(c.max,niceRound(c.offer+(c.max-c.offer)*.1));return hold(L.pushBuy.stubborn);}
   if((c.pers==='desperate'||c.urgent||c.addict)&&p<=c.max)return dealSell(p);
   if(c.pers==='impatient'){
-    if(first&&p<=c.max)return dealSell(p);
-    const ins=p>c.max*1.6;c.patience-=ins?2:1;if(c.patience<=0)return leave(ins);
+    if(p<=c.max&&(first||chance(.5)))return dealSell(p);
+    const bad=rude(c,p>c.max*1.6);if(c.patience<=0)return leave(bad);
+    if(!c.imp){c.imp=1;c.offer=Math.min(c.max,niceRound(c.offer+(c.max-c.offer)*.4));return hold(L.pushBuy.impatient);}
     c.final=1;c.offer=Math.min(c.max,niceRound(c.offer+(c.max-c.offer)*.6));return hold(['没空跟你磨！{p}，最后出价。','{p}。卖就卖，不卖我走了。']);
   }
   const span=Math.max(1,c.max-c.offer);
   if(p<=c.max&&(c.max-p)/span>rand(.15,.55))return dealSell(p);
-  const ins=p>c.max*1.6;c.patience-=ins?2:1;
-  if(c.patience<=0)return leave(ins);
+  const ins=p>c.max*1.6,bad=rude(c,ins);
+  if(c.patience<=0)return leave(bad);
   if(p<=c.max){c.offer=Math.min(c.max,niceRound(c.offer+(p-c.offer)*rand(.3,.55)));if((p-c.offer)/p<.04)return dealSell(p);}
   else c.offer=Math.min(c.max,niceRound(c.offer+span*rand(.08,.22)));
   c.line=ins?pick(L.insult)+' '+say(L.pushBuy[c.pers],{p:c.offer}):p<=c.max*1.15?nearLine(c,c.offer):say(L.pushBuy[c.pers],{p:c.offer});
   c.flash=ins?'insult':'counter';ins?sfx.bad():sfx.click();
-  UI.price=Math.max(UI.price,c.offer);dlgPush(c);render();
+  UI.price=Math.max(UI.price,c.offer);gapBuy(c,p);dlgPush(c);render();
 }
 
 /* ---------- 对话：客人多说一句，你选一句回 ---------- */
@@ -2495,7 +2546,7 @@ function dlgStart(c){
   c.dlgN=0;c.dlg=null;c.fb='';
   if(!GD('dlg')||!['sell','buy','pawn'].includes(c.type)){c.quiet=1;return;}
   if(c.tells&&c.tells.length){c.quiet=0;dlgTell(c);}
-  else c.quiet=chance(.55)?1:0;
+  else c.quiet=chance(.65)?1:0;
 }
 function dlgTell(c){
   const i=(c.tells||[]).findIndex(t=>!t.used&&!t.shown);if(i<0)return false;
@@ -2508,7 +2559,7 @@ function dlgPush(c){
   if(c.done||c.dlg||c.quiet||c.final||c.fix||!GD('dlg'))return;
   const sell=sellSide(c),last=sell&&c.patience<=1&&!c.used.last;
   if(c.dlgN>=(last?3:2))return;
-  if(c.dlgN>=1&&!last&&!chance(.5))return;
+  if(c.dlgN>=1&&!last&&!chance(.3))return;
   if(!last&&dlgTell(c))return;
   let pool=shuffle((sell?['flaw','poor','stall','chat']:['pitch','warranty','chat','stall']).filter(k=>!c.used[k]));
   if((c.pers==='gambler'||evFx().gamble)&&!c.used.coin)pool.unshift('coin');
@@ -2520,7 +2571,7 @@ function dlgPush(c){
 }
 /* 把货拿给买家看的时候 */
 function dlgItem(c){
-  if(c.done||c.quiet||c.fix||c.dlgN>=2||!c.item||!GD('dlg'))return;
+  if(c.done||c.quiet||c.fix||c.dlgN>=2||!c.item||!GD('dlg')||!chance(.6))return;
   const pool=[];
   if(c.item.cert)pool.push('cert');
   pool.push('pitch','honest');if(pool.length<3)pool.push('warranty');
@@ -3029,7 +3080,7 @@ function ownerAct(how){
 }
 
 /* 每周日：租金 */
-const rentOf=()=>niceRound((60+20*sum(Object.values(G.upg)))*[0,1,5,25,100,400][G.star]);
+const rentOf=()=>niceRound((60+20*sum(Object.values(G.upg)))*[0,1,3,12,60,300][G.star]);
 function weekly(news){
   if(cal().wd!==6)return;
   const r=rentOf();G.cash-=r;news.push({i:'home',c:'',t:'周租',d:`交了这周的租金和维护费 ${fmt(r)}。`});
@@ -3045,7 +3096,7 @@ function startDay(first){
   }
   planEvents(news);rollMarket(news);
   if(!first&&GD('stolen')){makeNotices(news);const o=makeOrder();if(o)news.push(o);}
-  G.gs={};
+  G.gs={};G.cash0=G.cash;
   if(G.ev&&evFx().heatFloor)G.heat=Math.max(G.heat,evFx().heatFloor);
   G.queue=[];
   morningChores(news);
@@ -3094,7 +3145,7 @@ function nextCustomer(){
       if(isBan(c)&&(G.banX||0)<banCap()){G.banX=(G.banX||0)+1;G.left++;G.dayN++;}}
   }
   G.cust=c;if(c.tutI==null)greet(c);dlgStart(c);
-  UI.price=c.type==='buy'?0:Math.max(1,Math.min(G.cash,niceRound(c.ask*.7||1)));
+  UI.price=c.type==='buy'?0:c.type==='sell'||c.type==='pawn'?defOffer(c):Math.max(1,Math.min(G.cash,niceRound(c.ask*.7||1)));
   sfx.door();render();
 }
 function greet(c){
@@ -3530,12 +3581,14 @@ function renderCounter(){
 /* 一件货的等级、估价、真假（引导期还没讲到的先不显示） */
 function itemInfo(it){
   if(!GD('grade'))return `<span class="num">转手约值 ${fmt(faceVal(it))}</span>`;
-  return `${gBadge(it)}<span class="num">${estText(it)}</span>${GD('fake')?`<span class="au ${authCls(it)}">${authTxt(it)}</span>`:''}`;
+  const [a,b]=estRange(it),one=a===b&&gRange(it)[0]===gRange(it)[1];
+  return `${gBadge(it)}<span class="num">${one?fmt(a):'约 '+fmt(aboutVal(it))}</span>${GD('fake')?`<span class="au ${authCls(it)}">${authTxt(it)}</span>`:''}${one?'':`<span class="rg">可能在 ${estText(it)}</span>`}`;
 }
 function icard(it,c){
   const tags=tagsOf(it);
   const scanBtn=GD('scan')&&canScan(it)&&!it.legend&&G.scans>0&&!c.done?`<button class="btn sm" data-act="scan" data-a="${it.id}">${ic('scan')}鉴定<small>剩${G.scans}次</small></button>`:'';
-  return `${ibox(it)}<div class="ic-b"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><div class="ic-r">${itemInfo(it)}</div><div>${tags}</div></div>${scanBtn}`;
+  const mine=c.type==='buy'&&it.cost?`<em class="cost">你的收价 ${fmt(it.cost/(it.qty||1))}</em>`:'';
+  return `${ibox(it)}<div class="ic-b"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><div class="ic-r">${itemInfo(it)}</div><div>${tags}${mine}</div></div>${scanBtn}`;
 }
 function tagsOf(it){
   let t='';
@@ -3586,7 +3639,9 @@ function panel(c){
   const sell=sellSide(c);
   const main=sell?btn('offer',`出价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow'):btn('ask',`要价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow');
   const extra=c.type==='pawn'?btn('buyout','买断','sm','',!!c.used.buyout):sell?'':btn('showPick','换一件','sm');
-  return `${priceRow()}<div class="row">${main}${extra}${btn('decline','送客','sq')}</div>`;
+  /* 一键成交：照对方现在的价 */
+  const quick=`<button class="qk" data-act="quick">${c.type==='pawn'?'照对方要的数借出':sell?'照对方开的价收':'照对方出的价卖'} <b class="num">${fmt(sell?c.ask:c.offer)}</b></button>`;
+  return `${priceRow()}<div class="row">${main}${extra}${btn('decline','送客','sq')}</div>${quick}`;
 }
 function talkPanel(c){
   if(c.pid==='funi')return `<div class="row col">${btn('talk','聊几句','grow','chat',!!c.used.chat)}${btn('talk',`请他喝杯茶<small>${fmt(teaCost())}</small>`,'grow','tea',!!c.used.tea)}${btn('talk','送他出门','sm','bye')}</div>`;
@@ -3675,7 +3730,7 @@ function personSheet(id){
 function pageShop(){
   let h=`<div class="pghead"><b>${STARS[G.star].n}</b><span>${'★'.repeat(G.star)}${'☆'.repeat(5-G.star)}</span></div>`;
   if(!G.freed){
-    h+=`<div class="card debt"><b>开局的债务 ${fmt(G.debt)}</b><span>${dayShort(G.debtDue)}打烊前要还清，不然这家店就没了。</span><div class="row">${btn('repay','全还',G.cash>=G.debt?'good':'',  'all',G.cash<=0)}${btn('repay','还一半','','half',G.cash<=0)}${btn('repay','还 '+fmt(Math.max(1,niceRound(G.cash*.2))),'','some',G.cash<=0)}</div></div>`;
+    h+=`<div class="card debt"><b>开局的债务 ${fmt(G.debt)}</b><span>${dayShort(G.debtDue)}打烊前要还清，不然这家店就没了。</span><div class="row">${btn('repay','全还',G.cash>=G.debt?'good':'',  'all',G.cash<=0)}${btn('repay','还一半','','half',G.cash<=0)}${btn('repayNum','输入金额','','',G.cash<=0)}</div></div>`;
   }
   h+=`<h3>${ic('up')}升级</h3>`;
   h+=UPG.map(u=>{const lv=upLv(u.id),row=u.lv[lv],m=upMat(u.id,lv);
@@ -3721,7 +3776,8 @@ function pageMore(){
 /* ---------- 夜里 ---------- */
 function showNightMenu(){UI.tab='counter';G.phase='night';if(!G.shop||G.shop.day!==G.day)stockShops();render();}
 function nightSum(){
-  const s=G.stat;return `<div class="kv sm"><span>接待</span><span>${s.served||0} 位</span><span>收进</span><span>${s.bought||0} 件，花了 ${fmt(s.spent||0)}</span><span>卖出</span><span>${s.sold||0} 件，进账 ${fmt(s.earned||0)}</span></div>`;
+  const s=G.stat,d=G.cash-(G.cash0??G.cash),stock=sum(G.inv,i=>i.ban||knownStolen(i)||i.auth===0?0:aboutVal(i)*(i.qty||1));
+  return `<div class="kv sm"><span>接待</span><span>${s.served||0} 位</span><span>收进</span><span>${s.bought||0} 件，花了 ${fmt(s.spent||0)}</span><span>卖出</span><span>${s.sold||0} 件，进账 ${fmt(s.earned||0)}</span><span>今天现金</span><span class="${d>=0?'gd':'bd'}">${d>=0?'多了':'少了'} ${fmt(Math.abs(d))}，手上的货大约值 ${fmt(stock)}</span>${!G.freed&&G.debt0?`<span>债务</span><span>还剩 ${fmt(G.debt)}（已还 ${pct(1-G.debt/G.debt0)}），还有 ${Math.max(0,G.debtDue-G.day)} 天</span>`:''}</div>`;
 }
 const evCard=x=>`<div class="ev ${x.c||''}">${ic(x.i||'bell')}<div class="evb"><b>${esc(x.t)}</b><p>${esc(x.d)}</p></div></div>`;
 function renderNight(){
@@ -3849,10 +3905,37 @@ function infoSheet(k){
 
 /* ==== 11meta.js ==== */
 /* 图鉴、称号、名人堂、日志、帮助、设置、新手引导 */
+/* 图鉴分两栏：货物、人物 */
+let CXT='item';
+const cxTabs=()=>`<div class="chips c2"><button class="chip ${CXT==='item'?'sel':''}" data-act="cxTab" data-a="item">货物</button><button class="chip ${CXT==='people'?'sel':''}" data-act="cxTab" data-a="people">人物</button></div>`;
+const SILLOOK={sp:0,hj:0,sh:0,bd:0,hat:0};
+const cxIdKnown=f=>!f.hide||!!META.role[f.id];
+function codexPeople(){
+  const cell=(id,svg,name,sub)=>`<button class="cc on" data-act="cxp" data-a="${id}"><div class="pbox">${svg}</div><b>${name}</b><span>${sub}</span></button>`;
+  const sil=`<div class="cc"><div class="pbox">${charSvg(SILLOOK,'neutral',1,'sil')}</div><b>？？？</b></div>`;
+  let h=cxTabs()+`<div class="sub">跨存档保留。见过一次，就记下样子和名字；发现了真实身份、摸清了脾气，也会记在这里。点一位看详情。</div>`;
+  h+=`<h3>朋友（${MAINS.filter(m=>META.met[m.id]).length}/${MAINS.length}）</h3><div class="cgrid">`+MAINS.map(m=>META.met[m.id]?cell(m.id,charSvg(lookOf(m.id,m.look),'happy',m.rich),m.n,FEEL[META.feel[m.id]||0][1]):sil).join('')+`</div>`;
+  h+=`<h3>街坊（${FIXED.filter(f=>META.met[f.id]).length}/${FIXED.length}）</h3><div class="cgrid">`+FIXED.map(f=>META.met[f.id]?cell(f.id,charSvg(lookOf(f.id),'neutral',f.showRich??f.rich),f.n,cxIdKnown(f)?f.real:'身份：？'):sil).join('')+`</div>`;
+  h+=`<div class="sub">朋友从街上认识，街坊会自己上门。带新手引导开局的话，他们第十天起才陆续出现。</div>`;
+  openSheet('codex','图鉴',h);
+}
+function codexPerson(id){
+  const back=btn('codex','回到图鉴','grow'),m=MAIN[id],f=FIX[id],n=META.met[id]||0;
+  if(!n)return;
+  if(m){
+    const lv=META.feel[id]||0;
+    return openSheet('cx',m.n,`<div class="pbig">${charSvg(lookOf(id,m.look),'happy',m.rich)}<div><b>${m.n}</b><span>${m.role}</span><span>处到过最好的关系：${FEEL[lv][1]}</span></div></div><h3>感情带来的好处</h3>${m.perks.map((t,i)=>`<p class="perk ${lv>i?'on':''}">${ic(lv>i?'heart':'lock')}<b>${FEEL[i+1][1]}</b>　${lv>i?t:'处到这一步就知道了'}</p>`).join('')}<div class="sub">感情靠买卖里的取舍涨：给公道价、让一点利、帮忙找货。</div>${back}`);
+  }
+  if(f){
+    const k=n>=3;
+    return openSheet('cx',f.n,`<div class="pbig">${charSvg(lookOf(id),'neutral',f.showRich??f.rich)}<div><b>${f.n}</b><span>${f.face}</span></div></div><div class="kv"><span>真实身份</span><span>${cxIdKnown(f)?f.real:'还没发现'}</span><span>性格</span><span>${k?PERS[f.pers].n:'多见几次才摸得清'}</span><span>懂行</span><span>${k?KNOWN[f.know]+(f.exp.length?'（'+f.exp.join('、')+'）':''):'多见几次才摸得清'}</span><span>见过</span><span>${n} 次</span></div>${f.hide&&!cxIdKnown(f)?'<div class="sub">这个人不像看上去那么简单。关系熟了，或者认出他带来的货有问题，就会发现。</div>':''}${back}`);
+  }
+}
 function codexSheet(){
   if(META.newc){META.newc=0;saveMeta();if(G)render();}
+  if(CXT==='people')return codexPeople();
   const seenN=ITEMS.filter(t=>cxSeen(t.k)).length;
-  let h=`<div class="sub">跨存档保留。一件货经手过一次，就记下名字和样子；确认过等级的真货，点亮对应的等级，并记下它的标准价。点一件看详情。已记下 ${seenN}/${ITEMS.length} 种。</div><h3>传奇（${Object.keys(META.legends).length}/${LEGENDS.length}）</h3><div class="cgrid">`;
+  let h=cxTabs()+`<div class="sub">跨存档保留。一件货经手过一次，就记下名字和样子；确认过等级的真货，点亮对应的等级，并记下它的标准价。点一件看详情。已记下 ${seenN}/${ITEMS.length} 种。</div><h3>传奇（${Object.keys(META.legends).length}/${LEGENDS.length}）</h3><div class="cgrid">`;
   h+=LEGENDS.map(l=>META.legends[l.k]?`<button class="cc on" data-act="cx" data-a="${l.k}"><div class="ibox legend">${ART[IT[l.base].a]?`<svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]}</svg>`:''}</div><b>${l.n}</b></button>`:`<div class="cc"><div class="ibox sil"><svg class="isv" viewBox="0 0 64 64">${ART[IT[l.base].a]||''}</svg></div><b>？？？</b><span>${l.rum}</span></div>`).join('');
   h+=`</div><h3>非卖品</h3><div class="cgrid">`+(META.deed?`<button class="cc on" data-act="cx" data-a="deed"><div class="ibox legend">${deedSvg()}</div><b>${DEED.n}</b></button>`:`<div class="cc"><div class="ibox sil">${deedSvg()}</div><b>？？？</b><span>听说还清开局的债，债主会送回一样东西。</span></div>`)+`</div>`;
   for(const c of [...CATS,BAN]){
@@ -3895,6 +3978,7 @@ function importSheet(){
 }
 const HELP=[
  ['新手引导','<p>开局勾了「新手引导」，还债的这段日子就是教程：第一天一步一步教收货和卖货，之后每天早上多开放一样东西（等级、行情、假货、对话、当品、拾荒、升级、赃物、违禁品、街坊），第十一天起全部开放。还清债务，或者在提示里关掉引导，没讲到的内容会立刻全部开放。</p>'],
+ ['怎么出价','<p>客人进门时，滑块已经放在一个稳妥的价上：收货是对方开价的一半左右，卖货是比对方出价高两成半。不想动脑，直接点「出价」「要价」也能做成不少生意。</p><p>被拒绝以后，对话框里会写你离对方心里的价还差多远：「只差一点」就小步加，「还差不少」就多加一些。第一次开出离谱的价只是警告，再来一次对方会很快走人。</p><p>滑块下面那一行可以一键照对方现在的价成交。货卡上的「约 ₡X」是这件货大概值多少；卖货时还会写你的收价，卖得比收价高才是赚。</p>'],
  ['基本玩法','<p>谈不拢、客气地送客都不掉声望；出价离谱把人气走才掉。</p><p>白天开门，客人一个个进来：有人卖货给你，有人来买货，有人来当东西借钱。拖滑块定价，或者点「−」「+」微调，也可以点价格数字直接输入；然后点「出价」或「要价」。对方的耐心看表情，表情越难看越快要走。</p><p>晚上打烊后选一个地方去：集市（商行和黑市）或者拾荒。然后回家睡觉，深夜可能有搜查和小偷。</p>'],
  ['等级和估价','<p>货分 D、C、B、A、S 五级，B 是标准价；A 两倍，S 五倍以上，极少数到一百倍。传奇货是 SSR，至少一亿。</p><p>等级一眼看不准，只能看到一个区间（比如 C–A），区间一定包含真实等级。放大镜升级能把区间收窄。鉴定仪二级以上能鉴定出准确等级。</p>'],
  ['真假和鉴定','<p>鉴定一次，会告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。这个数字是算数的：显示 75% 的货，四件里有三件是真的。贵货更难认。</p><p>没把握的可以送鉴定所（白天在库存里送），等两三天出鉴定书，任何买家都认。传奇货自己鉴定不了，只能送鉴定所。送赃物去会被扣下。</p>'],
@@ -3906,7 +3990,7 @@ const HELP=[
  ['升级和扩建','<p>前一两级只要钱，再往上还要交物资：某一类、某个等级以上的货。物资可以分几次交。还清债务后可以扩建门面，五星是灰港第一当铺。</p>'],
  ['拾荒','<p>晚上可以去拾荒。每轮翻出三件，挑着装进包；包满了可以换。前几轮安全，再往后每多搜一轮都可能出事。头灯决定夜里看得清多少。</p>'],
  ['日历和大事','<p>一周 7 天、一季 4 周、一年四季。有的大事每年固定日子来，有的随机。大事会改变行情和规则，比如边境冲突时武器翻倍。</p>'],
- ['图鉴和地契','<p>「更多」里的图鉴跨存档保留。一件货经手过一次就记下名字和样子；确认过等级的真货会点亮对应的等级，并记下标准价，以后再遇到这种货，心里就有数了。</p><p>还清开局的债务时，债主会把抵押的地契送回来。地契是非卖品，不占库存，不算进资产；在「库存」页挂到墙上，每天多来一位客人。</p>'],
+ ['图鉴和地契','<p>图鉴分「货物」和「人物」两栏。人物一栏记着见过的朋友和街坊，发现的真实身份、摸清的脾气也记在里面。</p><p>「更多」里的图鉴跨存档保留。一件货经手过一次就记下名字和样子；确认过等级的真货会点亮对应的等级，并记下标准价，以后再遇到这种货，心里就有数了。</p><p>还清开局的债务时，债主会把抵押的地契送回来。地契是非卖品，不占库存，不算进资产；在「库存」页挂到墙上，每天多来一位客人。</p>'],
  ['借贷和结束','<p>还清债务后可以借钱给熟人、向银行借钱。每周日交租金，现金是负数、一周补不上就破产。手头没钱没货的时候，可以去拾荒捡点东西卖，或者找放贷人。卖出的假货被发现要全额退款。任何时候可以在「更多」里退休，结算评分。</p>'],
 ];
 function helpSheet(){openSheet('help','帮助',HELP.map(([t,h])=>`<h3>${t}</h3><div class="help">${h}</div>`).join(''));}
@@ -3939,7 +4023,7 @@ const GD=k=>!guideOn()||G.day>=GDAY[k];
 /* 每天早上的一张卡：今天多了什么 */
 const GUIDE=[null,
  {t:'第一天：收货和卖货',d:'当铺的生意只有一句话：低价收，高价卖。今天只来几位客人，会一步一步教你。'},
- {t:'今天多了：等级和估价',d:'从今天起，货的好坏要靠眼力。每件货标着一个等级区间（比如 C–A）和一个估价区间，真实的等级一定在区间里。按区间低的那头出价最稳。<br>晚上可以去集市了：商行按六成价收你卖不掉的货，也卖带鉴定书的真货。'},
+ {t:'今天多了：等级和估价',d:'从今天起，货的好坏要靠眼力。每件货标着一个等级区间（比如 C–A），真实的等级一定在区间里；旁边的「约 ₡X」是它大概值多少。<br>滑块已经帮你放在一个稳妥的价上，直接点「出价」也行。被拒绝时，对话框里会写还差多远。<br>晚上可以去集市了：商行按六成价收你卖不掉的货，也卖带鉴定书的真货。'},
  {t:'今天多了：行情和还债',d:'每类货的价钱天天在变，早报会说哪类涨了、哪类跌了。涨的时候卖，跌的时候收。<br>底部多了「店铺」页：债在那里还，升级也在那里。手头宽裕就先还一点。'},
  {t:'今天多了：假货和鉴定',d:'从今天起会有假货，假货几乎不值钱。货卡上多了「鉴定」按钮，每天能用几次。它告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。把握低的货，要么把价压得很低，要么不收。'},
  {t:'今天多了：对话',d:'从今天起，客人有时会多说一句，下面会出现两三句你能回的话。回对了对方会让价，回错了对方会不耐烦。哪句管用，要看对方是什么样的人。拿不准就点「不回」，接着谈价。<br>客人走了以后，会告诉你他是什么样的人。'},
@@ -4073,7 +4157,7 @@ function coachGroup(){
   if(c&&!c.done){
     if(d>=5&&c.dlg){const r=tip('dlg','.rep','回一句话','对方多说了一句。下面是你能回的话，选一句试试：回对了对方会让价，回错了对方会不耐烦。拿不准就点最下面的「不回」，接着谈价。');if(r)return r;}
     if(d>=4&&it&&sellSide(c)){const r=tip('scan','#icard [data-act=scan]','鉴定','拿不准真假就点「鉴定」，每天次数有限。结果是一个把握，比如「75% 真」，意思是这样的货四件里有三件是真的。');if(r)return r;}
-    if(d>=2&&it&&sellSide(c)&&!it.gKnown){const r=tip('grade','#icard','等级和估价是个区间',`这件货标着「${gTxt(gRange(it))}」：真实等级就在这个区间里，可能是最低的，也可能是最高的。后面的 ${estText(it)} 是对应的估价。按低的那头出价最稳；想赌一把，就出高一点。`);if(r)return r;}
+    if(d>=2&&it&&sellSide(c)&&!it.gKnown){const r=tip('grade','#icard','等级和估价是个区间',`这件货标着「${gTxt(gRange(it))}」：真实等级就在这个区间里。「约 ${fmt(aboutVal(it))}」是它大概值多少，收价比这个数低才有赚头。滑块已经放在一个稳妥的价上；被拒绝的话，对话框里会写还差多远。`);if(r)return r;}
     return null;
   }
   if(!c){
@@ -4133,20 +4217,23 @@ function deedToggle(){
 }
 
 /* ---------- 直接输入价格 ---------- */
-let NUMV='';
+let NUMV='',NUM=null;
+function numOpen(o){
+  NUM=o;NUMV='';
+  openSheet('num',o.title,`<div class="numd num" id="numD">—</div><div class="sub center">能输入的范围：${fmtFull(o.lo)} 到 ${fmtFull(o.hi)}</div><div class="numpad">${[1,2,3,4,5,6,7,8,9,'00',0,'删'].map(k=>`<button class="btn" data-act="numKey" data-a="${k}">${k}</button>`).join('')}</div><div class="row">${btn('closeSheet','取消','grow')}${btn('numOk','确定','pri grow')}</div>`);
+}
 function numSheet(){
   const c=G.cust;if(!c||c.done)return;
-  const [lo,hi]=priceBounds();NUMV='';
-  openSheet('num',sellSide(c)?'输入出价':'输入要价',`<div class="numd num" id="numD">—</div><div class="sub center">能输入的范围：${fmtFull(lo)} 到 ${fmtFull(hi)}</div><div class="numpad">${[1,2,3,4,5,6,7,8,9,'00',0,'删'].map(k=>`<button class="btn" data-act="numKey" data-a="${k}">${k}</button>`).join('')}</div><div class="row">${btn('closeSheet','取消','grow')}${btn('numOk','确定','pri grow')}</div>`);
+  const [lo,hi]=priceBounds();
+  numOpen({title:sellSide(c)?'输入出价':'输入要价',lo,hi,ok:v=>{if(!G.cust||G.cust.done)return;setPrice(v);if(v<lo||v>hi)toast(`超出范围，已经调到 ${fmtFull(UI.price)}`,'warn');}});
 }
 function numKey(a){
   if(a==='删')NUMV=NUMV.slice(0,-1);else if(NUMV.length<13)NUMV=(NUMV+a).replace(/^0+/,'');
   const d=$('#numD');if(d)d.textContent=NUMV?fmtFull(+NUMV):'—';sfx.tick();
 }
 function numOk(){
-  const v=+NUMV;closeSheet();if(!v||!G.cust||G.cust.done)return;
-  const [lo,hi]=priceBounds();setPrice(v);
-  if(v<lo||v>hi)toast(`超出范围，已经调到 ${fmtFull(UI.price)}`,'warn');
+  const v=+NUMV,o=NUM;closeSheet();NUM=null;if(!v||!o)return;
+  o.ok(v);
 }
 
 /* ==== 12main.js ==== */
@@ -4228,7 +4315,10 @@ const ACT={
   reply:a=>reply(+a),noReply:()=>{const c=G.cust;if(c&&c.dlg){c.dlg=null;sfx.click();render();}},pstep:a=>stepOnce(+a),pnum:()=>numSheet(),numKey:a=>numKey(a),numOk:()=>numOk(),
   deed:()=>deedToggle(),goal:()=>goalSheet(),cx:a=>codexDetail(a),
   offer:()=>offerToSeller(UI.price),ask:()=>priceToBuyer(UI.price),decline,
-  showPick:()=>SHEETS.pick(),show:a=>showItem(+a),buyout,
+  showPick:()=>{const c=G.cust,l=c?sellable(c):[];if(l.length===1&&!COACH)return showItem(l[0].id);SHEETS.pick();},
+  quick:()=>{const c=G.cust;if(!c||c.done)return;if(sellSide(c))offerToSeller(c.ask);else if(c.item)priceToBuyer(c.offer);},
+  repayNum:()=>{const hi=Math.min(G.cash,G.debt);if(hi<1)return;numOpen({title:'还多少债',lo:1,hi,ok:v=>{if(v>hi)toast(`最多能还 ${fmtFull(hi)}，就按这个数还了`,'warn');repay(Math.min(v,hi));}});},
+  cxTab:a=>{CXT=a;codexSheet();},cxp:a=>codexPerson(a),show:a=>showItem(+a),buyout,
   bustPay,bustBribe,owner:a=>ownerAct(a),lend:a=>lendTo(+a),talk,tip,
   scan:a=>doScan(+a),
   invOpen:a=>{UI.open=UI.open==a?null:+a;render();},
