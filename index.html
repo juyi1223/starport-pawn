@@ -406,6 +406,17 @@ h3{margin:20px 0 8px;font-size:14px;color:var(--cyan);letter-spacing:1px;display
   #bubble{min-height:40px}
   .btn.tout{min-height:42px}
 }
+/* v7 */
+.tip .dl.bad{background:#3a1420;color:#ff9bb0}
+#plate{max-width:94%}
+#plate span{overflow:hidden;text-overflow:ellipsis}
+#plate .pers{flex:none}
+.chips.c4{grid-template-columns:repeat(4,1fr);gap:5px}
+.chips.c4 .chip{font-size:12.5px;gap:2px;padding:0 2px;white-space:nowrap}
+#bounty.law{background:linear-gradient(90deg,#0c3340,#1c1a36);border-bottom-color:#2a7f96}
+#bounty.dark{background:linear-gradient(90deg,#3a1034,#1c1a36);border-bottom-color:#8a2f7c}
+.tacl{margin:0 0 6px;font-size:13px;line-height:1.55;color:#c9d3f5}
+.tacl b{color:var(--cyan)}
 </style>
 </head>
 <body>
@@ -691,12 +702,31 @@ function drawChar(look,mood='neutral',cls=''){
 
 /* ===================== 数据 ===================== */
 const PERS={
- greedy:   {n:'贪婪',col:'#ffc857',pat:[3,4],min:[.68,.85],ask:[1.4,1.8],buy:[.95,1.15],chat:.5,redeem:.8},
- naive:    {n:'天真',col:'#58e6a0',pat:[4,6],min:[.35,.6],ask:[.7,1.15],buy:[1.2,1.6],chat:.9,redeem:.8},
- desperate:{n:'窘迫',col:'#a78bfa',pat:[3,5],min:[.3,.5],ask:[.85,1.2],buy:[.95,1.15],chat:.7,redeem:.5},
- shrewd:   {n:'精明',col:'#4de1ff',pat:[3,4],min:[.62,.8],ask:[1.2,1.5],buy:[1.05,1.25],chat:.35,redeem:.85},
- impatient:{n:'急躁',col:'#ff5d7a',pat:[2,3],min:[.5,.7],ask:[1.1,1.4],buy:[1.1,1.4],chat:.1,redeem:.7},
+ greedy:   {n:'贪婪',col:'#ffc857',pat:[3,4],min:[.6,.75],ask:[1.5,1.9],buy:[.95,1.15],chat:.5,redeem:.8,h:'作势送客，对方会让步'},
+ naive:    {n:'天真',col:'#58e6a0',pat:[4,6],min:[.4,.6],ask:[.75,1.15],buy:[1.2,1.6],chat:1,redeem:.8,h:'说什么都信；说瞎话掉声望'},
+ desperate:{n:'窘迫',col:'#a78bfa',pat:[2,4],min:[.32,.5],ask:[.85,1.2],buy:[.95,1.15],chat:.7,redeem:.5,h:'急着成交，价到底线就答应'},
+ shrewd:   {n:'精明',col:'#4de1ff',pat:[3,4],min:[.62,.8],ask:[1.2,1.5],buy:[1.05,1.25],chat:.35,redeem:.85,h:'话术要先扫描才管用'},
+ impatient:{n:'急躁',col:'#ff5d7a',pat:[2,3],min:[.5,.7],ask:[1.1,1.4],buy:[1.1,1.4],chat:.1,redeem:.7,h:'只有第一口价好谈'},
+ chatty:   {n:'话痨',col:'#ffa94d',pat:[4,6],min:[.55,.72],ask:[1.15,1.45],buy:[1.05,1.3],chat:1,redeem:.8,h:'套近乎必成，能用两次'},
+ gambler:  {n:'赌徒',col:'#f783ac',pat:[3,4],min:[.5,.7],ask:[1.15,1.5],buy:[1,1.3],chat:.6,redeem:.45,h:'可以抛硬币赌价'},
+ stubborn: {n:'倔强',col:'#b8c0cc',pat:[3,4],min:[.6,.8],ask:[.85,1.1],buy:[1,1.2],chat:.3,redeem:.9,h:'一口价，只有话术能说动'},
 };
+const TAC={buyout:'劝卖',coin:'抛硬币',flaw:'挑毛病',doubt:'盘问来历',chat:'套近乎',poor:'哭穷',compare:'比价',stall:'晾一晾',
+ pitch:'夸货',warranty:'承诺包退',lore:'讲来历',last:'只剩一件',cert:'亮鉴定'};
+const TACTIP={
+ flaw:'成色是「磨损明显」或「破旧不堪」才管用，砍两到三成。',
+ doubt:'卖家心虚（赝品、赃物）会大降价并露馅；东西清白对方会生气。',
+ chat:'看性格。成功让一成左右，耐心 +1。',
+ poor:'你的现金不到对方要价的两倍才可信，砍一成不到。',
+ compare:'这类货行情在跌，或者你库存里已有同类货，才管用，砍一成。',
+ stall:'对方耐心有 3 点以上才管用，砍一成不到，但要花 1 点耐心；耐心少的会发火。',
+ buyout:'劝对方别当了，直接卖断给你。成不成看性格，窘迫、天真的容易答应。',
+ coin:'一半一半。赢了对方大让一步，输了价格往反方向走。',
+ pitch:'成色是「轻微使用」或「近乎全新」，或者是稀有款，才管用，多出两成左右。',
+ warranty:'买家多出两成半；但如果是赝品，当晚全额退款、大掉声望。',
+ lore:'古董、艺术类的货才管用，多出一成。',
+ last:'库存里这类货只有这一件才管用，多出一成不到。',
+ cert:'扫描过的真品才管用，多出一成半；拿赝品的扫描单出来会把人气走。'};
 const L={
  sellGreet:{
   greedy:['这可是稀世珍品「{item}」，少于 {p} 我可不卖。','看看这宝贝！{p}，一分都不能少……大概吧。'],
@@ -704,11 +734,15 @@ const L={
   desperate:['求你了……我急需用钱。「{item}」，{p} 就行。','我的飞船被扣了，这件「{item}」{p} 卖给你。'],
   shrewd:['「{item}」，市价你懂的。{p}，别浪费时间。','我做过功课了。这件「{item}」值 {p}。'],
   impatient:['快点快点！「{item}」，{p}，收不收？','我只有一分钟。「{item}」，{p}！'],
+  chatty:['哎呀掌柜的！这件「{item}」可有一段故事……对了，{p}。','「{item}」，{p}。不急不急，咱们慢慢聊。'],
+  gambler:['手气不好，周转一下。「{item}」，{p}。要不……咱们赌一把？','「{item}」，{p}。敢不敢抛个硬币定价？'],
+  stubborn:['「{item}」，{p}。一口价，别跟我磨。','我爷爷说了，这件「{item}」就值 {p}，少一分不卖。'],
  },
  pawnGreet:['我想把「{item}」押在你这儿 {d} 天，借我 {p} 周转一下。','「{item}」先当给你，{d} 天后我来赎。借我 {p}。'],
  buyGreet:{
   greedy:['听说你这有便宜的{cat}货？别想坑我。'],naive:['我想买件{cat}类的礼物，你有推荐吗？'],
   desperate:['我急需一件{cat}类的东西……但钱不多。'],shrewd:['有{cat}类的好货吗？拿出来看看。'],impatient:['{cat}！有没有！快！'],
+  chatty:['掌柜的忙不忙？我想挑件{cat}类的东西，顺便聊两句。'],gambler:['今天赢了点钱！有{cat}类的好货吗？'],stubborn:['{cat}类的。我心里有数，别跟我抬价。'],
  },
  anyGreet:['随便逛逛，有啥好东西？','我在等飞船加油，顺便看看。'],
  collectorGreet:['我是收藏家。听说你这里有{cat}类的珍品？钱不是问题。'],
@@ -751,9 +785,11 @@ const shCap=()=>SHCAP[upLv('shield')];
 const exposed=()=>G.inv.filter(i=>i.stolen).sort((a,b)=>apparent(b)-apparent(a)).slice(shCap());
 const adCost=()=>40+20*(G.ads||0);
 const toutCost=()=>10+5*(G.tout||0);
+const ORDN={law:'官方悬赏',dark:'黑市悬赏'};
+const ordName=o=>ORDN[o&&o.src]||'商会悬赏';
 const boxP=()=>[50,60,110,160,200][repT().s-1];
 const GRADE=[1800,1200,800];
-const DIFFS={easy:{n:'轻松',debt:2000,cash:600,rep:30},normal:{n:'标准',debt:3800,cash:500,rep:20},hard:{n:'硬核',debt:6000,cash:400,rep:15}};
+const DIFFS={easy:{n:'轻松',debt:2000,cash:600,rep:30},normal:{n:'标准',debt:3800,cash:500,rep:20},hard:{n:'硬核',debt:7000,cash:400,rep:15}};
 const PROFS={
  appraiser:{n:'鉴定师',i:'scan',d:'每天多 2 次扫描，目测估值更准；扫描过的真品附鉴定书，买家多出一成半。'},
  fixer:{n:'修理匠',i:'tool',d:'自带满级修复工作台，修复几乎不花钱，而且修得更好。'},
@@ -865,8 +901,41 @@ function newGame(prof){
 const alZone=a=>a>=30?1:a<=-30?-1:0;
 const align=d=>{const z0=alZone(G.align);G.align=clamp(G.align+d,-100,100);const z1=alZone(G.align);
   if(z0!==z1)setTimeout(()=>toast(z1>0?'立场变为「守法」：海关不罚款，买家多出 6%，治安队肯帮忙':z1<0?'立场变为「黑道」：不会失窃，掮客常来；但海关查得更勤、罚得更重':'立场回到「中立」：两边的好处都没有了',z1?'warn':''),900);};
-const PTIP={greedy:'要价高，底价也高，很难砍。套近乎一半管用。',naive:'好说话，要价常常偏低，买东西出价也大方。套近乎很管用。',
- desperate:'急用钱，底价很低，可以狠砍。来典当的话，一半不会回来赎。',shrewd:'懂行情，底价不低。套近乎多半没用。',impatient:'耐心很少，磨两下就走人。套近乎基本没用，还会更烦。'};
+const PTIP={
+ greedy:'要价虚高。点「送客」作势要走，对方会叫住你并主动让一大步（只管用一次）。',
+ naive:'不懂行，你说什么都信：话术必定管用，哪怕条件不成立。但哄骗老实人每次声望 −1。另外给到公道价声望 +2，压得太狠 −2。',
+ desperate:'急着成交。你的价只要够到对方的底线，立刻答应，不会来回磨。来典当的话，一半不会回来赎。',
+ shrewd:'只认证据。除了套近乎、哭穷、晾一晾，其它话术要先扫描这件货才管用。',
+ impatient:'没空磨。第一口价只要够到底线就成交；谈不拢对方会报一个最后价，之后一分不让。耐心很少。',
+ chatty:'爱聊天。套近乎必定管用，还能用两次；但挑毛病会伤感情，扣 2 点耐心。',
+ gambler:'爱赌。话术里多一个「抛硬币」：赢了对方大让一步，输了对方反而涨价（买家则压价）。',
+ stubborn:'认死理。你怎么还价对方都不动，只有话术能让价格松动。'};
+const TORD=Object.keys(TAC);
+function pickTacs(c){
+  const pool=c.type==='sell'?['flaw','doubt','chat','poor','compare','stall']:['pitch','warranty','chat','lore','last','cert'];
+  const fx=[];if(c.pawn)fx.push('buyout');if(c.pk==='gambler')fx.push('coin');if(c.pk==='chatty')fx.push('chat');
+  const rest=pool.filter(k=>!fx.includes(k)).map(k=>[Math.random(),k]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  return [...fx,...rest].slice(0,4).sort((a,b)=>TORD.indexOf(a)-TORD.indexOf(b));
+}
+// 这招现在管不管用：true 管用，false 没用，null 说不准
+function tacOk(c,t,raw){
+  const it=c.item,pk=c.pk;if(!it)return null;
+  if(t==='coin'||t==='buyout'||t==='doubt')return null;
+  if(t==='warranty')return true;
+  if(t==='chat')return pk==='chatty'||(pk==='naive'&&!raw)?true:null;
+  if(t==='cert')return it.scanned&&!it.fake;
+  if(pk==='chatty'&&t==='flaw')return false;
+  if(pk==='naive'&&!raw)return true;
+  if(pk==='shrewd'&&!it.scanned&&t!=='stall'&&t!=='poor')return false;
+  if(t==='flaw')return it.cond<.65;
+  if(t==='poor')return G.credits<c.ask*2;
+  if(t==='compare')return G.market[it.cat]<.95||G.inv.some(i=>i.cat===it.cat);
+  if(t==='stall')return c.patience>=3;
+  if(t==='pitch')return it.cond>.65||(!!it.rare&&!it.fake);
+  if(t==='lore')return it.cat==='古董'||it.cat==='艺术'||!!it.legend;
+  if(t==='last')return G.inv.filter(i=>i.cat===it.cat).length===1;
+  return null;
+}
 const repT=()=>REPT.find(t=>G.rep>=t.min)||REPT[4];
 const custCount=()=>Math.max(6,G.custPerDay+repT().cust);
 const repFx=t=>{const a=[t.g];
@@ -968,7 +1037,8 @@ function makeCustomer(isBuyer,collector){
       c.redeem=!c.knowsFake&&Math.random()<(it.stolen?.3:P.redeem);
       c.line=say(L.pawnGreet,{item:it.name,p:c.ask,d});
     }else c.line=lg?`听好了，这可是传说中的「${it.name}」。${fmt(c.ask)}，少一个子儿都不谈。`:say(L.sellGreet[pk],{item:it.name,p:c.ask});
-    c.ask0=c.ask;
+    if(pk==='stubborn')c.min=c.ask-1;
+    c.ask0=c.ask;c.min0=c.min;c.tac=pickTacs(c);
   }else{
     if(collector){c.collector=true;c.want=G.collector;G.collector=null;c.line=say(L.collectorGreet,{cat:c.want});}
     else if(win&&!G.scUsed&&Math.random()<.5){G.scUsed=true;c.fromWindow=true;c.want='item';c.wantId=win.id;c.line=`我在橱窗里看见那件「${win.name}」了，想买下来。`;}
@@ -1073,13 +1143,14 @@ function startDay(){
   if(G.order&&G.order.due<G.day){morning.push(['悬赏订单过期了','bad']);G.order=null;}
   if(!G.order&&G.day<G.maxDay){
     const rs=repT().s;
-    G.order={cat:pick(G.day===1||rs<=2?CATS.filter(c=>c!=='古董'):CATS),pay:ri(180,260)+(rs-1)*70,due:Math.min(G.maxDay,G.day+3)};
-    morning.push([`新悬赏：${G.order.cat}类真品一件，报酬 ${fmt(G.order.pay)}`,'']);
+    const or=Math.random(),lp=G.align>=30?.45:G.align<=-30?.15:.25,dp=G.align<=-30?.45:G.align>=30?.15:.25,src=G.day===1?'':or<lp?'law':or<lp+dp?'dark':'';
+    G.order={cat:pick(G.day===1||rs<=2?CATS.filter(c=>c!=='古董'):CATS),pay:Math.round((ri(180,260)+(rs-1)*70)*(src==='dark'?1.3:1)),due:Math.min(G.maxDay,G.day+3),src};
+    morning.push([`新的${ordName(G.order)}：${G.order.cat}类真品一件，报酬 ${fmt(G.order.pay)}`,'']);
   }
   if(G.free&&G.star>=3&&!G.collector)G.collector=G.inv.length?pick(G.inv).cat:pick(CATS);
   const moves=CATS.filter(c=>Math.abs(G.market[c]-1)>.08).map(c=>`${c}${G.market[c]>1?'涨':'跌'}${Math.abs(Math.round((G.market[c]-1)*100))}%`);
   G.news=`今天预计来 ${n} 位顾客。`+(G.day===1&&!G.free?'新店开张，头一天上门的都是便宜货；声望越高，上门的货越值钱。':'')+(moves.length?'行情：'+moves.join('，')+'。':'行情平稳。')+(G.collector?`传闻有收藏家在找${G.collector}类物品。`:'')
-    +(G.order?`悬赏：${G.order.cat}类真品，报酬 ${fmt(G.order.pay)}，第 ${G.order.due} 天截止。`:'')
+    +(G.order?`${ordName(G.order)}：${G.order.cat}类真品，报酬 ${fmt(G.order.pay)}，第 ${G.order.due} 天截止。`:'')
     +(G.day>=4&&G.day<=6&&!G.bankDone?'银行第 6 天回访：已还三成半减免 ₡100，否则加收 ₡80。':'');
   log(`第 ${G.day} 天开门营业`,'y');
   morning.forEach(([t,c],i)=>setTimeout(()=>toast(t,c),350+i*1100));
@@ -1095,7 +1166,7 @@ function nextCustomer(){
   const col=!!G.collector&&G.inv.length>0;
   let buy=true;
   if(G.tut===1){G.tut=2;G.nS--;buy=false;let k=0;
-    do{G.cust=makeCustomer(false,false);k++;}while(k<80&&(G.cust.item.fake||G.cust.item.stolen||G.cust.pawn||G.cust.item.cond>=.62||G.cust.item.rare||G.cust.pk==='impatient'||G.cust.pk==='greedy'));}
+    do{G.cust=makeCustomer(false,false);k++;}while(k<80&&(G.cust.item.fake||G.cust.item.stolen||G.cust.pawn||G.cust.item.cond>=.62||G.cust.item.rare||!['naive','desperate'].includes(G.cust.pk)));G.cust.tac=['flaw','doubt','chat','poor'];}
   else{if(col)G.nB--;else buy=pickType();G.cust=makeCustomer(buy,col);}
   G.stat[buy?'cb':'cs']++;
   const c=G.cust;
@@ -1118,10 +1189,10 @@ function dealBuy(price){
     c.result=`借出 ${fmt(price)}，「${c.item.name}」入当品柜，第 ${G.day+c.pawn} 天到期`;
     log(`典当「${c.item.name}」借出 −${fmt(price)}`,'r');
   }else{
-    const fr=price>=fairLine(c)?1:price<lowLine(c)?-1:0;
+    const nv=c.pk==='naive'?2:1,fr=(price>=fairLine(c)?1:price<lowLine(c)?-1:0)*nv;
     c.item.cost=price;G.inv.push(c.item);
-    if(fr)addRep(fr,fr>0?'收货给价公道':'压价太狠，卖家到处抱怨');
-    c.result=`以 ${fmt(price)} 收购「${c.item.name}」`+(fr>0?'，给价公道，声望 +1':fr<0?'，压价太狠，声望 −1':'');
+    if(fr)addRep(fr,fr>0?(nv>1?'给老实人公道价':'收货给价公道'):(nv>1?'欺负老实人，街坊都在骂':'压价太狠，卖家到处抱怨'));
+    c.result=`以 ${fmt(price)} 收购「${c.item.name}」`+(fr>0?`，给价公道，声望 +${fr}`:fr<0?`，压价太狠，声望 −${-fr}`:'');
     if(orderFits(c.item)){const pay=G.order.pay;setTimeout(()=>toast(`这件符合悬赏，点顶部的悬赏条交货，报酬 ${fmt(pay)}`,'good'),700);}
     log(`收购「${c.item.name}」 −${fmt(price)}`,'r');
   }
@@ -1151,6 +1222,18 @@ function offerToSeller(o){
   if(noRoom(c)){toast(c.pawn?'当品柜已满':'仓库已满，先清理库存','bad');return;}
   if(o>G.credits){toast('现金不够','bad');return;}
   if(o>=c.ask)return dealBuy(c.ask);
+  const pk=c.pk,first=!c.tries;c.tries=(c.tries||0)+1;
+  const hold=lines=>{c.line=say(lines,{p:c.ask});c.was=null;c.flash='counter';sfx.click();UI.price=Math.min(UI.price,c.ask);render();};
+  if(pk==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);
+    return hold(['我说了，{p}，一口价。','{p}。少一个子儿都不卖。']);}
+  if(pk==='desperate'&&o>=c.min)return dealBuy(o);
+  if(pk==='impatient'){
+    if(first&&o>=c.min)return dealBuy(o);
+    const ins=o<c.min*.55;c.patience-=ins?2:1;if(c.patience<=0)return leave(ins);
+    if(!c.final){c.final=1;c.ask=Math.max(c.min,Math.round(c.min+(c.ask-c.min)*.4));c.min=c.ask-1;
+      return hold(['没空跟你磨！{p}，最后一口价。','{p}。行就行，不行我走了。']);}
+    return hold(['{p}！我说过了！','听不懂吗？{p}！']);
+  }
   const span=Math.max(1,c.ask-c.min);
   if(o>=c.min&&(o-c.min)/span>rand(.2,.6))return dealBuy(o);
   const insulted=o<c.min*.55,close=!insulted&&o<c.min&&o>=c.min*.85;
@@ -1168,8 +1251,9 @@ function offerToSeller(o){
 function showItem(id){
   const c=G.cust,it=G.inv.find(x=>x.id==id);if(!it||!c||c.done||c.type!=='buy'||!wants(c,it))return;
   c.item=it;const ap=apparent(it);
-  c.max=Math.round(ap*c.maxF*(G.prof==='appraiser'&&it.scanned&&!it.fake?1.15:1));
+  c.max=Math.round(ap*c.maxF*(G.prof==='appraiser'&&it.scanned&&!it.fake?1.15:1));c.max0=c.max;c.tries=0;c.final=0;if(!c.tac)c.tac=pickTacs(c);
   c.offer=Math.min(Math.round(c.max*.95),Math.round(ap*rand(.55,.8)));
+  if(c.pk==='stubborn')c.offer=Math.round(c.max*.88);
   const [,hi]=estRange(it);
   c.sliderMax=Math.max(c.offer+10,Math.round(Math.max(hi*1.8,c.offer*2.5)));
   UI.price=clamp(Math.round(Math.max(hi*1.05,c.offer*1.3)),c.offer,c.sliderMax);
@@ -1178,6 +1262,18 @@ function showItem(id){
 function priceToBuyer(p){
   const c=G.cust;if(!(p>0))return;
   if(p<=c.offer)return dealSell(c.offer);
+  const pk=c.pk,first=!c.tries;c.tries=(c.tries||0)+1;
+  const hold=lines=>{c.line=say(lines,{p:c.offer});c.was=null;c.flash='counter';sfx.click();UI.price=Math.max(UI.price,c.offer);render();};
+  if(pk==='stubborn'){c.patience--;if(c.patience<=0)return leave(false);
+    return hold(['我只出 {p}，不加。','{p}。多一个子儿都没有。']);}
+  if(pk==='desperate'&&p<=c.max)return dealSell(p);
+  if(pk==='impatient'){
+    if(first&&p<=c.max)return dealSell(p);
+    const ins=p>c.max*1.6;c.patience-=ins?2:1;if(c.patience<=0)return leave(ins);
+    if(!c.final){c.final=1;c.offer=Math.min(c.max,Math.round(c.offer+(c.max-c.offer)*.6));c.max=c.offer;
+      return hold(['没空跟你磨！{p}，最后出价。','{p}。卖就卖，不卖我走了。']);}
+    return hold(['{p}！我说过了！','听不懂吗？{p}！']);
+  }
   const span=Math.max(1,c.max-c.offer);
   if(p<=c.max&&(c.max-p)/span>rand(.2,.6))return dealSell(p);
   const insulted=p>c.max*1.6,close=!insulted&&p>c.max&&p<=c.max*1.15;
@@ -1192,39 +1288,78 @@ function priceToBuyer(p){
   UI.price=Math.max(UI.price,c.offer);
   render();
 }
-// 话术：每位顾客每种只能用一次。used: 1=奏效 2=没用
+// 话术：每位顾客给四种，每种只能用一次。used: 1=奏效 2=没用
 function tactic(t){
   const c=G.cust;if(!c||c.done||c.used[t]||!c.item)return;
-  const it=c.item,P=PERS[c.pk],sell=c.type==='sell',before=sell?c.ask:c.offer;let ok=true,cost=0;
-  const cutS=(a,m)=>{c.min=Math.max(2,Math.round(c.min*m));c.ask=Math.max(c.min+1,Math.round(c.ask*a));};
-  const upB=(m,o,keep)=>{if(keep)c.maxF*=m;c.max=Math.round(c.max*m);c.offer=Math.min(c.max,Math.round(c.offer*o));};
-  if(t==='chat'){
-    ok=Math.random()<P.chat+(G.prof==='talker'?.1:0);
-    if(ok){c.patience++;c.patMax=Math.max(c.patMax,c.patience);if(sell)cutS(.92,.88);else upB(1.1,1.06,true);c.line=pick(L.chatOk);}
-    else{cost=c.pk==='impatient'?1:0;c.line=pick(L.chatNo);}
+  const it=c.item,P=PERS[c.pk],pk=c.pk,sell=c.type==='sell',before=sell?c.ask:c.offer,k=tacOk(c,t);let ok=true,cost=0,keep=false,lie=pk==='naive'&&tacOk(c,t,true)===false;
+  const cutS=(a,m)=>{const fl=Math.max(2,Math.round((c.min0||c.min)*.6));c.min=Math.max(fl,Math.round(c.min*m));c.ask=Math.max(c.min+1,Math.round(c.ask*a));if(pk==='stubborn')c.min=c.ask-1;};
+  const upB=(m,o,kp)=>{const cap=Math.round((c.max0||c.max)*1.4);if(kp)c.maxF*=m;c.max=Math.min(cap,Math.round(c.max*m));c.offer=Math.min(c.max,Math.round(c.offer*o));};
+  const P_=()=>({p:sell?c.ask:c.offer});
+  const noProof=pk==='shrewd'&&!it.scanned&&['flaw','compare','pitch','lore','last'].includes(t);
+  if(noProof){ok=false;cost=1;c.line=pick(['没凭没据的，少来这套。先验了货再说。','空口无凭。你扫描过吗？']);}
+  else if(t==='chat'){
+    ok=k===true||Math.random()<P.chat+(G.prof==='talker'?.1:0);
+    if(ok){c.patience++;c.patMax=Math.max(c.patMax,c.patience);
+      if(pk==='chatty'&&!c.chat2){c.chat2=1;keep=true;}
+      if(sell)cutS(.92,.9);else upB(1.1,1.06,true);
+      c.line=pick(L.chatOk);}
+    else{cost=pk==='impatient'?1:0;c.line=pick(L.chatNo);}
   }else if(t==='flaw'){
-    ok=it.cond<.65;
-    if(ok){if(it.cond<.45)cutS(.68,.76);else cutS(.78,.84);c.line=say(L.flawOk,{p:c.ask});}
-    else{cost=1;c.line=pick(L.flawNo);}
+    if(pk==='chatty'){ok=false;cost=2;c.line='我把你当朋友，你居然挑我的刺！';}
+    else if(k){if(it.cond<.45)cutS(.68,.76);else cutS(.78,.84);c.line=say(L.flawOk,P_());}
+    else{ok=false;cost=1;c.line=pick(L.flawNo);}
   }else if(t==='doubt'){
-    if(c.knowsFake){cutS(.45,.5);it.suspect='fake';c.tell='对方的脸色一下子变了';c.line=say(L.doubtFake,{p:c.ask});}
-    else if(it.stolen){cutS(.7,.72);it.suspect='stolen';c.tell='对方明显慌了';c.line=say(L.doubtStolen,{p:c.ask});}
-    else if(it.fake){cutS(.85,.85);c.line=say(L.doubtUnsure,{p:c.ask});}
+    if(c.knowsFake){cutS(.45,.5);it.suspect='fake';c.tell='对方的脸色一下子变了';c.line=say(L.doubtFake,P_());}
+    else if(it.stolen){cutS(.7,.72);it.suspect='stolen';c.tell='对方明显慌了';c.line=say(L.doubtStolen,P_());}
+    else if(it.fake||pk==='naive'){if(!it.fake)lie=true;cutS(.85,.85);c.line=say(L.doubtUnsure,P_());}
     else{ok=false;cost=1;c.line=pick(L.doubtReal);}
+  }else if(t==='poor'){
+    if(k){cutS(.93,.94);c.line=say(['……行吧，看你也不容易。{p}。','小本生意是吧？那 {p}，不能再少了。'],P_());}
+    else{ok=false;cost=1;c.line=pick(['少装了，你柜台里的钱我都看见了。','哭穷？你这铺面可不像没钱的样子。']);}
+  }else if(t==='compare'){
+    if(k){cutS(.9,.92);c.line=say(['别家真这么便宜？……那 {p}。','行情我也听说了。{p} 吧。'],P_());}
+    else{ok=false;cost=1;c.line=pick(['那你去别家收啊。','少唬我，这东西现在紧俏着呢。']);}
+  }else if(t==='stall'){
+    if(k){cost=1;cutS(.92,.93);c.line=say(['……别不说话啊。{p}，行了吧？','你这么盯着我干嘛……{p}。'],P_());}
+    else{ok=false;cost=2;c.line=pick(['你到底做不做生意？！','哑巴了？我可没空陪你耗。']);}
+  }else if(t==='buyout'){
+    ok=Math.random()<({desperate:.8,naive:.75,chatty:.6,gambler:.6,greedy:.5,impatient:.5,shrewd:.4,stubborn:.15}[pk]||.5);
+    if(ok){const ap=apparent(it);c.pawn=0;c.redeem=false;
+      c.min=Math.max(4,Math.round(ap*rand(.45,.6)*(c.knowsFake?.4:it.stolen?.6:1)));c.ask=Math.max(c.min+2,Math.round(ap*rand(.95,1.25)*(it.stolen?.8:1)));
+      if(pk==='stubborn')c.min=c.ask-1;
+      c.ask0=c.ask;c.min0=c.min;c.tries=0;c.final=0;c.line=say(['……也行，反正我也不一定赎得起。卖断的话得 {p}。','你是真喜欢它啊。好吧，{p}，它归你。'],P_());
+      const [lo]=estRange(it);UI.price=clamp(Math.round(lo*.8),1,Math.max(1,Math.min(c.ask,G.credits)));}
+    else{cost=1;c.line=pick(['这是我的宝贝，只当不卖。','不卖。我还要赎回去的。']);}
+  }else if(t==='coin'){
+    ok=Math.random()<.5;sfx.coin();
+    if(ok){if(sell)cutS(.65,.7);else upB(1.3,1.22);c.line=say(['啧，手气真背……愿赌服输，{p}。','居然输了！行，{p}。'],P_());}
+    else{if(sell){c.ask=Math.round(c.ask*1.2);c.min=Math.min(c.ask-1,Math.round(c.min*1.15));}
+      else{c.maxF*=.88;c.max=Math.round(c.max*.88);c.offer=Math.min(c.max,Math.round(c.offer*.9));}
+      c.line=say(['哈哈，我赢了！现在是 {p}。','运气在我这边。{p}，愿赌服输哦。'],P_());}
   }else if(t==='pitch'){
-    ok=it.cond>.65||(it.rare&&!it.fake);
-    if(ok){if(it.cond>.85)upB(1.25,1.18);else upB(1.18,1.12);c.line=say(L.pitchOk,{p:c.offer});}
-    else{cost=1;c.line=pick(L.pitchNo);}
+    if(k){if(it.cond>.85)upB(1.25,1.18);else upB(1.18,1.12);c.line=say(L.pitchOk,P_());}
+    else{ok=false;cost=1;c.line=pick(L.pitchNo);}
   }else if(t==='warranty'){
-    c.warranty=true;upB(1.25,1.18);c.line=say(L.warranty,{p:c.offer});
+    c.warranty=true;upB(1.25,1.18);c.line=say(L.warranty,P_());
+  }else if(t==='lore'){
+    if(k){upB(1.1,1.07);c.line=say(['原来还有这段来历……那我出 {p}。','有故事的东西就是不一样。{p}。'],P_());}
+    else{ok=false;cost=1;c.line=pick(['这种东西能有什么来历。','故事就免了，说价钱。']);}
+  }else if(t==='last'){
+    if(k){upB(1.08,1.06);c.line=say(['就剩这一件了？……{p}，给我留着。','那我可得抓紧。{p}。'],P_());}
+    else{ok=false;cost=1;c.line=pick(['少唬我，你架子上明明还有同类的。','只剩一件？我刚才可都看见了。']);}
+  }else if(t==='cert'){
+    if(it.scanned&&it.fake){ok=false;cost=2;c.line='你自己的扫描单上写着“赝品”……当我不识字？';}
+    else if(k){upB(1.14,1.1);c.line=say(['有鉴定结果，那就放心了。{p}。','白纸黑字，是真品。我出 {p}。'],P_());}
+    else{ok=false;cost=1;c.line=pick(['鉴定单呢？空口无凭。','你自己都没验过，让我怎么信？']);}
   }
-  c.used[t]=ok?1:2;
+  if(lie&&ok){addRep(-1,'哄骗老实人');toast('对方信了，可你说的不是实话。声望 −1','warn');}
+  if(!keep)c.used[t]=ok?1:2;
   const after=sell?c.ask:c.offer;if(after!==before&&c.was==null)c.was=before;
   c.patience-=cost;
   if(c.patience<=0)return leave(false);
   c.flash=ok?'good':cost?'insult':'counter';
   if(ok)sfx.good();else if(cost)sfx.bad();else sfx.click();
-  if(c.type==='sell')UI.price=Math.min(UI.price,c.ask);else UI.price=Math.max(UI.price,c.offer);
+  if(sell)UI.price=Math.min(UI.price,c.ask);else UI.price=Math.max(UI.price,c.offer);
   render();
 }
 let scanning=false;
@@ -1262,8 +1397,10 @@ function deliver(id){
   const it=invItem(id),o=G.order;if(!it||!o||!orderFits(it)||busyItem(it))return;
   G.inv=G.inv.filter(x=>x!==it);
   if(it.fake){addRep(-5,'悬赏交了赝品');log(`订单验货：「${it.name}」是赝品，被没收`,'r');sfx.bad();toast('订单方验货发现是赝品！东西被没收，声望 −5','bad');}
-  else{G.credits+=o.pay;addRep(3,'完成悬赏订单');G.orders++;G.order=null;
-    log(`完成悬赏订单「${it.name}」 +${fmt(o.pay)}`,'g');sfx.coin();toast(`悬赏完成！+${fmt(o.pay)}，声望 +3`,'good');}
+  else if(o.src==='law'&&it.stolen){addRep(-5,'给官方悬赏交了赃物');align(-5);log(`官方验货：「${it.name}」是赃物，被没收`,'r');sfx.bad();toast('官方验货发现是赃物！东西被没收，声望 −5','bad');}
+  else{G.credits+=o.pay;addRep(3,'完成'+ordName(o));G.orders++;G.order=null;
+    if(o.src==='law')align(8);else if(o.src==='dark')align(-8);
+    log(`完成${ordName(o)}「${it.name}」 +${fmt(o.pay)}`,'g');sfx.coin();toast(`悬赏完成！+${fmt(o.pay)}，声望 +3${o.src==='law'?'，立场偏向守法':o.src==='dark'?'，立场偏向黑道':''}`,'good');}
   afterInvChange();
 }
 function afterInvChange(){const k=sheetKind;save();render();if(G.phase==='night')showNight();if(k==='order'){if(G.order)openOrder();else closeSheet();}else openInv();}
@@ -1499,10 +1636,10 @@ const TOUR=[
  ['','欢迎来到星港当铺','你继承了叔叔的小当铺，也继承了欠银行的债。<b>低价收货、高价卖出</b>，在期限内把债还清。下面用一分钟带你认一遍屏幕。'],
  ['.hud-stats','钱、债、声望','<b>现金</b>是本钱。<b>债务</b>在每晚打烊后还。<b>声望</b>越高，顾客越多、上门的货越值钱、买家出价越高。点「债务」「声望」能看详细规则。'],
  ['#queue','今天的顾客','每天大约 10 位顾客，一半来卖东西，一半来买东西。接待完就可以打烊。'],
- ['#want,#pat','先看清对方来干什么','左边的牌子写着这位是<b>卖家</b>（把货卖给你）、<b>买家</b>（买你的货）还是来<b>典当</b>的。右边的圆点是对方的耐心，谈不拢会减少，减完就走人。'],
+ ['#want,#pat,#plate','先看清对方来干什么','左边的牌子写着这位是<b>卖家</b>（把货卖给你）、<b>买家</b>（买你的货）还是来<b>典当</b>的。右边的圆点是对方的耐心，谈不拢会减少，减完就走人。下面的名牌写着对方的<b>性格</b>和对付的窍门。'],
  ['#icard','看货','这是正在谈的货。估值只是个范围，目测看不出赝品和赃物。点右边的<b>扫描</b>可以验明真假，但每天次数有限。'],
  ['.pctl,.rngw','定价','拖滑块或点加减号定你的价。收货时出得越低越赚，但太低对方会生气。滑到金色的「公道价」刻度以上成交，声望 +1。'],
- ['.chips','话术','每位顾客每种话术只能用一次。亮金边的表示这次用了管用；用错了会扣对方的耐心。'],
+ ['.chips','话术','每位顾客给你四种话术，每种只能用一次。用对了对方让价，用错了扣耐心。每一招什么时候管用，点顾客的名牌能看到。只有轻松难度会用金边标出管用的招。'],
  ['#panel .row:last-child','成交或送客','<b>我出价</b>是按你定的价还价；<b>照价收下</b>是直接答应对方的要价。实在谈不拢就点左边的<b>送客</b>，不掉声望，之后还能花一点钱到门口再揽一位新顾客。'],
  ['#invBtn','库存','收来的货都在这里。可以扫描、放进橱窗招买家、批发换现金、交悬赏。买家上门时，也是从库存里挑一件给对方看。'],
  ['#bounty','悬赏订单','有人高价求购某一类真品。收到合适的货，点这一条就能交货领赏。货品上带「悬赏」标签的就是它要的。'],
@@ -1559,7 +1696,7 @@ function openInv(){
   if(!G)return;
   const c=G.cust,choosing=c&&!c.done&&c.type==='buy'&&!c.item,o=G.order;
   let h=`<div class="sub invhelp">收来的货都在这里。每件货可以<b>扫描</b>验真假、<b>放进橱窗</b>招买家、<b>批发</b>马上换现金（只给一半价）。买家上门时，也是从这里挑货给对方看。</div>`;
-  if(o)h+=`<div class="order">${ic('star')} <b>悬赏订单</b>　${o.cat}类真品一件，成色不能是“破旧不堪”。<br>报酬 <b class="num">${fmt(o.pay)}</b> · 第 ${o.due} 天打烊前交货。符合的货下面有「交悬赏」按钮；交赝品会被没收。</div>`;
+  if(o)h+=`<div class="order">${ic('star')} <b>${ordName(o)}</b>　${o.cat}类真品一件，成色不能是“破旧不堪”。<br>报酬 <b class="num">${fmt(o.pay)}</b> · 第 ${o.due} 天打烊前交货。符合的货下面有「交悬赏」按钮；交赝品会被没收。</div>`;
   const hot=knownHot();if(hot.length)h+=`<div class="order hot">${ic('alert')} ${hotWarn(hot.length)}</div>`;
   for(const it of G.inv){
     const match=choosing&&wants(c,it),busy=busyItem(it);
@@ -1584,8 +1721,8 @@ function openInv(){
 }
 function openOrder(){
   const o=G&&G.order;if(!o)return;const fits=G.inv.filter(orderFits);
-  openSheet('order','悬赏订单',`<div class="order">${ic('star')} 有人出 <b class="num">${fmt(o.pay)}</b> 求购一件<b>${o.cat}类真品</b>，成色不能是“破旧不堪”。<br>
-   第 ${o.due} 天打烊前交货都算数（今天是第 ${G.day} 天）；过期作废，不罚。完成后声望 +3。<br>交赝品会被没收，声望 −5，所以最好先扫描。声望越高，悬赏报酬越高。</div>`
+  openSheet('order',ordName(o),`<div class="order">${ic('star')} 有人出 <b class="num">${fmt(o.pay)}</b> 求购一件<b>${o.cat}类真品</b>，成色不能是“破旧不堪”。<br>
+   第 ${o.due} 天打烊前交货都算数（今天是第 ${G.day} 天）；过期作废，不罚。完成后声望 +3。<br>交赝品会被没收，声望 −5，所以最好先扫描。声望越高，悬赏报酬越高。<br>${o.src==='law'?'<b>官方悬赏</b>：完成后立场偏向守法。交赃物会被没收，声望 −5。':o.src==='dark'?'<b>黑市悬赏</b>：报酬高三成，完成后立场偏向黑道。赃物也收。':'<b>商会悬赏</b>：不影响立场。'}</div>`
    +(fits.length?`<div class="sub" style="margin-bottom:8px">库存里符合的货：</div>`+fits.map(it=>`<div class="invrow match" data-item="${it.id}"><div class="top">${ibox(it)}
      <div class="imeta"><b>${it.name}</b>${tagsOf(it)}<div class="sub">${condWord(it.cond)} · 进价 <span class="num">${fmt(it.cost)}</span> · 估 <span class="est num">${estText(it)}</span></div></div></div>
      <div class="acts"><button class="btn sm warn" data-act="deliver" data-id="${it.id}" ${busyItem(it)?'disabled':''}>交货领赏 <span class="num">+${fmt(o.pay)}</span></button>
@@ -1616,8 +1753,8 @@ function openRep(){
   if(!G)return;const T=repT();
   openSheet('rep','声望',`<div class="help"><p>现在是 <b>${Math.round(G.rep)}</b>（${T.n}）。声望决定上门的货值不值钱、每天来多少顾客、买家肯出多少钱，悬赏报酬也跟着涨。新店从「无名小店」做起。</p></div>
    <div class="tiers">${REPT.map((t,i)=>`<div class="tier ${t===T?'cur':''}"><i>${'★'.repeat(t.s)}</i><b>${t.n}<br><small class="num">${i?t.min+'–'+(REPT[i-1].min-1):t.min+' 以上'}</small></b><span>${repFx(t)}</span></div>`).join('')}</div>
-   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1；拒收问题货 +1；包退的货是真品 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
-   <p><b>怎么掉</b>　把顾客谈崩 −1，出价离谱气走人 −3；收货压价太狠 −1；赶走流浪儿 −1；赶走稽查员 −2；卖出的赝品被发现 −8，包退的 −10；海关查出赃物 −6；卖出的赃物被失主认出 −3；悬赏交赝品 −5。</p>
+   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1（对天真的顾客 +2）；拒收问题货 +1；包退的货是真品 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
+   <p><b>怎么掉</b>　把顾客谈崩 −1，出价离谱气走人 −3；收货压价太狠 −1（对天真的顾客 −2）；赶走流浪儿 −1；赶走稽查员 −2；卖出的赝品被发现 −8，包退的 −10；海关查出赃物 −6；卖出的赃物被失主认出 −3；悬赏交赝品 −5。</p>
    <p>声望低于 10 时，每天早上自动回升 2。</p></div>
    <h3 style="margin-top:6px">最近变化</h3>${G.repLog.length?G.repLog.map(r=>`<div class="rlog"><span>第${r.day}天　${r.why}</span><b class="num ${r.d>0?'g':'r'}">${r.d>0?'+':'−'}${Math.abs(r.d)}</b></div>`).join(''):'<div class="sub">还没有变化。</div>'}`);
 }
@@ -1649,15 +1786,18 @@ function openHelp(){
    <p><b>收货</b>　卖家上门时，用滑块或加减键定出价。出价越接近对方要价越容易成交；压得太狠对方会生气，耐心耗尽就走人，还会掉声望。滑块上金色的「公道价」刻度以上成交，声望 +1。</p>
    <p><b>卖货</b>　买家上门时，从库存里挑一件给对方看，再往上要价。</p>
    <p><b>送客和揽客</b>　不想谈就点「送客」，不掉声望。顾客没成交就走了的话，可以花 ₡10 起到门口再揽一位新顾客，每天最多 4 次，一次比一次贵。</p>
-   <p><b>话术</b>　每位顾客每种只能用一次，用对了价格会明显松动，用错了扣耐心。<br>挑毛病：成色是「磨损明显」或「破旧不堪」才管用，越旧砍得越狠（最多砍三成）。<br>盘问来历：卖家心虚（赝品、赃物）会当场大降价，还能看出货有问题；东西清白对方会生气。<br>套近乎：看性格，天真的吃这套，急躁的不吃；成功后价格让一成左右，耐心 +1。<br>夸货：成色是「轻微使用」或「近乎全新」才管用，买家多出两成左右。<br>管用的「挑毛病」「夸货」按钮会亮金边。<br>承诺包退：买家多出两成半，但如果是赝品要全额退款；是真品的话当晚声望 +1。</p>
-   <p><b>性格</b>　贪婪的难砍，天真的好说话，窘迫的底价低，精明的不吃套近乎，急躁的耐心少。点顾客的名牌可以看提示。</p>
+   <p><b>话术</b>　每位顾客随机给你四种，每种只能用一次，用对了价格会明显松动，用错了扣耐心。点顾客的名牌能看这四招各自什么时候管用。只有轻松难度会用金边标出当前管用的招。<br>
+   收货时：挑毛病（货旧才管用）、盘问来历（卖家心虚才管用）、套近乎（看性格）、哭穷（你现金不到要价两倍才可信）、比价（这类货在跌价，或你已有同类货）、晾一晾（对方耐心 3 点以上）。<br>
+   卖货时：夸货（成色好或稀有款）、承诺包退（赝品要全额退款）、套近乎、讲来历（古董、艺术类）、只剩一件（库存里这类只有一件）、亮鉴定（扫描过的真品）。<br>
+   来典当的顾客多一招「劝卖」：劝对方直接卖断给你，成不成看性格。</p>
+   <p><b>性格</b>　写在顾客名牌上，每种有自己的规矩。<br>贪婪：作势送客，对方会叫住你并让一大步。<br>天真：说什么都信，但说瞎话每次声望 −1；公道价声望 +2，压太狠 −2。<br>窘迫：价够到底线就立刻成交。<br>精明：多数话术要先扫描才管用。<br>急躁：只有第一口价好谈，之后一分不让。<br>话痨：套近乎必成、能用两次；挑毛病会翻脸。<br>赌徒：可以抛硬币赌价。<br>倔强：还价没用，只有话术能说动。</p>
    <p><b>库存</b>　右上角的「库存」按钮。收来的货都在里面，可以扫描、放进橱窗、修复、批发换现金、交悬赏。</p>
    <p><b>扫描</b>　每天次数有限。目测估值只是范围，看不出赝品和赃物。留意顾客的神情：要价明显偏低、神色慌张的，多半有问题。</p>
    <p><b>赝品</b>　只值真品的一成不到。卖出去有一半可能被发现，要退赔、大掉声望。</p>
    <p><b>赃物</b>　收得便宜，能按正价卖；但留在仓库过夜可能被海关没收罚款，件数越多越容易被查。</p>
    <p><b>声望</b>　新店从「无名小店」做起，第一天上门的都是便宜货。声望越高，上门的货越值钱、顾客越多、买家出价越高。点顶部的「声望」看档位和所有涨跌方式。</p>
    <p><b>典当</b>　有的顾客不是卖，而是押东西借钱。到期对方来赎，你赚三成利息；不来赎，东西归你。押赝品的人不会回来。</p>
-   <p><b>悬赏</b>　屏幕上方的金色长条。交一件指定类别的真品就能领赏，点长条交货。符合的货带金色「悬赏」标签。</p>
+   <p><b>悬赏</b>　屏幕上方的长条。交一件指定类别的真品就能领赏，点长条交货。符合的货带金色「悬赏」标签。悬赏有三种：商会的不影响立场；官方的让立场偏守法，不收赃物；黑市的报酬高三成，让立场偏黑道。</p>
    <p><b>特殊来客</b>　稽查员、逃亡者、帮会、行商等不讲价，只让你做选择。选择会改变立场（点顶部的立场按钮查看），守法和黑道各有好处。</p>
    <p><b>橱窗</b>　在库存里把一件货放进橱窗，会吸引专门冲它来的买家，一进门就直接出价，而且出得更高；但也更招贼。</p>
    <p><b>打烊</b>　先看夜间报告（退货、海关、失窃都在这里），再还债、买升级。升级每项分几级，从几十块起步，越升越贵。别把现金全还光，要留本钱进货。</p>
@@ -1689,8 +1829,8 @@ function renderHud(){
   $('#queue').innerHTML=`<span>顾客 <b class="num">${seen}/${G.dayN}</b></span><div class="qb"><i style="width:${(seen-(active?.5:0))/G.dayN*100}%"></i></div>`;
   $('#invBtn').innerHTML=`库存 <span class="num">${G.inv.length}/${G.cap}</span>`;
   const bo=$('#bounty'),o=G.order;bo.hidden=!o;
-  if(o){const fit=G.inv.filter(orderFits).length,dl=o.due-G.day;bo.className=fit?'ready':'';
-    bo.innerHTML=`${ic('star')}<span><b>悬赏</b>　${o.cat}类真品一件　<b class="num">${fmt(o.pay)}</b></span><em>${fit?'有货可交 ›':dl<=0?'今天截止 ›':`还剩 ${dl+1} 天 ›`}</em>`;}
+  if(o){const fit=G.inv.filter(orderFits).length,dl=o.due-G.day;bo.className=(fit?'ready ':'')+(o.src||'');
+    bo.innerHTML=`${ic('star')}<span><b>${ordName(o)}</b>　${o.cat}类真品一件　<b class="num">${fmt(o.pay)}</b></span><em>${fit?'有货可交 ›':dl<=0?'今天截止 ›':`还剩 ${dl+1} 天 ›`}</em>`;}
   const al=$('#alBtn'),a=G.align;al.className='hbtn al '+(a>=30?'law':a<=-30?'dark':'');al.innerHTML=(a>=30?'守法':a<=-30?'黑道':'中立');
 }
 function typeLine(el,text){
@@ -1712,7 +1852,8 @@ function renderScene(){
     else if(c.flash==='insult')box.classList.add('shake');
   }
   const P=PERS[c.pk];
-  $('#plate').innerHTML=`<b>${c.name}</b><span>${SPECIES[c.look.sp].n}</span>`+(c.ev?`<i class="pers" style="background:#fff">${EVN[c.ev]}</i>`:`<i class="pers" style="background:${P.col}">${P.n} ›</i>`);
+  $('#plate').innerHTML=c.ev?`<b>${c.name}</b><span>${SPECIES[c.look.sp].n}</span><i class="pers" style="background:#fff">${EVN[c.ev]}</i>`
+    :`<b>${c.name}</b><i class="pers" style="background:${P.col}">${P.n}</i><span>${P.h} ›</span>`;
   const pat=$('#pat');pat.hidden=!!c.done||!!c.ev;pat.className=c.patience<=1&&c.patMax>1?'low':'';
   pat.innerHTML='耐心'+Array.from({length:c.patMax},(_,i)=>`<i class="${i<c.patience?'on':i===c.patience&&c.flash?'pop':''}"></i>`).join('');
   const want=$('#want');let wt='',wc='';
@@ -1760,10 +1901,9 @@ function setPrice(v,quiet){
 }
 function priceNote(){
   const c=G&&G.cust,m=$('#mainP');if(!m||!c)return;let t=fmt(UI.price),k='';
-  if(c.type==='sell'&&!c.pawn&&c.item){if(UI.price>=fairLine(c)){t+=' · 声望+1';k='fg';}else if(UI.price<lowLine(c)){t+=' · 声望−1';k='fr';}}
+  if(c.type==='sell'&&!c.pawn&&c.item){const nv=c.pk==='naive'?2:1;if(UI.price>=fairLine(c)){t+=' · 声望+'+nv;k='fg';}else if(UI.price<lowLine(c)){t+=' · 声望−'+nv;k='fr';}}
   m.textContent=t;m.className='num '+k;
 }
-const TACTICS={sell:[['flaw','挑毛病'],['doubt','盘问来历'],['chat','套近乎']],buy:[['pitch','夸货'],['warranty','承诺包退'],['chat','套近乎']]};
 function renderPanel(){
   const c=G.cust,el=$('#panel');let h='';
   if(!c||c.done){
@@ -1778,7 +1918,7 @@ function renderPanel(){
     h+=`<div class="choices">${c.choices.map((ch,i)=>`<button class="btn ${i===0?'pri':''}" data-act="ev" data-id="${i}" ${ch.dis?'disabled':''}><span>${ch.label}</span><small class="num">${ch.sub||''}</small></button>`).join('')}</div>`;
   }else if(c.type==='sell'||c.item){
     const sell=c.type==='sell',[lo,hi]=priceBounds(),full=sell&&noRoom(c),cur=sell?c.ask:c.offer;
-    const wasH=c.was?`<s class="num">${fmt(c.was)}</s>`:'',dlH=c.was?`<i class="dl num">${cur<c.was?'−':'+'}${Math.round(Math.abs(cur-c.was)/c.was*100)}%</i>`:'';
+    const wasH=c.was?`<s class="num">${fmt(c.was)}</s>`:'',dlH=c.was?`<i class="dl num ${(cur>c.was)===sell?'bad':''}">${cur<c.was?'−':'+'}${Math.round(Math.abs(cur-c.was)/c.was*100)}%</i>`:'';
     UI.price=clamp(UI.price||lo,lo,hi);
     const fp=sell&&!c.pawn?clamp((fairLine(c)-lo)/Math.max(1,hi-lo),0,1):-1,fmk=fp<0?'':`<i class="fmk ${fp>.6?'rt':''}" style="left:calc(14px + (100% - 28px) * ${fp.toFixed(3)})"></i>`;
     const rb=c.pawn?'<i class="rb pawn">典当</i>':sell?'<i class="rb sell">卖家</i>':'<i class="rb buy">买家</i>';
@@ -1790,7 +1930,7 @@ function renderPanel(){
       <label class="pbox"><small>${c.pawn?'你借':sell?'你出':'你要'}</small><input id="amt" type="text" inputmode="numeric" pattern="[0-9]*" value="${UI.price}" aria-label="价格"></label>
       <button class="step" data-step="1" aria-label="增加">+</button></div>
      <div class="rngw"><input type="range" id="rng" min="${lo}" max="${hi}" value="${UI.price}" aria-label="价格滑块">${fmk}</div>
-     <div class="chips">${TACTICS[c.type].map(([k,n])=>`<button class="chip ${c.used[k]===1?'ok':c.used[k]===2?'no':(k==='flaw'&&c.item.cond<.65)||(k==='pitch'&&c.item.cond>.65)?'hint':''}" data-act="tactic" data-id="${k}" ${c.used[k]?'disabled':''}>${n}${c.used[k]===1?' ✓':c.used[k]===2?' ✗':''}</button>`).join('')}</div>
+     <div class="chips c4">${(c.tac||[]).map(k=>`<button class="chip ${c.used[k]===1?'ok':c.used[k]===2?'no':G.diff==='easy'&&tacOk(c,k,true)===true?'hint':''}" data-act="tactic" data-id="${k}" ${c.used[k]?'disabled':''}>${TAC[k]}${c.used[k]===1?' ✓':c.used[k]===2?' ✗':''}</button>`).join('')}</div>
      <div class="row"><button class="btn sq" data-act="dismiss" aria-label="送客">${ic('door')}<small>送客</small></button>
       <button class="btn pri grow" data-act="${sell?'offer':'price'}" ${full?'disabled':''}><span class="col">${c.pawn?'放款':sell?'我出价':'我开价'}<small class="num" id="mainP">${fmt(UI.price)}</small></span></button>
       <button class="btn good grow" data-act="${sell?'acceptAsk':'acceptOffer'}" ${sell&&(full||c.ask>G.credits)?'disabled':''}><span class="col">${c.pawn?'照数借出':sell?'照价收下':'照价卖出'}<small class="num">${fmt(sell?c.ask:c.offer)}</small></span></button></div>`;
@@ -1819,7 +1959,9 @@ const ACT={
   ev:id=>chooseEv(+id),
   showcase:id=>{G.showcase=G.showcase==id?null:+id;afterInvChange();},
   pers:()=>{const c=G&&G.cust;if(!c||c.ev)return;const P=PERS[c.pk];
-    openSheet('pers',`${P.n}的顾客`,`<div class="help"><p>${PTIP[c.pk]}</p><p><b>耐心</b>　${c.name} 现在还有 ${Math.max(0,c.patience)} 点耐心。每次还价没谈拢扣 1 点，出价太离谱扣 2 点，扣完就走人，你还会掉声望。</p></div>`);},
+    openSheet('pers',`${P.n}的${SPECIES[c.look.sp].n}`,`<div class="help"><p><b>${P.n}</b>　${PTIP[c.pk]}</p>
+     <p><b>耐心</b>　${c.name} 现在还有 ${Math.max(0,c.patience)} 点耐心。每次还价没谈拢扣 1 点，出价太离谱扣 2 点，话术用错也会扣；扣完就走人，你还会掉声望。</p></div>
+     ${c.tac?`<h3 style="margin:4px 0 8px">这位顾客能用的话术</h3>${c.tac.map(k=>`<p class="tacl"><b>${TAC[k]}</b>　${TACTIP[k]}</p>`).join('')}<div class="sub">每种只能用一次。几招叠加也有底：最多把对方的底线压低四成，或把买家的上限抬高四成。</div>`:''}`);},
   align:openAlign,rep:openRep,debtInfo:openDebt,buyStar,goFree,
   nightOk:()=>{G.nightStep=1;save();showNight();},
   nightBack:()=>{G.nightStep=0;showNight();},
@@ -1844,6 +1986,12 @@ const ACT={
   deliver:id=>deliver(id),
   dismiss:()=>{const c=G.cust;if(!c||c.done)return;const it=c.item;
     const bad=c.type==='sell'&&it&&((it.scanned&&(it.fake||it.stolen))||it.suspect);
+    if(!bad&&c.pk==='greedy'&&!c.bluffed&&it){c.bluffed=1;const sell=c.type==='sell',before=sell?c.ask:c.offer;
+      if(sell){c.min=Math.max(2,Math.round(c.min*.92));c.ask=Math.max(c.min+1,Math.round(c.ask*.82));UI.price=Math.min(UI.price,c.ask);}
+      else{c.maxF*=1.06;c.max=Math.round(c.max*1.06);c.offer=Math.min(c.max,Math.round(c.offer*1.15));UI.price=Math.max(UI.price,c.offer);}
+      if(c.was==null)c.was=before;
+      c.line=say(sell?['等等等等！别急着赶人嘛……{p}，这总行了吧？','哎——回来回来！{p}，算我亏本。']:['别别别！我加，我加还不行吗？{p}！','等一下！{p}，这是我的诚意。'],{p:sell?c.ask:c.offer});
+      c.flash='good';sfx.good();toast('对方叫住了你，主动让了一步。再点送客就真走了','good');return render();}
     c.line=pick(c.type==='buy'&&!G.inv.some(i=>wants(c,i))?L.noMatch:L.refuse);
     if(bad){addRep(1,'拒收问题货');c.result='你拒收了这件问题货，声望 +1';}else c.result='你客气地送走了顾客，声望不变';
     log(`送走了 ${c.name}`);finish('left');},
