@@ -406,6 +406,24 @@ h3{margin:20px 0 8px;font-size:14px;color:var(--cyan);letter-spacing:1px;display
   #bubble{min-height:40px}
   .btn.tout{min-height:42px}
 }
+/* v8 */
+.tag.ban{color:#fff;background:#b0306f}
+.tag.safe{color:var(--ink);background:#9fb4ff}
+#want.ban{border-color:#ff5d9e;color:#ffc0dc;background:#3a0f2ad9}
+.exg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px 8px;font-size:11.5px;line-height:1.4;color:var(--dim);min-width:0}
+.ex b{font-size:14px;color:var(--text);margin-right:5px}
+.ex .num{font-weight:800;color:var(--dim)}
+.ex.up{border-color:#1f6a4a}.ex.up .num{color:var(--green)}
+.ex.dn{border-color:#7a2a44}.ex.dn .num{color:#ff9bb0}
+.ex small{display:block;font-size:10.5px}
+.ex i{font-style:normal;color:var(--gold);font-size:10.5px}
+.mkrow{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.mkrow span{font-size:11.5px;padding:2px 7px;border-radius:7px;background:#ffffff10;color:var(--dim)}
+.mkrow span.up{color:var(--green);background:#0f3324}
+.mkrow span.dn{color:#ff9bb0;background:#2a1422}
+.safeh{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:12.5px;line-height:1.5;color:#cfd8ff;background:#1b2752;border:1px solid #3a4a8a;border-radius:11px;padding:7px 10px}
+.safeh .ic{width:16px;height:16px;flex:none;color:#9fb4ff}
 /* v7 */
 .tip .dl.bad{background:#3a1420;color:#ff9bb0}
 #plate{max-width:94%}
@@ -570,8 +588,18 @@ batt:`<rect x="25" y="4" width="14" height="8" rx="2.5" fill="url(#gMetal)" ${S}
 dark:`<g transform="rotate(-30 32 32)"><rect x="4" y="19" width="56" height="26" rx="13" fill="#b9c6e6" opacity=".3"/><ellipse cx="32" cy="32" rx="14" ry="4.5" fill="none" stroke="#b9a5ff" stroke-width="1.8"/><circle cx="32" cy="32" r="8.5" fill="#04050c" stroke="#a78bfa" stroke-width="1.5"/><path d="M19 33a13 4.5 0 0 0 26 0" fill="none" stroke="#b9a5ff" stroke-width="1.8"/><rect x="4" y="19" width="56" height="26" rx="13" fill="none" ${S}/><path d="M4 32a13 13 0 0 1 13-13v26A13 13 0 0 1 4 32z" fill="url(#gMetal)" ${S}/><path d="M60 32a13 13 0 0 0-13-13v26a13 13 0 0 0 13-13z" fill="url(#gMetal)" ${S}/><path d="M22 23.5h20" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/></g>`,
 sail:`<path d="M7 51L30 5l27 31-15 4 5 13-19-7z" fill="url(#gRainbow)" ${S}/><path d="M30 5l-2 41M17 31l35 3M12 41l32-1M42 19L20 52" stroke="#fff" stroke-width="1.1" opacity=".6"/><path d="M52 8l1.4 3.6L57 13l-3.600 1.400L52 18l-1.400-3.600L47 13l3.600-1.400z" fill="#fff"/>`,
 fuel:`<rect x="24" y="3" width="16" height="8" rx="2.5" fill="url(#gMetal)" ${S}/><rect x="13" y="10" width="38" height="51" rx="8" fill="#ff9d5d" ${S}/><path d="M14 25h36v13H14z" fill="#0a1024"/><path d="M17 38l8.5-13h6.5l-8.5 13zM31 38l8.5-13H46l-8.500 13z" fill="#ffc857"/><rect x="20" y="45" width="24" height="8" rx="4" fill="#0a1024"/><rect x="22" y="47" width="14" height="4" rx="2" fill="#4de1ff"/><path d="M19 15.5v6" stroke="#fff" stroke-width="2.6" opacity=".55" stroke-linecap="round"/>`,
+brooch:`<path d="M9 52C19 46 26 39 32 32" fill="none" stroke="#0a1024" stroke-width="9" stroke-linecap="round"/><path d="M9 52C19 46 26 39 32 32" fill="none" stroke="#7ad9ff" stroke-width="4.5" stroke-linecap="round"/><path d="M40 7l5.2 11 12 1.6-8.800 8.300 2.300 12L40 34l-10.700 5.900 2.300-12-8.800-8.300 12-1.600z" fill="url(#gGold)" ${S}/><circle cx="40" cy="24.500" r="4.500" fill="#ff7ad9" ${S}/><path d="M34 13l2.500-4" stroke="#fff" stroke-width="2" opacity=".8" stroke-linecap="round"/>`,
+ring:`<ellipse cx="32" cy="42" rx="17" ry="15" fill="none" stroke="#0a1024" stroke-width="10"/><ellipse cx="32" cy="42" rx="17" ry="15" fill="none" stroke="#e7b84a" stroke-width="5.500"/><path d="M21 22l11-14 11 14-11 10z" fill="url(#gPearl)" ${S}/><path d="M21 22h22M32 8v24" stroke="#fff" stroke-width="1.200" opacity=".6"/><path d="M50 7l1.400 3.600L55 12l-3.600 1.400L50 17l-1.400-3.600L45 12l3.600-1.400z" fill="#fff" stroke="#0a1024" stroke-width="1"/>`,
+neck:`<path d="M9 6C9 36 55 36 55 6" fill="none" stroke="#0a1024" stroke-width="6.500" stroke-linecap="round"/><path d="M9 6C9 36 55 36 55 6" fill="none" stroke="#e7b84a" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 4.500"/><circle cx="32" cy="29" r="3.200" fill="url(#gGold)" ${S}/><path d="M32 31l9.500 11L32 59l-9.500-17z" fill="url(#gCyan)" ${S}/><path d="M22.500 42h19M32 31v28" stroke="#fff" stroke-width="1.200" opacity=".6"/>`,
+diamond:`<path d="M16 20h32l11 13-27 27L5 33z" fill="#1a1440" ${S}/><path d="M16 20l6 13h20l6-13M5 33h54M22 33l10 27 10-27M27 20l-5 13M37 20l5 13" stroke="#a78bfa" stroke-width="1.500" fill="none"/><circle cx="32" cy="32" r="5" fill="#04050c" stroke="#ff7ad9" stroke-width="1.600"/><path d="M51 4l1.700 4.300L57 10l-4.300 1.700L51 16l-1.700-4.300L45 10l4.300-1.700z" fill="#fff" stroke="#0a1024" stroke-width="1"/>`,
+ticket:`<g transform="rotate(-12 32 32)"><path d="M5 18h54v10a4 4 0 0 0 0 8v10H5V36a4 4 0 0 0 0-8z" fill="#f4e7c3" ${S}/><path d="M43 19v26" stroke="#9a8a62" stroke-width="1.600" stroke-dasharray="3 3"/><path d="M11 25h20M11 31h26M11 37h14" stroke="#6b4a8f" stroke-width="2.400" stroke-linecap="round"/><circle cx="51" cy="32" r="4.500" fill="none" stroke="#d0413a" stroke-width="2"/><path d="M51 29.500v5M48.500 32h5" stroke="#d0413a" stroke-width="1.600" stroke-linecap="round"/></g>`,
+mbox:`<path d="M9 34l7-19h40l-7 19z" fill="#7a3b2e" ${S}/><rect x="9" y="34" width="40" height="23" rx="3" fill="url(#gClay)" ${S}/><path d="M17 43h24M17 49h14" stroke="#7a3b2e" stroke-width="2.200" stroke-linecap="round"/><circle cx="33" cy="24" r="5" fill="url(#gGold)" ${S}/><path d="M49 46h8v-8" fill="none" stroke="#0a1024" stroke-width="3" stroke-linecap="round"/><circle cx="57" cy="36" r="3" fill="#ff7ad9" ${S}/><path d="M24 10V3l7 2" fill="none" stroke="#4de1ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="10" r="2.500" fill="#4de1ff"/>`,
+moss:`<rect x="22" y="4" width="20" height="9" rx="2.500" fill="url(#gClay)" ${S}/><path d="M18 13h28v38a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8z" fill="#dff6ff" opacity=".25"/><path d="M18 41q4-7 8-2t7-3 6 2 7-2v15a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8z" fill="url(#gGreen)"/><circle cx="26" cy="32" r="1.800" fill="#c9ffd6"/><circle cx="35" cy="26" r="1.400" fill="#c9ffd6"/><circle cx="39" cy="33" r="1.200" fill="#c9ffd6"/><path d="M18 13h28v38a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8z" fill="none" ${S}/><path d="M23 18v15" stroke="#fff" stroke-width="2" opacity=".5" stroke-linecap="round"/>`,
+dice:`<path d="M32 5l23 13v27L32 59 9 45V18z" fill="url(#gDark)" ${S}/><path d="M9 18l23 13 23-13M32 31v28" stroke="#0a1024" stroke-width="2.200" fill="none"/><g fill="#4de1ff"><circle cx="32" cy="18" r="3.200"/><circle cx="17" cy="31" r="2.700"/><circle cx="24" cy="46" r="2.700"/><circle cx="40" cy="35" r="2.700"/><circle cx="47" cy="31" r="2.700"/><circle cx="43.500" cy="45" r="2.700"/></g>`,
+toba:`<path d="M39 8q3-4 0-7M47 9q3-4 0-7" stroke="#c9d4ea" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/><rect x="9" y="21" width="46" height="35" rx="5" fill="#8a5a2b" ${S}/><rect x="9" y="13" width="46" height="13" rx="4" fill="#c98a3a" ${S}/><path d="M32 31c10 0 14 6 14 12-10 1-15-4-14-12zM32 31c-10 0-14 6-14 12 10 1 15-4 14-12z" fill="#58e6a0" ${S}/><path d="M32 31v18" stroke="#0a1024" stroke-width="1.600"/><path d="M15 17.500h10" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/>`,
+organ:`<path d="M22 14V9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v5" fill="none" stroke="#0a1024" stroke-width="5.500"/><path d="M22 14V9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v5" fill="none" stroke="#c9d4ea" stroke-width="2.200"/><rect x="6" y="14" width="52" height="43" rx="6" fill="#eef3ff" ${S}/><path d="M6 20a6 6 0 0 1 6-6h40a6 6 0 0 1 6 6v6H6z" fill="#4de1ff" ${S}/><path d="M26 33v16M18 41h16" stroke="#e0354b" stroke-width="6" stroke-linecap="round"/><path d="M46 34v12M40.800 37l10.400 6M51.200 37l-10.400 6" stroke="#4aa8d8" stroke-width="1.800" stroke-linecap="round"/><circle cx="13" cy="20" r="1.800" fill="#fff"/>`,
 };
-const CATS=['科技','古董','武器','生物','艺术','能源'];
+const CATS=['科技','古董','珠宝','生物','艺术','能源'],BAN='违禁';
 const ITEMS=[
  {k:'core',n:'跃迁引擎核心',c:'科技',v:[300,900],d:'拆自一艘退役货船，还带着淡淡的臭氧味。'},
  {k:'band',n:'神经接口头环',c:'科技',v:[150,500],d:'戴上后能听见邻舱的梦，副作用未知。'},
@@ -581,10 +609,10 @@ const ITEMS=[
  {k:'coin',n:'古地球硬币',c:'古董',v:[60,400],d:'一面是星星，另一面也是星星。'},
  {k:'watch',n:'机械怀表',c:'古董',v:[150,600],d:'不需要电，靠发条运行——太神奇了。'},
  {k:'sat',n:'远古卫星残片',c:'古董',v:[200,800],d:'在小行星带漂流了三百年。'},
- {k:'gun',n:'等离子手枪',c:'武器',v:[150,500],d:'保险栓用胶带缠着。'},
- {k:'blade',n:'能量刃',c:'武器',v:[200,700],d:'开启时会发出令人安心的嗡嗡声。'},
- {k:'bomb',n:'声波手雷',c:'武器',v:[60,200],d:'请勿摇晃，请勿唱歌给它听。'},
- {k:'sword',n:'礼仪长剑',c:'武器',v:[120,450],d:'某星系贵族的决斗用剑，刃口很钝。'},
+ {k:'gun',n:'等离子手枪',c:BAN,ban:1,v:[150,500],d:'保险栓用胶带缠着。'},
+ {k:'blade',n:'能量刃',c:BAN,ban:1,v:[200,700],d:'开启时会发出令人安心的嗡嗡声。'},
+ {k:'bomb',n:'声波手雷',c:BAN,ban:1,v:[60,200],d:'请勿摇晃，请勿唱歌给它听。'},
+ {k:'sword',n:'礼仪长剑',c:BAN,ban:1,v:[120,450],d:'某星系贵族的决斗用剑，刃口很钝。'},
  {k:'egg',n:'冷冻龙蛋',c:'生物',v:[300,1200],d:'在零下二百度保存，偶尔会动一下。'},
  {k:'plant',n:'会唱歌的盆栽',c:'生物',v:[50,220],d:'只会唱一首歌，而且跑调。'},
  {k:'jelly',n:'虚空水母标本',c:'生物',v:[150,600],d:'在暗处会发出幽幽的光。'},
@@ -597,6 +625,16 @@ const ITEMS=[
  {k:'dark',n:'暗物质胶囊',c:'能源',v:[300,1000],d:'看不清里面有什么，但很沉。'},
  {k:'sail',n:'太阳帆碎片',c:'能源',v:[40,180],d:'薄如蝉翼，在灯下闪着彩虹。'},
  {k:'fuel',n:'等离子燃料罐',c:'能源',v:[80,260],d:'罐身上的警告标志有七种语言。'},
+ {k:'brooch',n:'彗星胸针',c:'珠宝',v:[40,180],d:'别在衣领上，会拖出一道小小的光尾。'},
+ {k:'ring',n:'月长石戒指',c:'珠宝',v:[120,480],d:'据说在有满月的殖民星上会变色。'},
+ {k:'neck',n:'星尘项链',c:'珠宝',v:[150,560],d:'每一粒链珠里都封着一点真的星尘。'},
+ {k:'diamond',n:'黑洞钻石',c:'珠宝',v:[320,1150],d:'盯着看久了，会觉得它也在看你。'},
+ {k:'ticket',n:'旧式船票',c:'古董',v:[30,150],d:'一张没用掉的单程票，目的地的名字已经没人认识。'},
+ {k:'mbox',n:'发条八音盒',c:'艺术',v:[100,400],d:'转动把手，会放出一段没人听过的摇篮曲。'},
+ {k:'moss',n:'发光苔藓瓶',c:'生物',v:[40,180],d:'关灯以后，是一盏不用充电的小夜灯。'},
+ {k:'dice',n:'量子骰子',c:'科技',v:[120,460],d:'掷出去之前，它同时是所有点数。'},
+ {k:'toba',n:'陀巴寇',c:BAN,ban:1,v:[80,340],d:'一种晒干的古地球叶子，点着了吸。星港明令禁止，越禁越贵。'},
+ {k:'organ',n:'冷藏人体器官',c:BAN,ban:1,v:[320,1100],d:'登记编号被磨掉了。箱子上只写着“保持低温，尽快送达”。'},
 ];
 ITEMS.forEach(t=>{const m=(t.v[0]+t.v[1])/2;t.t=m<200?0:m<=400?1:2;});
 function itemSvg(it){
@@ -777,23 +815,27 @@ const UPGRADES=[
  {id:'ai',n:'估价 AI',i:'chip',lv:[[60,'目测估值范围缩小四分之一'],[150,'目测估值范围再缩小一截'],[320,'目测估值几乎就是实价']]},
  {id:'bench',n:'修复工作台',i:'tool',lv:[[60,'可以花钱修复物品成色（每件一次）'],[150,'修复费减半，修得更好']]},
  {id:'guard',n:'安保机器人',i:'bot',lv:[[50,'夜里来的小偷有一半会被赶跑'],[130,'再也不会失窃']]},
- {id:'shield',n:'信号屏蔽柜',i:'shield',lv:[[70,'能藏住 1 件赃物，海关查不到'],[160,'能藏住 3 件赃物'],[340,'所有赃物都查不到']]},
+ {id:'safe',n:'保险箱',i:'lock',lv:[[70,'保险箱 +1 格（共 2 格）'],[150,'保险箱 +1 格（共 3 格）'],[320,'保险箱 +1 格（共 4 格）'],[650,'保险箱 +1 格（共 5 格）']]},
 ];
 const upLv=id=>(G.upg[id]||0);
-const SHCAP=[0,1,3,99];
-const shCap=()=>SHCAP[upLv('shield')];
-const exposed=()=>G.inv.filter(i=>i.stolen).sort((a,b)=>apparent(b)-apparent(a)).slice(shCap());
+const safeCap=()=>1+upLv('safe');
+const safeN=()=>G.inv.filter(i=>i.safe).length;
+const exposed=()=>G.inv.filter(i=>(i.stolen||i.ban)&&!i.safe);
+const winBan=()=>{const w=G.inv.find(i=>i.id===G.showcase);return !!(w&&w.ban);};
+const turnVal=it=>Math.max(5,Math.round(realVal(it)*.1));
+const ordWhat=o=>o.cat===BAN?'违禁品一件（要真货）':`${o.cat}类真品一件`;
+const trendDays=c=>G.trend&&G.trend[c]?G.trend[c].to-G.day+1:0;
 const adCost=()=>40+20*(G.ads||0);
 const toutCost=()=>10+5*(G.tout||0);
 const ORDN={law:'官方悬赏',dark:'黑市悬赏'};
 const ordName=o=>ORDN[o&&o.src]||'商会悬赏';
 const boxP=()=>[50,60,110,160,200][repT().s-1];
 const GRADE=[1800,1200,800];
-const DIFFS={easy:{n:'轻松',debt:2000,cash:600,rep:30},normal:{n:'标准',debt:3800,cash:500,rep:20},hard:{n:'硬核',debt:7000,cash:400,rep:15}};
+const DIFFS={easy:{n:'轻松',debt:2000,cash:600,rep:30},normal:{n:'标准',debt:3600,cash:500,rep:20},hard:{n:'硬核',debt:7000,cash:400,rep:15}};
 const PROFS={
  appraiser:{n:'鉴定师',i:'scan',d:'每天多 2 次扫描，目测估值更准；扫描过的真品附鉴定书，买家多出一成半。'},
  fixer:{n:'修理匠',i:'tool',d:'自带满级修复工作台，修复几乎不花钱，而且修得更好。'},
- fence:{n:'销赃人',i:'mask',d:'海关查不到你的赃物。开局立场偏黑道：不怕贼，但查得勤。'},
+ fence:{n:'销赃人',i:'mask',d:'自带三格保险箱。开局立场偏黑道：不怕贼，违禁品更常上门，但海关查得勤。'},
  talker:{n:'谈判家',i:'chat',d:'所有顾客耐心 +1，「套近乎」更容易成功。'},
 };
 const EVN={inspector:'稽查员',fugitive:'逃亡者',gang:'帮会收数人',beggar:'流浪儿',fence:'黑市掮客',merchant:'流浪行商',informant:'情报贩子',bank:'银行催收员'};
@@ -820,10 +862,10 @@ const TEACH={
  stolen:['这是一件赃物',`<p><b>赃物</b>是卖家偷来的东西。目测看不出来，只有扫描或「盘问来历」能认出。</p>
   <p><b>好处</b>　卖家急着脱手，收得便宜；照样能按正价卖给顾客。</p>
   <p><b>风险</b>　留在仓库过夜，海关可能来查：每多一件赃物，被查的概率就高一截。查到就全部没收、罚款、掉声望。卖给普通顾客后，失主有可能找上门，掉声望。</p>
-  <p><b>对策</b>　当天卖掉；等黑市掮客上门收；买「信号屏蔽柜」；或者干脆别收。</p>`],
+  <p><b>对策</b>　放进保险箱（在库存里操作）；当天卖掉；等黑市掮客上门收；或者干脆别收。</p>`],
  fake:['这是一件赝品',`<p><b>赝品</b>只值真品的一成不到。目测看不出来，只有扫描能确认。</p>
   <p><b>后果</b>　卖给顾客后，有一半可能当晚被发现：退赔一半货款，声望 −8。如果你「承诺包退」，一定被发现：全额退款，声望 −10。交悬赏会被没收。</p>
-  <p><b>对策</b>　在库存里批发处理掉，或者等黑市掮客上门收。下次收货前先扫描，或者「盘问来历」看对方心不心虚。</p>`],
+  <p><b>对策</b>　在库存里甩卖掉，或者等黑市掮客上门收。下次收货前先扫描，或者「盘问来历」看对方心不心虚。</p>`],
  buyer:['来了一位买家',`<p>这位是来<b>买东西</b>的，左上角的绿牌子写着对方想买什么。</p>
   <p>从下面挑一件对方想要的货（亮框的）给对方看，对方会先出个价，你再往上要。要得太高，对方会不耐烦。</p>
   <p>卖出一件声望 +1，卖出扫描过的真品 +2。</p>`],
@@ -831,6 +873,10 @@ const TEACH={
   <p>到期对方来赎，你连本带利多收三成；不来赎，东西归你。押赝品的人不会回来，所以放款前最好扫描一下。</p>`],
  event:['特殊来客',`<p>这位不是来做买卖的。特殊来客不讲价，只让你做选择。</p>
   <p>每个选项右边写着代价或好处。选择会改变你的<b>立场</b>（守法 / 黑道）和声望。</p>`],
+ ban:['这是违禁品',`<p><b>违禁品</b>有三种：武器、陀巴寇、人体器官。一眼就认得出来，不用扫描。</p>
+  <p><b>好处</b>　卖家急着脱手，比正常货便宜一两成；专门来找违禁品的买家肯多出两成半。</p>
+  <p><b>风险</b>　没进保险箱的违禁品留过夜，海关可能来查：没收、罚款、掉声望。白天稽查员上门也会没收。来买违禁品的人里偶尔有海关便衣。买卖违禁品让立场偏向黑道，卖了不涨声望。交易所不收。</p>
+  <p><b>对策</b>　放进<b>保险箱</b>（在库存里操作，起步只有一格，晚上可以升级）；尽快卖给找上门的买家或黑市掮客；或者在库存里「上交海关」，换一点奖励和守法立场。</p>`],
  window:['橱窗招来了买家',`<p>这位<b>买家</b>是看见橱窗里的货才进来的，所以一进门就直接出价，而且比一般买家多出一成多。</p>
   <p>柜台上那件是<b>你的货</b>。你可以照价卖，也可以拖滑块再往上要。</p>`],
 };
@@ -886,14 +932,14 @@ function tweenCred(to){
 let G=null,UI={price:0,line:'',custId:0,typeT:0,repay:null,itemShown:0};
 function newGame(prof){
   const D=DIFFS[diffSel];prof=PROFS[prof]?prof:'appraiser';
-  G={v:6,diff:diffSel,prof,day:1,maxDay:12,credits:D.cash,debt:D.debt,debt0:D.debt,rep:D.rep,ads:0,adDay:0,tout:0,tut:tutSel?1:0,align:0,scansMax:4,scans:4,estW:.4,cap:8,pawnCap:3,custPerDay:10,
+  G={v:8,trend:{},next:{},diff:diffSel,prof,day:1,maxDay:12,credits:D.cash,debt:D.debt,debt0:D.debt,rep:D.rep,ads:0,adDay:0,tout:0,tut:tutSel?1:0,align:0,scansMax:4,scans:4,estW:.4,cap:8,pawnCap:3,custPerDay:10,
      inv:[],pawns:[],order:null,orders:0,upg:{},market:Object.fromEntries(CATS.map(c=>[c,1])),left:0,dayN:10,nS:0,nB:0,evs:[],cust:null,collector:null,
      showcase:null,scUsed:false,lastEv:'',protect:0,forceRaid:false,forceTheft:false,gift:false,tipCat:null,bankDone:false,
      repLog:[],seen:{},free:false,freeDay:0,won:false,star:1,legends:{},nightStep:0,
      sales:[],stat:null,endMsgs:[],log:[],phase:'day',news:'',dayStart:D.cash,spentNight:0};
   if(prof==='appraiser'){G.scansMax=6;G.estW=.3;}
   if(prof==='fixer')G.upg.bench=2;
-  if(prof==='fence'){G.upg.shield=3;G.align=-30;}
+  if(prof==='fence'){G.upg.safe=2;G.align=-30;}
   if(!G.tut)G.seen.buyer=G.seen.pawn=G.seen.event=1;
   shown.cred=null;UI.repay=null;UI.line='';hideOverlay();startDay();
   if(G.tut){nextCustomer();setTimeout(()=>tourShow(0),500);}
@@ -929,7 +975,7 @@ function tacOk(c,t,raw){
   if(pk==='shrewd'&&!it.scanned&&t!=='stall'&&t!=='poor')return false;
   if(t==='flaw')return it.cond<.65;
   if(t==='poor')return G.credits<c.ask*2;
-  if(t==='compare')return G.market[it.cat]<.95||G.inv.some(i=>i.cat===it.cat);
+  if(t==='compare')return (G.market[it.cat]||1)<.95||G.inv.some(i=>i.cat===it.cat);
   if(t==='stall')return c.patience>=3;
   if(t==='pitch')return it.cond>.65||(!!it.rare&&!it.fake);
   if(t==='lore')return it.cat==='古董'||it.cat==='艺术'||!!it.legend;
@@ -959,23 +1005,39 @@ function teach(k){
   setTimeout(()=>openSheet('teach',t,`<div class="help">${h}</div><button class="btn pri" style="width:100%" data-act="closeSheet">知道了</button>`),80);
 }
 function save(){if(G)ls.set(SAVE,JSON.stringify({...G,cust:null}));}
-function loadSave(){try{const s=JSON.parse(ls.get(SAVE));if(s&&s.v===6)return s}catch(e){}return null}
-
-function pickTpl(){
-  const w=G.day===1&&!G.free?[1,0,0]:repT().gw;let r=Math.random()*ITEMS.reduce((a,t)=>a+w[t.t],0);
-  for(const t of ITEMS){r-=w[t.t];if(r<0)return t;}
-  return ITEMS[0];
+function migrate(s){
+  if(s.v===6){
+    const fix=it=>{if(it&&it.cat==='武器'){it.cat=BAN;it.ban=1;it.stolen=false;}};
+    s.inv.forEach(fix);s.pawns.forEach(p=>fix(p.item));
+    s.trend={};s.next={};const m=s.market||{};delete m['武器'];s.market={};
+    for(const c of CATS){const v=m[c]||1;if(Math.abs(v-1)>.08){s.market[c]=+v.toFixed(2);s.trend[c]={m:s.market[c],to:s.day};}else s.market[c]=1;}
+    const sh=(s.upg&&s.upg.shield)||0;if(s.upg){delete s.upg.shield;if(sh)s.upg.safe=[0,1,2,4][sh];}
+    if(s.order&&s.order.cat==='武器'){s.order.cat=BAN;s.order.src='dark';}
+    if(s.collector==='武器')s.collector=null;if(s.tipCat==='武器')s.tipCat=null;
+    s.v=8;
+  }
+  return s;
 }
-function makeItem(){
-  const t=pickTpl();
-  return {id:++uid,k:t.k,name:t.n,cat:t.c,desc:t.d,
+function loadSave(){try{const s=JSON.parse(ls.get(SAVE));if(s&&(s.v===6||s.v===8))return migrate(s)}catch(e){}return null}
+
+function pickTpl(noBan){
+  const w=G.day===1&&!G.free?[1,0,0]:repT().gw;
+  const bp=noBan||(G.day===1&&!G.free)?0:(G.align<=-30?.25:G.align>=30?.08:.15)*(G.diff==='easy'?.5:1);
+  const ban=Math.random()<bp,pool=ITEMS.filter(t=>!!t.ban===ban&&w[t.t]>0),src=pool.length?pool:ITEMS.filter(t=>!t.ban&&w[t.t]>0);
+  let r=Math.random()*src.reduce((a,t)=>a+w[t.t],0);
+  for(const t of src){r-=w[t.t];if(r<0)return t;}
+  return src[0];
+}
+function makeItem(noBan){
+  const t=pickTpl(noBan);
+  return {id:++uid,k:t.k,name:t.n,cat:t.c,ban:t.ban?1:0,desc:t.d,
     base:Math.round(rand(t.v[0],t.v[1])),cond:rand(.4,1),
-    rare:Math.random()<.08*repT().rare,fake:Math.random()<.14+G.day*.008,
+    rare:Math.random()<.08*repT().rare,fake:Math.random()<Math.min(.28,.14+G.day*.008),
     stolen:false,noise:rand(-.6,.6),scanned:false,cost:0};
 }
 function makeLegend(){
   const pool=LEGENDS.filter(l=>!G.legends[l.k]),l=pick(pool.length?pool:LEGENDS),t=ITEMS.find(x=>x.k===l.k);
-  return {id:++uid,k:l.k,name:l.n,cat:t.c,desc:l.d,base:ri(1400,2400),cond:rand(.75,1),rare:false,legend:1,
+  return {id:++uid,k:l.k,name:l.n,cat:t.ban?'古董':t.c,desc:l.d,base:ri(1400,2400),cond:rand(.75,1),rare:false,legend:1,
     fake:Math.random()<.3,stolen:false,noise:rand(-.6,.6),scanned:false,cost:0};
 }
 function gotLegend(it){
@@ -984,7 +1046,7 @@ function gotLegend(it){
   if(n===LEGENDS.length){G.credits+=3000;addRep(10,'集齐传奇图鉴');log('集齐传奇图鉴，博物馆谢礼 +₡3,000','g');
     setTimeout(()=>toast('集齐全部传奇！星港博物馆送来 ₡3,000 谢礼','good'),1300);}
 }
-const apparent=it=>Math.max(5,Math.round(it.base*it.cond*(it.rare?2.5:1)*G.market[it.cat]));
+const apparent=it=>Math.max(5,Math.round(it.base*it.cond*(it.rare?2.5:1)*(G.market[it.cat]||1)));
 const realVal=it=>it.fake?Math.max(3,Math.round(apparent(it)*.08)):apparent(it);
 function estRange(it){
   if(it.scanned){const v=realVal(it);return [v,v];}
@@ -996,7 +1058,7 @@ const fairLine=c=>Math.max(2,Math.min(c.ask0||c.ask,Math.round(estMid(c.item)*.6
 const lowLine=c=>Math.round(estMid(c.item)*.25);
 const estText=it=>{const [a,b]=estRange(it);return a===b?fmt(a):`${fmt(a)}~${fmt(b)}`};
 const condWord=c=>c>.85?'近乎全新':c>.65?'轻微使用':c>.45?'磨损明显':'破旧不堪';
-const wholesaleVal=it=>Math.max(1,Math.round(realVal(it)*.5));
+const wholesaleVal=it=>Math.max(1,Math.round(realVal(it)*(G.phase==='night'?.6:.4)));
 const fixCost=it=>Math.max(3,Math.round(it.base*(G.prof==='fixer'?.06:.1)*(upLv('bench')>=2?.5:1)));
 const orderFits=it=>G.order&&it.cat===G.order.cat&&it.cond>.45&&!it.legend;
 
@@ -1018,17 +1080,19 @@ function makeCustomer(isBuyer,collector){
   if(!isBuyer){
     const lg=G.free&&G.star>=2&&Math.random()<(G.star>=4?.07:.04);
     const it=lg?makeLegend():makeItem();
-    if(!it.fake&&!lg)it.stolen=Math.random()<.14;
+    if(!it.fake&&!lg&&!it.ban)it.stolen=Math.random()<.14;
     c.item=it;
     const ap=apparent(it);
     let mf=rand(...P.min)*.85,af=rand(...P.ask);
     c.knowsFake=it.fake&&Math.random()<.7;
     if(c.knowsFake)mf*=.4;
     if(it.stolen){mf*=.6;af*=.8;}
+    if(it.ban){mf*=.8;af*=.85;}
     c.min=Math.max(4,Math.round(ap*mf));
     c.ask=Math.max(Math.round(c.min*1.08)+1,Math.round(ap*af));
     if(c.knowsFake&&Math.random()<.6)c.tell=pick(L.fakeTell);
     else if(it.stolen&&Math.random()<.8)c.tell=pick(L.stolenTell);
+    else if(it.ban)c.tell=pick(['对方把东西裹在外套里递过来','对方先看了一眼门口，才把东西放上柜台']);
     if(!lg&&G.pawns.length<G.pawnCap&&G.day+2<=G.maxDay&&Math.random()<.3){
       const d=Math.min(ri(2,3),G.maxDay-G.day);
       c.pawn=d;
@@ -1043,7 +1107,9 @@ function makeCustomer(isBuyer,collector){
     if(collector){c.collector=true;c.want=G.collector;G.collector=null;c.line=say(L.collectorGreet,{cat:c.want});}
     else if(win&&!G.scUsed&&Math.random()<.5){G.scUsed=true;c.fromWindow=true;c.want='item';c.wantId=win.id;c.line=`我在橱窗里看见那件「${win.name}」了，想买下来。`;}
     else if(Math.random()<.15){c.want='any';c.line=pick(L.anyGreet);}
-    else{c.want=G.inv.length&&Math.random()<.85?pick(G.inv).cat:pick(CATS);c.line=say(L.buyGreet[pk],{cat:c.want});}
+    else{c.want=G.inv.length&&Math.random()<.85?pick(G.inv).cat:pick(CATS);if(c.want===BAN&&Math.random()<.25)c.want=pick(CATS);c.line=say(L.buyGreet[pk],{cat:c.want});
+      if(c.want===BAN){c.shady=1;c.cop=Math.random()<.15;c.line=pick(['听说你这儿有……不方便摆出来的货？','嘘。违禁的，有没有？价钱好说。']);
+        if(c.cop&&Math.random()<.7)c.tell=pick(['对方站得笔直，鞋擦得很亮','对方的领口露出半截制服']);}}
     c.maxF=rand(...P.buy)*1.15*(c.collector?1.6:1)*T.buy*(c.fromWindow?1.12:1)*(G.align>=30?1.06:1)*(G.free&&G.star>=3?1.08:1);
   }
   return c;
@@ -1052,7 +1118,7 @@ const wants=(c,it)=>c.want==='any'||(c.want==='item'?it.id===c.wantId:it.cat===c
 const noRoom=c=>c.pawn?G.pawns.length>=G.pawnCap:G.inv.length>=G.cap;
 
 /* ===================== 特殊来客 ===================== */
-const hotItems=()=>G.inv.filter(i=>i.fake||i.stolen);
+const hotItems=()=>G.inv.filter(i=>i.fake||i.stolen||i.ban);
 function pickEvent(){
   const dark=G.align<=-30,room=G.inv.length<G.cap;
   const w={inspector:dark?4:2,fugitive:room?2:0,gang:dark?0:2,beggar:2,fence:hotItems().length?(dark?5:2):0,merchant:room&&G.credits>=boxP()?2:0,informant:G.credits>=40?1.5:0};
@@ -1073,7 +1139,7 @@ function makeEvent(key){
     A('塞个红包',fmt(60),()=>{G.credits-=60;align(-10);return {line:'咳……今天就先不查了。',ok:true,result:'花 ₡60 打发走了稽查员，立场偏向黑道'};},G.credits<60);
     A('把人赶出去','今晚会被突击检查，声望 −2',()=>{align(-15);addRep(-2,'把稽查员赶出门');G.forceRaid=true;return {line:'好，很好。咱们走着瞧。',ok:false,result:'你得罪了稽查员，声望 −2，立场偏向黑道',angry:true};});
   }else if(key==='fugitive'){
-    const it=makeItem();it.fake=false;it.stolen=true;it.cond=Math.max(it.cond,.7);
+    const it=makeItem(true);it.fake=false;it.stolen=true;it.cond=Math.max(it.cond,.7);
     const price=Math.max(20,Math.round(apparent(it)*.3));c.item=it;c.tell='对方压低了声音，不停回头张望';
     c.line=`后面有人在追我……这件「${it.name}」${fmt(price)} 就给你，只求你别声张。`;
     A('收下，不多问',fmt(price),()=>{G.credits-=price;it.cost=price;G.inv.push(it);G.stat.bought++;align(-10);return {line:'谢了。你没见过我。',ok:true,result:`以 ${fmt(price)} 收下「${it.name}」（来路不明），立场偏向黑道`};},G.credits<price||G.inv.length>=G.cap);
@@ -1091,7 +1157,7 @@ function makeEvent(key){
     A('给 ₡20','声望 +4',()=>{G.credits-=20;addRep(4,'接济流浪儿');if(Math.random()<.4)G.gift=true;return {line:'谢谢你！我会记住你的！',ok:true,result:'你给了 ₡20，声望 +4'};},G.credits<20);
     A('摆摆手','声望 −1',()=>{addRep(-1,'赶走了流浪儿');return {line:'……',ok:false,result:'流浪儿默默走开了，街坊都看在眼里。声望 −1'};});
   }else if(key==='fence'){
-    const hot=hotItems(),total=hot.reduce((s,i)=>s+Math.round(apparent(i)*(i.fake?.3:.6)),0);
+    const hot=hotItems(),total=hot.reduce((s,i)=>s+Math.round(apparent(i)*(i.fake?.3:i.ban?.8:.6)),0);
     hot.forEach(i=>i.scanned=true);
     c.line=`我闻得出来，你手里有 ${hot.length} 件烫手货：${hot.map(i=>i.name).join('、')}。${fmt(total)}，我全包了，不留痕迹。`;
     A('全部出手',fmt(total),()=>{G.inv=G.inv.filter(i=>!hot.includes(i));G.credits+=total;G.stat.sold+=hot.length;G.stat.earned+=total;align(-10);return {line:'爽快。以后有货还找我。',ok:true,result:`卖掉 ${hot.length} 件烫手货 +${fmt(total)}，立场偏向黑道`};});
@@ -1132,7 +1198,7 @@ function startDay(){
   if(Math.random()<.85)G.evs.push(ri(1,n-1));
   if(Math.random()<.4){const e=ri(1,n-1);if(!G.evs.includes(e))G.evs.push(e);}
   const morning=[];
-  if(G.gift){G.gift=false;const it=makeItem();it.fake=false;it.cost=0;G.inv.push(it);morning.push([`流浪儿送来了捡到的「${it.name}」，说是谢礼`,'good']);}
+  if(G.gift){G.gift=false;const it=makeItem(true);it.fake=false;it.cost=0;G.inv.push(it);morning.push([`流浪儿送来了捡到的「${it.name}」，说是谢礼`,'good']);}
   G.pawns=G.pawns.filter(p=>{
     if(p.due>G.day)return true;
     if(p.redeem){const v=Math.round(p.loan*PAWN_RATE);G.credits+=v;addRep(1,'当品按时赎回');
@@ -1144,13 +1210,13 @@ function startDay(){
   if(!G.order&&G.day<G.maxDay){
     const rs=repT().s;
     const or=Math.random(),lp=G.align>=30?.45:G.align<=-30?.15:.25,dp=G.align<=-30?.45:G.align>=30?.15:.25,src=G.day===1?'':or<lp?'law':or<lp+dp?'dark':'';
-    G.order={cat:pick(G.day===1||rs<=2?CATS.filter(c=>c!=='古董'):CATS),pay:Math.round((ri(180,260)+(rs-1)*70)*(src==='dark'?1.3:1)),due:Math.min(G.maxDay,G.day+3),src};
-    morning.push([`新的${ordName(G.order)}：${G.order.cat}类真品一件，报酬 ${fmt(G.order.pay)}`,'']);
+    G.order={cat:src==='dark'&&Math.random()<.5?BAN:pick(CATS),pay:Math.round((ri(180,260)+(rs-1)*70)*(src==='dark'?1.3:1)),due:Math.min(G.maxDay,G.day+3),src};
+    morning.push([`新的${ordName(G.order)}：${ordWhat(G.order)}，报酬 ${fmt(G.order.pay)}`,'']);
   }
-  if(G.free&&G.star>=3&&!G.collector)G.collector=G.inv.length?pick(G.inv).cat:pick(CATS);
-  const moves=CATS.filter(c=>Math.abs(G.market[c]-1)>.08).map(c=>`${c}${G.market[c]>1?'涨':'跌'}${Math.abs(Math.round((G.market[c]-1)*100))}%`);
+  if(G.free&&G.star>=3&&!G.collector){const nb=G.inv.filter(i=>!i.ban);G.collector=nb.length?pick(nb).cat:pick(CATS);}
+  const moves=CATS.filter(c=>Math.abs(G.market[c]-1)>.08).map(c=>`${c}${G.market[c]>1?'涨':'跌'}${Math.abs(Math.round((G.market[c]-1)*100))}%（${trendDays(c)>1?'还有 '+trendDays(c)+' 天':'只有今天'}）`);
   G.news=`今天预计来 ${n} 位顾客。`+(G.day===1&&!G.free?'新店开张，头一天上门的都是便宜货；声望越高，上门的货越值钱。':'')+(moves.length?'行情：'+moves.join('，')+'。':'行情平稳。')+(G.collector?`传闻有收藏家在找${G.collector}类物品。`:'')
-    +(G.order?`${ordName(G.order)}：${G.order.cat}类真品，报酬 ${fmt(G.order.pay)}，第 ${G.order.due} 天截止。`:'')
+    +(G.order?`${ordName(G.order)}：${ordWhat(G.order)}，报酬 ${fmt(G.order.pay)}，第 ${G.order.due} 天截止。`:'')
     +(G.day>=4&&G.day<=6&&!G.bankDone?'银行第 6 天回访：已还三成半减免 ₡100，否则加收 ₡80。':'');
   log(`第 ${G.day} 天开门营业`,'y');
   morning.forEach(([t,c],i)=>setTimeout(()=>toast(t,c),350+i*1100));
@@ -1174,7 +1240,7 @@ function nextCustomer(){
   sfx.door();render();
   if(c.fromWindow){showItem(c.wantId);if(c.item){c.line=`橱窗里那件「${c.item.name}」我要了。${fmt(c.offer)}，卖不卖？`;render();}
     toast('橱窗招来了一位买家','good');}
-  teach(c.fromWindow?'window':c.type==='buy'?'buyer':c.pawn?'pawn':'');
+  teach([c.item&&c.item.ban&&'ban',c.shady&&'ban',c.fromWindow&&'window',c.type==='buy'&&'buyer',c.pawn&&'pawn'].find(k=>k&&!G.seen[k])||'');
 }
 function finish(kind){const c=G.cust;c.done=kind;c.flash='';G.stat.served++;save();render();}
 
@@ -1193,6 +1259,7 @@ function dealBuy(price){
     c.item.cost=price;G.inv.push(c.item);
     if(fr)addRep(fr,fr>0?(nv>1?'给老实人公道价':'收货给价公道'):(nv>1?'欺负老实人，街坊都在骂':'压价太狠，卖家到处抱怨'));
     c.result=`以 ${fmt(price)} 收购「${c.item.name}」`+(fr>0?`，给价公道，声望 +${fr}`:fr<0?`，压价太狠，声望 −${-fr}`:'');
+    if(c.item.ban){align(-3);c.result+='。这是违禁品，立场偏向黑道';}
     if(orderFits(c.item)){const pay=G.order.pay;setTimeout(()=>toast(`这件符合悬赏，点顶部的悬赏条交货，报酬 ${fmt(pay)}`,'good'),700);}
     log(`收购「${c.item.name}」 −${fmt(price)}`,'r');
   }
@@ -1201,13 +1268,18 @@ function dealBuy(price){
 }
 function dealSell(price){
   const c=G.cust,it=c.item;
-  G.inv=G.inv.filter(x=>x!==it);G.credits+=price;
+  G.inv=G.inv.filter(x=>x!==it);if(G.showcase===it.id)G.showcase=null;
+  if(c.cop&&it.ban){const f=G.align>=30?60:100;G.credits-=f;addRep(-4,'把违禁品卖给了海关便衣');align(-6);
+    c.line='海关便衣。人赃并获，东西没收，罚款现在就交。';c.result=`对方是海关便衣！「${it.name}」被没收，罚款 ${fmt(f)}，声望 −4`;
+    log(`卖违禁品撞上便衣：「${it.name}」被没收，罚款 ${fmt(f)}`,'r');sfx.bad();flyText('−'+fmt(f),'#ff5d7a');return finish('left');}
+  G.credits+=price;
   const profit=price-it.cost;
   G.stat.sold++;G.stat.earned+=price;
   G.sales.push({name:it.name,price,fake:it.fake,stolen:it.stolen,warranty:!!c.warranty});
-  const rd=c.collector?3:it.scanned&&!it.fake?2:1;
-  addRep(rd,c.collector?'卖给收藏家':rd===2?'卖出验过的真品，顾客放心':'卖出货品，顾客满意');
-  c.line=pick(L.accept);c.result=`以 ${fmt(price)} 卖出「${it.name}」，${profit>=0?'赚':'亏'} ${fmt(Math.abs(profit))}，声望 +${rd}`;
+  const rd=it.ban?0:c.collector?3:it.scanned&&!it.fake?2:1;
+  if(rd)addRep(rd,c.collector?'卖给收藏家':rd===2?'卖出验过的真品，顾客放心':'卖出货品，顾客满意');
+  if(it.ban)align(-3);
+  c.line=pick(L.accept);c.result=`以 ${fmt(price)} 卖出「${it.name}」，${profit>=0?'赚':'亏'} ${fmt(Math.abs(profit))}`+(rd?`，声望 +${rd}`:'。违禁品不涨声望，立场偏向黑道');
   log(`卖出「${it.name}」 +${fmt(price)}（${profit>=0?'赚':'亏'} ${fmt(Math.abs(profit))}）`,'g');
   sfx.coin();flyText('+'+fmt(price),'#58e6a0');
   finish('deal');
@@ -1251,7 +1323,7 @@ function offerToSeller(o){
 function showItem(id){
   const c=G.cust,it=G.inv.find(x=>x.id==id);if(!it||!c||c.done||c.type!=='buy'||!wants(c,it))return;
   c.item=it;const ap=apparent(it);
-  c.max=Math.round(ap*c.maxF*(G.prof==='appraiser'&&it.scanned&&!it.fake?1.15:1));c.max0=c.max;c.tries=0;c.final=0;if(!c.tac)c.tac=pickTacs(c);
+  c.max=Math.round(ap*c.maxF*(G.prof==='appraiser'&&it.scanned&&!it.fake?1.15:1)*(it.ban&&c.want!=='any'?1.25:1));c.max0=c.max;c.tries=0;c.final=0;if(!c.tac)c.tac=pickTacs(c);
   c.offer=Math.min(Math.round(c.max*.95),Math.round(ap*rand(.55,.8)));
   if(c.pk==='stubborn')c.offer=Math.round(c.max*.88);
   const [,hi]=estRange(it);
@@ -1381,11 +1453,25 @@ function invItem(id){return G.inv.find(x=>x.id==id);}
 function busyItem(it){return G.cust&&!G.cust.done&&G.cust.item===it;}
 function wholesale(id){
   const it=invItem(id);if(!it||busyItem(it))return;
-  const v=wholesaleVal(it);
-  G.inv=G.inv.filter(x=>x!==it);G.credits+=v;
-  log(`批发处理「${it.name}」 +${fmt(v)}`,'g');sfx.coin();
-  if(!it.scanned)toast(it.fake?`批发商验货：赝品，只给 ${fmt(v)}`:`批发商验货后给了 ${fmt(v)}`,it.fake?'bad':'');
+  if(it.ban){toast('交易所不收违禁品。可以卖给找上门的买家、等黑市掮客，或者上交海关','bad');return;}
+  const v=wholesaleVal(it),night=G.phase==='night';
+  G.inv=G.inv.filter(x=>x!==it);G.credits+=v;if(G.showcase===it.id)G.showcase=null;
+  log(`${night?'卖给交易所':'甩卖'}「${it.name}」 +${fmt(v)}`,'g');sfx.coin();
+  if(!it.scanned)toast(it.fake?`验货：赝品，只给 ${fmt(v)}`:`验货后给了 ${fmt(v)}`,it.fake?'bad':'');
   afterInvChange();
+}
+function turnIn(id){
+  const it=invItem(id);if(!it||!it.ban||busyItem(it))return;const v=turnVal(it);
+  G.inv=G.inv.filter(x=>x!==it);G.credits+=v;if(G.showcase===it.id)G.showcase=null;
+  align(5);addRep(1,'主动上交违禁品');log(`上交违禁品「${it.name}」 +${fmt(v)}`,'g');sfx.good();toast(`海关收下了，奖励 ${fmt(v)}，声望 +1，立场偏向守法`,'good');
+  afterInvChange();
+}
+function toggleSafe(id){
+  const it=invItem(id);if(!it)return;
+  if(it.safe)it.safe=0;
+  else{if(safeN()>=safeCap()){toast(`保险箱只有 ${safeCap()} 格，已经满了。先取出一件，或者晚上升级保险箱`,'bad');return;}
+    it.safe=1;if(G.showcase===it.id)G.showcase=null;}
+  sfx.click();afterInvChange();
 }
 function fixItem(id){
   const it=invItem(id);if(!it||!G.upg.bench||it.fixed||it.cond>=.85)return;
@@ -1407,7 +1493,7 @@ function afterInvChange(){const k=sheetKind;save();render();if(G.phase==='night'
 
 /* ===================== 夜间结算 ===================== */
 const rentOf=d=>G.free?20+G.freeDay*8+(d-G.freeDay)*6+(G.star-1)*40:20+d*8;
-const raidP=n=>Math.min(.65,.05+n*.15+(G.align<=-30?.08:0));
+const raidP=n=>Math.min(.7,.05+n*.15+(G.align<=-30?.08:0)+(winBan()?.2:0));
 const lite=it=>({k:it.k,name:it.name,cond:it.cond});
 function closeShop(){
   const m=[],E=(i,c,h,t,o)=>m.push({i,c,h,t,...o}),t0=repT();UI.muteRep=true;
@@ -1424,46 +1510,57 @@ function closeShop(){
   G.sales=[];
   if(wn){const d=Math.min(3,wn);addRep(d,'包退的货是真品，顾客到处夸你');E('up','good','包退的货没出问题',`你承诺包退的 ${wn} 件货都是真品，买家到处夸你讲信用。`,{rep:d});}
   if(!G.stat.walk&&G.stat.served>=6){addRep(2,'一整天没气走一位顾客');E('up','good','宾主尽欢','今天没有一位顾客是气呼呼走的。',{rep:2});}
-  rollNight(E);UI.muteRep=false;
+  rollNight(E);if(G.free||G.day<G.maxDay)rollMarket(E);UI.muteRep=false;
   const t1=repT();if(t1!==t0)E(t1.s>t0.s?'up':'down',t1.s>t0.s?'good':'bad',`声望${t1.s>t0.s?'升到':'跌到'}「${t1.n}」`,`从明天起：${repFx(t1)}。点顶部的「声望」可以看怎么涨回来。`);
   if(G.protect>0)G.protect--;
   const rent=rentOf(G.day);G.credits-=rent;
   E('home','','摊位租金','今天的租金已扣。'+(G.free||G.day<G.maxDay?`明天涨到 ${fmt(rentOf(G.day+1))}。`:''),{cash:-rent});
   while(G.credits<0&&G.inv.length){
-    G.inv.sort((a,b)=>realVal(b)-realVal(a));const it=G.inv.shift(),v=wholesaleVal(it);
-    G.credits+=v;E('down','bad','被迫贱卖',`现金不够付账，「${it.name}」被批发商低价收走。`,{cash:v,its:[lite(it)]});
+    G.inv.sort((a,b)=>realVal(b)-realVal(a));const it=G.inv.shift(),v=Math.max(1,Math.round(realVal(it)*.5));
+    G.credits+=v;E('down','bad','被迫贱卖',`现金不够付账，「${it.name}」被人低价收走。`,{cash:v,its:[lite(it)]});
   }
   G.cust=null;
   if(G.credits<0)return gameOver('你付不起租金。管理局查封了当铺，你被塞进了下一班去矿星的货船……');
   G.endMsgs=m;G.phase='night';G.nightStep=0;UI.repay=null;UI.nightSfx=true;save();render();showNight();
 }
 function customsRaid(E){
-  const all=G.inv.filter(i=>i.stolen),st=exposed(),hid=all.length-st.length,dark=G.align<=-30,law=G.align>=30;
+  const all=G.inv.filter(i=>i.stolen||i.ban),st=exposed(),hid=all.length-st.length,dark=G.align<=-30,law=G.align>=30;
   if(st.length){
-    const un=st.filter(i=>!i.scanned&&i.suspect!=='stolen').length,f=law?0:st.length*(dark?120:80);
-    G.inv=G.inv.filter(i=>!st.includes(i));G.credits-=f;addRep(-6,'海关在店里查出赃物');G.seen.stolen=1;
-    E('alert','bad','海关突击检查',`仓库里的 ${st.length} 件赃物被查出来，全部没收${f?`，每件罚款 ${fmt(f/st.length)}`:'。念你一向守法，这次不罚款'}。`
-      +(hid?`屏蔽柜藏住了另外 ${hid} 件。`:'')+(un?`其中 ${un} 件你没扫描过，所以之前不知道是赃物。`:'')+'赃物留过夜越多，被查的概率越高。',{cash:-f,rep:-6,its:st.map(lite)});
-  }else E('shield','good','海关突击检查',all.length?`信号屏蔽柜藏住了 ${all.length} 件赃物，检查员什么也没查到。`:'店里干干净净，检查员悻悻离开。');
+    const un=st.filter(i=>i.stolen&&!i.scanned&&i.suspect!=='stolen').length,f=law?0:st.length*(dark?120:80);
+    G.inv=G.inv.filter(i=>!st.includes(i));if(st.some(i=>i.id===G.showcase))G.showcase=null;
+    G.credits-=f;addRep(-6,'海关在店里查出赃物或违禁品');G.seen.stolen=1;
+    E('alert','bad','海关突击检查',`仓库里的 ${st.length} 件赃物或违禁品被查出来，全部没收${f?`，每件罚款 ${fmt(f/st.length)}`:'。念你一向守法，这次不罚款'}。`
+      +(hid?`保险箱里的 ${hid} 件没被发现。`:'')+(un?`其中 ${un} 件你没扫描过，所以之前不知道是赃物。`:'')+'这类货没进保险箱的越多，被查的概率越高。',{cash:-f,rep:-6,its:st.map(lite)});
+  }else E('shield','good','海关突击检查',all.length?`要命的货都锁在保险箱里（${all.length} 件），检查员什么也没查到。`:'店里干干净净，检查员悻悻离开。');
 }
 function nightTheft(E){
   const gl=upLv('guard');
   if(gl>=2||(gl===1&&Math.random()<.5))return E('bot','good','夜里来了小偷','被安保机器人电晕后扔出了气闸，货一件没少。');
   if(G.protect>0||G.align<=-30)return E('shield','good','夜里来了小偷','在店外转悠时被帮会的人赶跑了，货一件没少。');
-  const win=G.inv.find(i=>i.id===G.showcase),it=win&&Math.random()<.6?win:pick(G.inv);
-  G.inv=G.inv.filter(x=>x!==it);
-  E('mask','bad','夜间失窃',`${it===win?'橱窗里的':''}「${it.name}」被偷走了（进价 ${fmt(it.cost)}）。安保机器人升满，或者有帮会罩着，就不会丢。`,{its:[lite(it)]});
+  const pool=G.inv.filter(i=>!i.safe);
+  if(!pool.length)return E('lock','good','夜里来了小偷','货都锁在保险箱里，小偷空手而归。');
+  const win=pool.find(i=>i.id===G.showcase),it=win&&Math.random()<.6?win:pick(pool);
+  G.inv=G.inv.filter(x=>x!==it);if(G.showcase===it.id)G.showcase=null;
+  E('mask','bad','夜间失窃',`${it===win?'橱窗里的':''}「${it.name}」被偷走了（进价 ${fmt(it.cost)}）。安保机器人升满、有帮会罩着，或者把货放进保险箱，就不会丢。`,{its:[lite(it)]});
 }
 function rollNight(E){
   const n=exposed().length;
   if(G.forceRaid||Math.random()<raidP(n)){G.forceRaid=false;customsRaid(E);}
   if(G.forceTheft){G.forceTheft=false;if(G.inv.length)nightTheft(E);return;}
   const r=Math.random();
-  if(r<.22){const c=pick(CATS),up=Math.random()<.5;G.market[c]*=up?1.45:.65;
-    E(up?'up':'down',up?'good':'warn','银河新闻',`${c}类商品${up?'需求暴涨，明天能卖出更高的价':'市场崩盘，明天卖不上价'}。`);}
-  else if(r<.30){if(G.inv.length)nightTheft(E);}
-  else if(r<.37){if(G.inv.length){const it=pick(G.inv);it.cond*=.8;E('meteor','warn','陨石击穿仓库',`「${it.name}」被砸到了，成色下降。`,{its:[lite(it)]});}}
-  else if(r<.52&&!G.collector){const c=pick(CATS);G.collector=c;E('hat','good','小道消息',`一位富有的收藏家明天会来，对${c}类物品很感兴趣，出价比别人高得多。`);}
+  if(r<.08){if(G.inv.length)nightTheft(E);}
+  else if(r<.15){const pool=G.inv.filter(i=>!i.safe);if(pool.length){const it=pick(pool);it.cond*=.8;E('meteor','warn','陨石击穿仓库',`「${it.name}」被砸到了，成色下降。放进保险箱的货不会被砸。`,{its:[lite(it)]});}}
+  else if(r<.30&&!G.collector){const c=pick(CATS);G.collector=c;E('hat','good','小道消息',`一位富有的收藏家明天会来，对${c}类物品很感兴趣，出价比别人高得多。`);}
+}
+// 行情：每晚给还没有走势的品类掷一次，走势持续 1 到 4 天，第二天早上生效
+function rollMarket(E){
+  const news=[];G.next={};
+  for(const c of CATS){const t=G.trend[c];
+    if(t&&t.to>G.day)continue;
+    if(Math.random()<.24){const up=Math.random()<.55,m=+(up?rand(1.2,1.5):rand(.6,.85)).toFixed(2),d=ri(1,4);
+      G.next[c]={m,to:G.day+d};news.push(`${c}类${up?'涨':'跌'} ${Math.abs(Math.round((m-1)*100))}%（${d} 天）`);}
+  }
+  if(news.length)E('up','','银河行情','明天起：'+news.join('；')+'。交易所的收购价和上门顾客的出价都会跟着变。');
 }
 function nightSum(){
   let cash=0,rp=0,n=0;
@@ -1521,6 +1618,12 @@ function showSettle(){
      <div class="sub" style="margin-top:8px">${last?'今晚是最后期限，还不清就完了。':`明晚租金 ${fmt(rentOf(G.day+1))}。记得留够进货的本金。还清后可以继续自由经营。`}</div>`
      :`<div class="sub" style="margin-top:8px">手头没有现金可还。</div>`}
    </div>`}
+   <h3>${ic('up')}星港交易所</h3><div class="sub" style="margin:-2px 0 8px">今晚按实价的六成收货（白天甩卖只有四成），价格跟着行情走。不收违禁品。</div>
+   <div class="exg">${CATS.map(c=>{const m=G.market[c]||1,p=Math.round((m-1)*100),n=G.inv.filter(i=>i.cat===c).length,
+     nx=(G.next&&G.next[c])||(G.trend[c]&&G.trend[c].to>G.day?G.trend[c]:null),np=nx?Math.round((nx.m-1)*100):0;
+     return `<div class="ex ${p>8?'up':p<-8?'dn':''}"><b>${c}</b><span class="num">${p>8?'↑'+p+'%':p<-8?'↓'+(-p)+'%':'平价'}</span>
+      <small>${nx?`明天 ${np>0?'↑'+np:'↓'+(-np)}%，共 ${nx.to-G.day} 天`:Math.abs(p)>8?'明天回到平价':'明天平价'}</small>${n?`<i>你有 ${n} 件</i>`:''}</div>`}).join('')}</div>
+   <div class="row" style="margin-bottom:14px"><button class="btn sm grow" data-act="inv">${ic('box')}打开库存，卖给交易所</button></div>
    <h3>${ic('cart')}升级店铺</h3><div class="sub" style="margin:-2px 0 8px">每项分几级，从几十块起步，越升越贵。</div>${upg}
    </div>
    <div class="foot"><button class="btn sq" data-act="inv" aria-label="库存">${ic('box')}<small>库存</small></button>
@@ -1540,8 +1643,9 @@ function nextDay(){
     return victory();
   }
   G.day++;UI.repay=null;
-  for(const c of CATS)G.market[c]=1+(G.market[c]-1)*.7;
-  if(G.tipCat){G.market[G.tipCat]*=1.45;G.tipCat=null;}
+  for(const c of CATS){const t=G.trend[c];if(t&&t.to<G.day)delete G.trend[c];if(G.next&&G.next[c])G.trend[c]=G.next[c];G.market[c]=G.trend[c]?G.trend[c].m:1;}
+  G.next={};
+  if(G.tipCat){G.trend[G.tipCat]={m:1.45,to:G.day+1};G.market[G.tipCat]=1.45;G.tipCat=null;}
   hideOverlay();startDay();
 }
 function buyUpg(id){
@@ -1567,7 +1671,7 @@ function buyStar(){
   if(G.star===5)return grandEnd();
   toast(`扩建完成：${nx.n}`,'good');showNight();
 }
-const worth=()=>G.credits+G.inv.reduce((s,i)=>s+wholesaleVal(i),0);
+const worth=()=>G.credits+G.inv.reduce((s,i)=>s+Math.max(1,Math.round(realVal(i)*.5)),0);
 const alignName=()=>G.align>=30?'守法商户':G.align<=-30?'地下大亨':'左右逢源';
 function victory(){
   G.won=true;G.debt=0;save();sfx.coin();setTimeout(sfx.coin,220);render();closeSheet();
@@ -1641,10 +1745,10 @@ const TOUR=[
  ['.pctl,.rngw','定价','拖滑块或点加减号定你的价。收货时出得越低越赚，但太低对方会生气。滑到金色的「公道价」刻度以上成交，声望 +1。'],
  ['.chips','话术','每位顾客给你四种话术，每种只能用一次。用对了对方让价，用错了扣耐心。每一招什么时候管用，点顾客的名牌能看到。只有轻松难度会用金边标出管用的招。'],
  ['#panel .row:last-child','成交或送客','<b>我出价</b>是按你定的价还价；<b>照价收下</b>是直接答应对方的要价。实在谈不拢就点左边的<b>送客</b>，不掉声望，之后还能花一点钱到门口再揽一位新顾客。'],
- ['#invBtn','库存','收来的货都在这里。可以扫描、放进橱窗招买家、批发换现金、交悬赏。买家上门时，也是从库存里挑一件给对方看。'],
+ ['#invBtn','库存','收来的货都在这里。可以扫描、放进橱窗招买家、放进保险箱、甩卖换现金、交悬赏。买家上门时，也是从库存里挑一件给对方看。'],
  ['#bounty','悬赏订单','有人高价求购某一类真品。收到合适的货，点这一条就能交货领赏。货品上带「悬赏」标签的就是它要的。'],
  ['#alBtn','立场','稽查员、帮会这些特殊来客会让你做选择。选择决定你偏守法还是偏黑道，两边各有好处，点它可以看。'],
- ['','打烊以后','每晚先看<b>夜间报告</b>（退货、海关、小偷都在这里），再<b>还债</b>、<b>买升级</b>。升级从几十块起步，越往上越贵。别把现金全还光，要留本钱进货。'],
+ ['','打烊以后','每晚先看<b>夜间报告</b>（退货、海关、小偷都在这里），再<b>还债</b>、<b>买升级</b>，还能把货卖给<b>交易所</b>。升级从几十块起步，越往上越贵。别把现金全还光，要留本钱进货。'],
  ['','开始吧','第一天上门的都是便宜货，放心练手。想再看一遍：右上角菜单 → 新手引导。祝生意兴隆！']];
 function tourShow(i){
   const T=$('#tour');
@@ -1673,7 +1777,8 @@ let sheetKind='';
 function openSheet(kind,title,html){sheetKind=kind;$('#sheetTitle').textContent=title;$('#sheetBody').innerHTML=html;$('#sheet').classList.add('show');$('#shade').classList.add('show');}
 function closeSheet(){sheetKind='';$('#sheet').classList.remove('show');$('#shade').classList.remove('show');}
 function tagsOf(it){
-  let t=`<span class="tag">${it.cat}</span>`;const mk=G.market[it.cat];
+  let t=it.ban?'<span class="tag ban">违禁品</span>':`<span class="tag">${it.cat}</span>`;const mk=G.market[it.cat]||1;
+  if(it.safe)t+='<span class="tag safe">保险箱</span>';
   if(mk>1.08)t+=`<span class="tag up">行情 +${Math.round((mk-1)*100)}%</span>`;else if(mk<.92)t+=`<span class="tag dn">行情 −${Math.round((1-mk)*100)}%</span>`;
   if(G.order&&orderFits(it))t+=`<span class="tag bty">悬赏 ${fmt(G.order.pay)}</span>`;
   if(it.legend)t+='<span class="tag legend">传奇</span>';
@@ -1682,21 +1787,25 @@ function tagsOf(it){
   else if(it.suspect)t+=`<span class="tag sus">${it.suspect==='fake'?'疑似赝品':'来路可疑'}</span>`;
   return t;
 }
-const knownHot=()=>G.inv.filter(i=>i.stolen&&(i.scanned||i.suspect==='stolen'));
-const hotWarn=n=>{const ex=Math.max(0,n-shCap());
-  return ex?`仓库里有 <b>${n} 件赃物</b>${n>ex?`，屏蔽柜能藏住 ${n-ex} 件`:''}。留过夜的话，今晚海关来查的概率约 <b>${Math.round(raidP(ex)*100)}%</b>，查到就没收${G.align>=30?'':'并罚款'}。`
-  :`仓库里有 <b>${n} 件赃物</b>。信号屏蔽柜会藏住它们，海关查不到。`;};
-function detailNote(it){
+const knownHot=()=>G.inv.filter(i=>!i.safe&&(i.ban||(i.stolen&&(i.scanned||i.suspect==='stolen'))));
+const hotWarn=n=>`仓库里有 <b>${n} 件赃物或违禁品</b>没进保险箱${winBan()?'，橱窗里还摆着违禁品':''}。留过夜的话，今晚海关来查的概率约 <b>${Math.round(raidP(n)*100)}%</b>，查到就没收${G.align>=30?'':'并罚款'}。`;
+const mkChip=c=>{const m=G.market[c]||1,p=Math.round((m-1)*100),d=trendDays(c);
+  return `<span class="${p>8?'up':p<-8?'dn':''}">${c} ${p>8?'↑'+p+'%':p<-8?'↓'+(-p)+'%':'平'}${Math.abs(p)>8?(d>1?' · 还有 '+d+' 天':' · 只有今天'):''}</span>`;};
+const banNote=it=>it.ban?`<div class="order hot"><b>违禁品</b>　比正常货收得便宜，专门来找它的买家多出两成半。没进保险箱留过夜可能被海关没收罚款；交易所不收；可以在库存里上交海关。</div>`:'';
+function detailNote(it){return banNote(it)+detailNote0(it);}
+function detailNote0(it){
   if(!it.scanned)return `<div class="sub">${it.suspect==='stolen'?'对方一被盘问就慌了，这东西多半是赃物。扫描可以确认。':it.suspect==='fake'?'对方自己承认是高仿。':'目测只能看出大概，而且看不出赝品和赃物。'}</div>`;
-  if(it.fake)return `<div class="order hot"><b>赝品</b>　卖给顾客有一半可能当晚被发现（退赔一半货款，声望 −8）；承诺包退一定被发现。建议批发处理，或等黑市掮客来收。</div>`;
+  if(it.fake)return `<div class="order hot"><b>赝品</b>　卖给顾客有一半可能当晚被发现（退赔一半货款，声望 −8）；承诺包退一定被发现。建议甩卖掉，或等黑市掮客来收。</div>`;
   if(it.stolen)return `<div class="order hot"><b>赃物</b>　能按正价卖给顾客，但留过夜可能被海关没收罚款；卖出后失主也可能找上门（声望 −3）。黑市掮客会收。</div>`;
   return it.legend?`<div class="order"><b>传奇真品</b>　已登记进图鉴，可以放心高价出手。</div>`:'';
 }
 function openInv(){
   if(!G)return;
   const c=G.cust,choosing=c&&!c.done&&c.type==='buy'&&!c.item,o=G.order;
-  let h=`<div class="sub invhelp">收来的货都在这里。每件货可以<b>扫描</b>验真假、<b>放进橱窗</b>招买家、<b>批发</b>马上换现金（只给一半价）。买家上门时，也是从这里挑货给对方看。</div>`;
-  if(o)h+=`<div class="order">${ic('star')} <b>${ordName(o)}</b>　${o.cat}类真品一件，成色不能是“破旧不堪”。<br>报酬 <b class="num">${fmt(o.pay)}</b> · 第 ${o.due} 天打烊前交货。符合的货下面有「交悬赏」按钮；交赝品会被没收。</div>`;
+  let h=`<div class="sub invhelp">每件货可以<b>扫描</b>、<b>放进橱窗</b>、<b>放进保险箱</b>。白天<b>甩卖</b>给四成价，晚上<b>卖给交易所</b>给六成价并随行情涨跌。</div>
+   <div class="mkrow">${CATS.map(mkChip).join('')}</div>
+   <div class="safeh">${ic('lock')}<span>保险箱 <b>${safeN()} / ${safeCap()}</b> 格：防海关、小偷和陨石，但不能摆橱窗。</span></div>`;
+  if(o)h+=`<div class="order">${ic('star')} <b>${ordName(o)}</b>　${ordWhat(o)}　<b class="num">${fmt(o.pay)}</b> · 第 ${o.due} 天打烊前交货。符合的货下面有「交悬赏」按钮。</div>`;
   const hot=knownHot();if(hot.length)h+=`<div class="order hot">${ic('alert')} ${hotWarn(hot.length)}</div>`;
   for(const it of G.inv){
     const match=choosing&&wants(c,it),busy=busyItem(it);
@@ -1706,10 +1815,12 @@ function openInv(){
       ${orderFits(it)?`<button class="btn sm warn" data-act="deliver" data-id="${it.id}" ${busy?'disabled':''}>交悬赏 <span class="num">${fmt(o.pay)}</span></button>`:''}
       ${!it.scanned?`<button class="btn sm" data-act="scanInv" data-id="${it.id}" ${G.scans<=0?'disabled':''}>${ic('scan')}扫描</button>`:''}
       ${G.upg.bench&&!it.fixed&&it.cond<.85?`<button class="btn sm" data-act="fix" data-id="${it.id}" ${G.credits<fixCost(it)?'disabled':''}>${ic('tool')}修复 <span class="num">${fmt(fixCost(it))}</span></button>`:''}
-      <button class="btn sm" data-act="showcase" data-id="${it.id}">${ic('frame')}${G.showcase===it.id?'撤下橱窗':'放进橱窗'}</button>
-      <button class="btn sm" data-act="wholesale" data-id="${it.id}" ${busy?'disabled':''}>批发 <span class="num">${it.scanned?fmt(wholesaleVal(it)):'验货定价'}</span></button></div></div>`;
+      <button class="btn sm" data-act="showcase" data-id="${it.id}" ${it.safe?'disabled':''}>${ic('frame')}${G.showcase===it.id?'撤下橱窗':'放进橱窗'}</button>
+      <button class="btn sm" data-act="safe" data-id="${it.id}">${ic('lock')}${it.safe?'取出保险箱':'放进保险箱'}</button>
+      ${it.ban?`<button class="btn sm" data-act="turnin" data-id="${it.id}" ${busy?'disabled':''}>上交海关 <span class="num">+${fmt(turnVal(it))}</span></button>`
+       :`<button class="btn sm" data-act="wholesale" data-id="${it.id}" ${busy?'disabled':''}>${G.phase==='night'?'卖给交易所':'甩卖'} <span class="num">${it.scanned?fmt(wholesaleVal(it)):'验货定价'}</span></button>`}</div></div>`;
   }
-  if(G.inv.length<G.cap)h+=`<div class="empty">还有 ${G.cap-G.inv.length} 个空位 · 批发商按真实价值的一半收购</div>`;
+  if(G.inv.length<G.cap)h+=`<div class="empty">还有 ${G.cap-G.inv.length} 个空位 · 白天甩卖只给四成价，晚上卖给交易所给六成</div>`;
   h+=`<h3 style="margin-top:14px">${ic('lock')}当品柜 ${G.pawns.length} / ${G.pawnCap}</h3>`;
   if(!G.pawns.length)h+=`<div class="empty">空的。有人来典当时，你借钱出去，到期对方赎回你赚三成利息；不来赎，东西归你。</div>`;
   for(const p of G.pawns){const it=p.item;
@@ -1721,13 +1832,13 @@ function openInv(){
 }
 function openOrder(){
   const o=G&&G.order;if(!o)return;const fits=G.inv.filter(orderFits);
-  openSheet('order',ordName(o),`<div class="order">${ic('star')} 有人出 <b class="num">${fmt(o.pay)}</b> 求购一件<b>${o.cat}类真品</b>，成色不能是“破旧不堪”。<br>
+  openSheet('order',ordName(o),`<div class="order">${ic('star')} 有人出 <b class="num">${fmt(o.pay)}</b> 求购<b>${ordWhat(o)}</b>，成色不能是“破旧不堪”。<br>
    第 ${o.due} 天打烊前交货都算数（今天是第 ${G.day} 天）；过期作废，不罚。完成后声望 +3。<br>交赝品会被没收，声望 −5，所以最好先扫描。声望越高，悬赏报酬越高。<br>${o.src==='law'?'<b>官方悬赏</b>：完成后立场偏向守法。交赃物会被没收，声望 −5。':o.src==='dark'?'<b>黑市悬赏</b>：报酬高三成，完成后立场偏向黑道。赃物也收。':'<b>商会悬赏</b>：不影响立场。'}</div>`
    +(fits.length?`<div class="sub" style="margin-bottom:8px">库存里符合的货：</div>`+fits.map(it=>`<div class="invrow match" data-item="${it.id}"><div class="top">${ibox(it)}
      <div class="imeta"><b>${it.name}</b>${tagsOf(it)}<div class="sub">${condWord(it.cond)} · 进价 <span class="num">${fmt(it.cost)}</span> · 估 <span class="est num">${estText(it)}</span></div></div></div>
      <div class="acts"><button class="btn sm warn" data-act="deliver" data-id="${it.id}" ${busyItem(it)?'disabled':''}>交货领赏 <span class="num">+${fmt(o.pay)}</span></button>
      ${!it.scanned?`<button class="btn sm" data-act="scanInv" data-id="${it.id}" ${G.scans<=0?'disabled':''}>${ic('scan')}先扫描</button>`:''}</div></div>`).join('')
-    :`<div class="empty">库存里还没有符合的货。留意来卖${o.cat}类东西的顾客：符合悬赏的货会带一个金色的「悬赏」标签。</div>`));
+    :`<div class="empty">库存里还没有符合的货。留意来卖${o.cat===BAN?'违禁品':o.cat+'类东西'}的顾客：符合悬赏的货会带一个金色的「悬赏」标签。</div>`));
 }
 function openDetail(it){
   if(!it)return;
@@ -1736,7 +1847,7 @@ function openDetail(it){
    <div class="kv"><span>成色</span><span>${it.scanned?Math.round(it.cond*100)+'% · ':''}${condWord(it.cond)}</span>
    <span>${it.scanned?'扫描估值':'目测估值'}</span><span class="num est">${estText(it)}</span>
    ${it.cost?`<span>进货价</span><span class="num">${fmt(it.cost)}</span>`:''}
-   <span>行情</span><span>${it.cat}类 ${G.market[it.cat]>1.08?'上涨中':G.market[it.cat]<.92?'低迷':'平稳'}</span></div>
+   ${it.ban?'':`<span>行情</span><span>${it.cat}类 ${G.market[it.cat]>1.08?'上涨中':G.market[it.cat]<.92?'低迷':'平稳'}${Math.abs((G.market[it.cat]||1)-1)>.08?(trendDays(it.cat)>1?'，还有 '+trendDays(it.cat)+' 天':'，只有今天'):''}</span>`}</div>
    ${detailNote(it)}`);
 }
 function openAlign(){
@@ -1753,7 +1864,7 @@ function openRep(){
   if(!G)return;const T=repT();
   openSheet('rep','声望',`<div class="help"><p>现在是 <b>${Math.round(G.rep)}</b>（${T.n}）。声望决定上门的货值不值钱、每天来多少顾客、买家肯出多少钱，悬赏报酬也跟着涨。新店从「无名小店」做起。</p></div>
    <div class="tiers">${REPT.map((t,i)=>`<div class="tier ${t===T?'cur':''}"><i>${'★'.repeat(t.s)}</i><b>${t.n}<br><small class="num">${i?t.min+'–'+(REPT[i-1].min-1):t.min+' 以上'}</small></b><span>${repFx(t)}</span></div>`).join('')}</div>
-   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1（对天真的顾客 +2）；拒收问题货 +1；包退的货是真品 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
+   <div class="help"><p><b>怎么涨</b>　卖出一件货 +1，卖出扫描过的真品 +2，卖给收藏家 +3；收货时给到公道价 +1（对天真的顾客 +2）；拒收问题货或违禁品 +1；包退的货是真品 +1；一整天没气走顾客 +2；完成悬赏 +3；当品被按时赎回 +1；接济流浪儿 +4；配合稽查 +3；协助抓逃犯 +2；每晚可以花钱打一次广告 +3；升级招牌 +3。</p>
    <p><b>怎么掉</b>　把顾客谈崩 −1，出价离谱气走人 −3；收货压价太狠 −1（对天真的顾客 −2）；赶走流浪儿 −1；赶走稽查员 −2；卖出的赝品被发现 −8，包退的 −10；海关查出赃物 −6；卖出的赃物被失主认出 −3；悬赏交赝品 −5。</p>
    <p>声望低于 10 时，每天早上自动回升 2。</p></div>
    <h3 style="margin-top:6px">最近变化</h3>${G.repLog.length?G.repLog.map(r=>`<div class="rlog"><span>第${r.day}天　${r.why}</span><b class="num ${r.d>0?'g':'r'}">${r.d>0?'+':'−'}${Math.abs(r.d)}</b></div>`).join(''):'<div class="sub">还没有变化。</div>'}`);
@@ -1791,16 +1902,19 @@ function openHelp(){
    卖货时：夸货（成色好或稀有款）、承诺包退（赝品要全额退款）、套近乎、讲来历（古董、艺术类）、只剩一件（库存里这类只有一件）、亮鉴定（扫描过的真品）。<br>
    来典当的顾客多一招「劝卖」：劝对方直接卖断给你，成不成看性格。</p>
    <p><b>性格</b>　写在顾客名牌上，每种有自己的规矩。<br>贪婪：作势送客，对方会叫住你并让一大步。<br>天真：说什么都信，但说瞎话每次声望 −1；公道价声望 +2，压太狠 −2。<br>窘迫：价够到底线就立刻成交。<br>精明：多数话术要先扫描才管用。<br>急躁：只有第一口价好谈，之后一分不让。<br>话痨：套近乎必成、能用两次；挑毛病会翻脸。<br>赌徒：可以抛硬币赌价。<br>倔强：还价没用，只有话术能说动。</p>
-   <p><b>库存</b>　右上角的「库存」按钮。收来的货都在里面，可以扫描、放进橱窗、修复、批发换现金、交悬赏。</p>
+   <p><b>库存</b>　右上角的「库存」按钮。收来的货都在里面，可以扫描、放进橱窗、放进保险箱、修复、甩卖换现金、交悬赏。</p>
    <p><b>扫描</b>　每天次数有限。目测估值只是范围，看不出赝品和赃物。留意顾客的神情：要价明显偏低、神色慌张的，多半有问题。</p>
    <p><b>赝品</b>　只值真品的一成不到。卖出去有一半可能被发现，要退赔、大掉声望。</p>
    <p><b>赃物</b>　收得便宜，能按正价卖；但留在仓库过夜可能被海关没收罚款，件数越多越容易被查。</p>
+   <p><b>违禁品</b>　武器、陀巴寇、人体器官。一眼认得出，比正常货便宜一两成，专门来找它的买家多出两成半。拒收违禁品声望 +1、立场偏守法。风险：没进保险箱留过夜可能被海关没收罚款；买家里偶尔有便衣；买卖它让立场偏黑道，卖了不涨声望；交易所不收。可以在库存里上交海关。</p>
+   <p><b>保险箱</b>　在库存里把货放进去。箱里的货不怕海关、小偷和陨石，但不能摆橱窗，仍占库存位。起步一格，晚上可以升级到五格。</p>
+   <p><b>行情和交易所</b>　六类正常货各有涨跌，一次持续 1 到 4 天，上门顾客的要价和出价都会跟着变；打开库存能看到今天的行情。每晚的夜间报告会预告明天的变化。晚上结算页有交易所，按实价六成收货并随行情涨跌；白天急着腾位置只能甩卖，四成价。</p>
    <p><b>声望</b>　新店从「无名小店」做起，第一天上门的都是便宜货。声望越高，上门的货越值钱、顾客越多、买家出价越高。点顶部的「声望」看档位和所有涨跌方式。</p>
    <p><b>典当</b>　有的顾客不是卖，而是押东西借钱。到期对方来赎，你赚三成利息；不来赎，东西归你。押赝品的人不会回来。</p>
    <p><b>悬赏</b>　屏幕上方的长条。交一件指定类别的真品就能领赏，点长条交货。符合的货带金色「悬赏」标签。悬赏有三种：商会的不影响立场；官方的让立场偏守法，不收赃物；黑市的报酬高三成，让立场偏黑道。</p>
    <p><b>特殊来客</b>　稽查员、逃亡者、帮会、行商等不讲价，只让你做选择。选择会改变立场（点顶部的立场按钮查看），守法和黑道各有好处。</p>
-   <p><b>橱窗</b>　在库存里把一件货放进橱窗，会吸引专门冲它来的买家，一进门就直接出价，而且出得更高；但也更招贼。</p>
-   <p><b>打烊</b>　先看夜间报告（退货、海关、失窃都在这里），再还债、买升级。升级每项分几级，从几十块起步，越升越贵。别把现金全还光，要留本钱进货。</p>
+   <p><b>橱窗</b>　在库存里把一件货放进橱窗，会吸引专门冲它来的买家，一进门就直接出价，而且出得更高；但也更招贼。违禁品摆橱窗会让当晚被查的概率 +20%。</p>
+   <p><b>打烊</b>　先看夜间报告（退货、海关、失窃、明天的行情都在这里），再还债、卖货给交易所、买升级。升级每项分几级，从几十块起步，越升越贵。别把现金全还光，要留本钱进货。</p>
    <p><b>自由经营</b>　还清债务后没有期限，租金每天涨。攒钱扩建店铺，最高五星；二星以后会出现价值几千的传奇货品。</p></div>`);
 }
 
@@ -1830,7 +1944,7 @@ function renderHud(){
   $('#invBtn').innerHTML=`库存 <span class="num">${G.inv.length}/${G.cap}</span>`;
   const bo=$('#bounty'),o=G.order;bo.hidden=!o;
   if(o){const fit=G.inv.filter(orderFits).length,dl=o.due-G.day;bo.className=(fit?'ready ':'')+(o.src||'');
-    bo.innerHTML=`${ic('star')}<span><b>${ordName(o)}</b>　${o.cat}类真品一件　<b class="num">${fmt(o.pay)}</b></span><em>${fit?'有货可交 ›':dl<=0?'今天截止 ›':`还剩 ${dl+1} 天 ›`}</em>`;}
+    bo.innerHTML=`${ic('star')}<span><b>${ordName(o)}</b>　${ordWhat(o)}　<b class="num">${fmt(o.pay)}</b></span><em>${fit?'有货可交 ›':dl<=0?'今天截止 ›':`还剩 ${dl+1} 天 ›`}</em>`;}
   const al=$('#alBtn'),a=G.align;al.className='hbtn al '+(a>=30?'law':a<=-30?'dark':'');al.innerHTML=(a>=30?'守法':a<=-30?'黑道':'中立');
 }
 function typeLine(el,text){
@@ -1859,9 +1973,9 @@ function renderScene(){
   const want=$('#want');let wt='',wc='';
   if(!c.done){
     if(c.ev){wt='特殊来客 · 不讲价，只做选择';wc='ev';}
-    else if(c.type==='buy'){wc='buy';wt=(c.collector?'收藏家 · ':'买家 · ')+(c.want==='any'?'什么都想买':c.want==='item'?'要买橱窗里那件':'想买'+c.want+'类');}
+    else if(c.type==='buy'){wc='buy';wt=(c.collector?'收藏家 · ':'买家 · ')+(c.want==='any'?'什么都想买':c.want==='item'?'要买橱窗里那件':c.want===BAN?'想买违禁品':'想买'+c.want+'类');if(c.shady)wc='ban';}
     else if(c.pawn){wc='pawn';wt=`典当 · 押货借钱，${c.pawn} 天后来赎`;}
-    else{wc='sell';wt=c.item&&c.item.legend?'卖家 · 传奇货品，小心赝品':'卖家 · 来卖货';}
+    else{wc='sell';wt=c.item&&c.item.legend?'卖家 · 传奇货品，小心赝品':'卖家 · 来卖货';if(c.item&&c.item.ban){wc='ban';wt='卖家 · 卖的是违禁品';}}
   }
   want.hidden=!wt;want.className=wc;want.textContent=wt;
   const ci=$('#ctItem');
@@ -1922,7 +2036,7 @@ function renderPanel(){
     UI.price=clamp(UI.price||lo,lo,hi);
     const fp=sell&&!c.pawn?clamp((fairLine(c)-lo)/Math.max(1,hi-lo),0,1):-1,fmk=fp<0?'':`<i class="fmk ${fp>.6?'rt':''}" style="left:calc(14px + (100% - 28px) * ${fp.toFixed(3)})"></i>`;
     const rb=c.pawn?'<i class="rb pawn">典当</i>':sell?'<i class="rb sell">卖家</i>':'<i class="rb buy">买家</i>';
-    h+=`<div class="tip">${rb}${full?(c.pawn?'<b>当品柜已满</b>。':'<b>仓库已满</b>，先到库存里批发掉一些。')
+    h+=`<div class="tip">${rb}${full?(c.pawn?'<b>当品柜已满</b>。':'<b>仓库已满</b>，先到库存里甩卖掉一些。')
         :c.pawn?`对方想借 ${wasH}<b class="num">${fmt(c.ask)}</b>${dlH}　赎回赚三成，不赎货归你`
         :sell?`对方要价 ${wasH}<b class="num">${fmt(c.ask)}</b>${dlH}`
         :`对方出价 ${wasH}<b class="num">${fmt(c.offer)}</b>${dlH}　你的进价 <span class="num">${fmt(c.item.cost)}</span>`}</div>
@@ -1957,7 +2071,9 @@ const ACT={
   start:showProfs,
   prof:id=>newGame(id),
   ev:id=>chooseEv(+id),
-  showcase:id=>{G.showcase=G.showcase==id?null:+id;afterInvChange();},
+  showcase:id=>{const it=invItem(id);if(!it)return;if(it.safe){toast('保险箱里的货不能摆橱窗','bad');return;}
+    G.showcase=G.showcase==id?null:+id;if(G.showcase&&it.ban)toast('违禁品摆进橱窗更招买家，但今晚被海关查的概率 +20%','warn');afterInvChange();},
+  safe:id=>toggleSafe(id),turnin:id=>turnIn(id),
   pers:()=>{const c=G&&G.cust;if(!c||c.ev)return;const P=PERS[c.pk];
     openSheet('pers',`${P.n}的${SPECIES[c.look.sp].n}`,`<div class="help"><p><b>${P.n}</b>　${PTIP[c.pk]}</p>
      <p><b>耐心</b>　${c.name} 现在还有 ${Math.max(0,c.patience)} 点耐心。每次还价没谈拢扣 1 点，出价太离谱扣 2 点，话术用错也会扣；扣完就走人，你还会掉声望。</p></div>
@@ -1993,7 +2109,9 @@ const ACT={
       c.line=say(sell?['等等等等！别急着赶人嘛……{p}，这总行了吧？','哎——回来回来！{p}，算我亏本。']:['别别别！我加，我加还不行吗？{p}！','等一下！{p}，这是我的诚意。'],{p:sell?c.ask:c.offer});
       c.flash='good';sfx.good();toast('对方叫住了你，主动让了一步。再点送客就真走了','good');return render();}
     c.line=pick(c.type==='buy'&&!G.inv.some(i=>wants(c,i))?L.noMatch:L.refuse);
-    if(bad){addRep(1,'拒收问题货');c.result='你拒收了这件问题货，声望 +1';}else c.result='你客气地送走了顾客，声望不变';
+    if(bad){addRep(1,'拒收问题货');c.result='你拒收了这件问题货，声望 +1';}
+    else if(c.type==='sell'&&it&&it.ban){addRep(1,'拒收违禁品');align(2);c.result='你拒收了违禁品，声望 +1，立场偏向守法';}
+    else c.result='你客气地送走了顾客，声望不变';
     log(`送走了 ${c.name}`);finish('left');},
   tout:()=>{const c=G.cust;if(!c||c.done!=='left'||c.ev||c.touted||(G.tout||0)>=4)return;const cost=toutCost();
     if(G.credits<cost){toast('现金不够','bad');return;}
