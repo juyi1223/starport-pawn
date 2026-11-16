@@ -778,6 +778,8 @@ button.cc:active .ibox{border-color:var(--cyan)}
 .idet .desc{margin-top:8px}
 .cell{min-height:116px}
 .cell .cn{font-size:11px;font-weight:700;line-height:1.15;color:#e6ebff;text-align:center;max-width:100%;padding:0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all;min-height:25px}
+@keyframes dueP{0%,100%{box-shadow:0 0 0 0 #ff5d7a00}50%{box-shadow:0 0 0 3px #ff5d7a88}}
+.stat.debt.urgent{border-color:var(--red);animation:dueP 1.3s ease-in-out infinite}
 
 </style>
 </head>
@@ -2772,13 +2774,14 @@ function leave(insulted){
   if(c.kind==='main'&&insulted)addFeel(c.pid,-2);
   c.result=`${c.name}走了。`;sfx.bad();log(`${c.name}谈崩了`);finish('left');
 }
-const nearLine=(c,p)=>say(L.near,{p});
+const nearLine=(c,p)=>{c.nearL=1;return say(L.near,{p});};
 /* 被拒以后，告诉玩家离对方心里的价还差多远 */
 /* 彩色的差距提示只在引导期前五天、或者学了口才以后才显示；平时听对方怎么说 */
 const showFb=()=>guideOn()&&G.day<=5||upLv('talk')>=1;
 function gapSay(c,k,sell){
+  /* 对方那句话本身已经在说「就差一点」时，不再重复一遍 */
   const t=pick((sell?L.gapS:L.gapB)[k]);
-  c.line=(c.line?c.line+' ':'')+t;
+  if(c.nearL&&k<=1)c.nearL=0;else{c.nearL=0;c.line=(c.line?c.line+' ':'')+t;}
   if(c.patience===1&&!c.lw){c.lw=1;c.line+=' '+pick(L.lastWarn);}
 }
 function gapSell(c,o){
@@ -3499,8 +3502,19 @@ function startDay(first){
   G.yuShot=0;
   G.treasure=upLv('window')>=3&&G.win.some(id=>{const it=invItem(id);return it&&it.legend;});
   if(G.treasure){addRep(1,'镇店之宝');news.push({i:'crown',c:'good',t:'镇店之宝',d:'橱窗里的传奇货引来不少人围观，声望 +1，懂行的阔客也多了。'});}
+  /* 引导期：还债进度明显落后时提醒一次 */
+  if(guideOn()&&!first&&(G.day===7||G.day===10)&&G.debt>0){
+    const have=Math.round(G.cash+sum(G.inv,i=>tv(i)*(i.qty||1)*.6)),need=G.debt*(G.day===7?.55:.8),left=G.debtDue-G.day+1;
+    if(have<need)news.unshift({i:'alert',c:'warn',t:'还债进度',d:`还剩 ${left} 天，欠 ${fmt(G.debt)}。你手上的现金加库存，大约只抵得上 ${fmt(have)}，照这个速度还不上。库存里卖不掉的货，晚上去集市点「卖出」换成现金；白天多收便宜的货、少压价太狠；手头有钱，就去「店铺」页先还一部分。`});
+  }
   G.news=news;
-  if(G.debt>0&&G.debtDue-G.day<=3&&G.debtDue>=G.day)news.push({i:'alert',c:'bad',t:'债务',d:`还剩 ${G.debtDue-G.day+1} 天，${dayShort(G.debtDue)}打烊前要还清 ${fmt(G.debt)}。`});
+  /* 还债倒数三天：每天早上放在最前面提醒，不管带不带引导 */
+  if(G.debt>0&&!G.freed&&G.debtDue>=G.day&&G.debtDue-G.day<=2){
+    const left=G.debtDue-G.day+1,ok=G.cash>=G.debt;
+    news.unshift({i:'alert',c:'bad',t:left===1?'今天是还债的最后一天':`还债倒数第 ${left} 天`,
+      d:left===1?`今天打烊前要还清 ${fmt(G.debt)}。你现在有现金 ${fmt(G.cash)}${ok?'，够还：可以现在就去「店铺」页还清，打烊时也会再问你一次。':`，还差 ${fmt(G.debt-G.cash)}。打烊时还不上，这家店就没了。`}`
+        :`${dayShort(G.debtDue)}打烊前要还清 ${fmt(G.debt)}。你现在有现金 ${fmt(G.cash)}。手头有钱，就去「店铺」页先还一部分。`});
+  }
   if(G.cash<0&&!G.freed&&false){}
   save();
 }
@@ -3557,7 +3571,12 @@ function closeShop(){
   if(G.cust&&!G.cust.done)return;
   G.cust=null;G.phase='close';
   const out=[];
-  if(G.debt>0&&!G.freed&&G.day>=G.debtDue){return gameOver('债务到期，你没能还清。');}
+  /* 最后一天打烊：钱够就还清，还不上才算失败 */
+  if(G.debt>0&&!G.freed&&G.day>=G.debtDue){
+    if(G.cash<G.debt)return gameOver('债务到期，你没能还清。');
+    const a=G.debt;G.cash-=a;G.debt=0;G.freed=true;G.freeDay=G.day;giveDeed();title('t_paid');log(`还债 ${fmt(a)}`,'r');
+    out.push({i:'crown',c:'good',t:'债务还清了',d:`打烊时，你把剩下的 ${fmt(a)} 一次还清了。这家店现在完全是你的，地契也回到了你手里。`});
+  }
   if(GD('raid')&&chance(raidBase()/4)){const r=raid('close');if(r)out.push(r);}
   G.raidTonight=GD('raid')&&(G.forceRaid||(G.raidPre!=null?G.raidPre:chance(raidBase())));G.forceRaid=0;G.raidPre=null;
   if(G.raidTonight&&mainLv('funi')>=2)out.push({i:'shield',c:'warn',t:'福妮',d:'福妮路过，压低声音说：「今晚可能有人来查，你自己当心。」'});
@@ -3924,7 +3943,7 @@ function renderHud(){
   $('#hSnd').innerHTML=ic(SET.mute?'mute':'sound');
   $('#hMk').hidden=!GD('mkt');$('#hMk').innerHTML=`${ic('up')}行情${G.rumNew?'<i class="dot"></i>':''}`;
   $('#sCash').textContent=fmt(G.cash);$('#sCash').classList.toggle('neg',G.cash<0);
-  if(!G.freed){$('#lDebt').textContent=`债务·剩${Math.max(0,G.debtDue-G.day+1)}天`;$('#sDebt').textContent=fmt(G.debt);$('#bDebt').className='stat debt';}
+  if(!G.freed){$('#lDebt').textContent=`债务·剩${Math.max(0,G.debtDue-G.day+1)}天`;$('#sDebt').textContent=fmt(G.debt);$('#bDebt').className='stat debt'+(G.debt>0&&G.debtDue-G.day<=2?' urgent':'');}
   else{$('#lDebt').textContent='周租';$('#sDebt').textContent=fmt(rentOf());$('#bDebt').className='stat';}
   $('#sRep').textContent=G.rep;
   const a=$('#sAl');a.textContent=(G.align>0?'+':G.align<0?'−':'')+Math.abs(G.align);a.className='num '+(G.align>=30?'law':G.align<=-30?'dark':'');
@@ -4265,7 +4284,7 @@ function showMorning(out){
   let h=`<div class="scroll"><div class="mhead">${ic('sun')}<b>${dateStr()}</b><span>${cal().wd>=5?'周末，客人会多一些':cal().wd===0?'周一，客人少一些':''}</span></div>`;
   h+=guideCard();
   if(out&&out.length)h+=`<h3>昨夜</h3>`+out.map(evCard).join('');
-  h+=`<h3>早报</h3>`+(news.length?news.map(evCard).join(''):'<div class="empty">今天没什么新闻。</div>');
+  if(news.length||!(guideOn()&&G.day===1))h+=`<h3>早报</h3>`+(news.length?news.map(evCard).join(''):'<div class="empty">今天没什么新闻。</div>');
   if(mainLv('tangxin')>=1){const f=forecast();if(f.length)h+=evCard({i:'chat',t:'唐心说',d:'我店里的客人都在聊：'+f.slice(0,3).join('，')+'。'});}
   h+=`</div><div class="foot">${btn('openShop',`${ic('door')}开门营业`,'pri grow')}</div>`;
   showOverlay(h,'morning');
@@ -4304,11 +4323,18 @@ function showTitle(){
 }
 let SETUP={};
 function showSetup(slot){
-  SETUP={slot,diff:SET.diff||'normal',prof:'appraiser',bag:'',tut:SET.tut!==false};
+  SETUP={slot,diff:SET.diff||'normal',prof:'appraiser',bag:'',tut:SET.diff==='hard'?false:SET.tut!==false};
+  /* 从没玩过的人：不让他先选一堆还没见过的东西 */
+  if(firstTime()){SETUP.diff='normal';SETUP.tut=true;SETUP.simple=1;}
   setupRender();
 }
+const firstTime=()=>!META.started&&!META.runs&&!Object.keys(META.seen||{}).length;
 function setupRender(){
   const S=SETUP;
+  if(S.simple){
+    const d0=DIFFS[S.diff];
+    return showOverlay(`<div class="scroll"><h2 class="sh">新的一局 · 存档 ${S.slot}</h2><div class="gcard"><b>第一次玩？直接开始就行</b><p>你接手了一家欠着债的当铺：开局现金 ₡${d0.cash}，欠债 ₡${d0.debt}，要在 ${DEBT_DAYS} 天内还清。<br>第一天会有人一步一步教你怎么收货、怎么卖货，之后每天多教一样新东西。</p></div><div class="sub">难度、出身这些可以以后再选：玩过一局，这里就会出现完整的选项。</div></div><div class="foot">${btn('backTitle','返回','sm')}${btn('setupFull','自己选','sm')}${btn('start','直接开始','pri grow')}</div>`,'setup');
+  }
   const diffs=Object.entries(DIFFS).map(([k,d])=>`<button class="chip ${S.diff===k?'sel':''}" data-act="setDiff" data-a="${k}">${d.n}</button>`).join('');
   const dd=DIFFS[S.diff];
   const profs=Object.entries(ORIGINS).map(([k,o])=>{const open=originOpen(k);return `<button class="oc ${S.prof===k?'sel':''}" data-act="setProf" data-a="${k}"${open?'':' disabled'}>${ic(o.i)}<b>${o.n}</b>${open?`<span class="g">＋${o.good.join('；')}</span><span class="r">－${o.bad}</span>`:`<span>称号「${TITLES[o.unlock]}」解锁</span>`}</button>`;}).join('');
@@ -4947,7 +4973,7 @@ const GUIDE=[null,
  {t:'今天多了：假货和鉴定',d:'从今天起会有假货，假货几乎不值钱。货卡上多了「鉴定」按钮，每天能用几次。它告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。把握低的货，要么把价压得很低，要么不收。'},
  {t:'今天多了：对话',d:'从今天起，客人的话里有时藏着线索：急着用钱、不懂行、货的来路不对……这时下面会出现三句问话，只有一句对得上对方刚才说的。问对了对方会让价，问错了对方会不耐烦。拿不准就点「不回」，接着谈价。<br>客人走了以后，会告诉你他是什么样的人。'},
  {t:'今天多了：当东西的客人和拾荒',d:'从今天起，被拒绝后那行彩色的小字没有了，要听对方怎么说：「再加一点就卖」是快成了，「还差点意思」是差一点，「差得远了」要多加，「开玩笑吧」是太离谱。<br>有的客人不卖货，只是把货押给你借钱。到期来赎，你多赚三成；不来赎，货归你。<br>晚上除了集市，还可以去拾荒：东西白捡，但搜得越久越容易出事。没有头灯的话，夜里看不清捡到的是什么。'},
- {t:'今天是周日：租金和升级',d:'每周日要交这周的租金。<br>「店铺」页里可以升级：放大镜让等级区间变窄，鉴定仪让鉴定更准，仓库能放更多货。钱不够就先不升，还债要紧。'},
+ {t:'今天是周日：租金和升级',d:'每周日要交这周的租金。<br>「店铺」页里可以升级，一共七条线，每条线一级一级往上买：鉴定工具让你看货更准，仓库能放更多货，口才让讲价轻松一点。钱不够就先不升，还债要紧。'},
  {t:'今天多了：赃物和风声',d:'从今天起，会有人拿偷来的东西来卖。赃物很便宜，但留在店里有风险：海关可能来搜查，查到就没收加罚款。锁进保险箱的东西查不到。<br>顶栏多了「风声」和「立场」：做这类生意，风声会涨，越高越容易被查；立场会偏黑。<br>每天早上有失窃通告，认出来可以上交领赏。不想碰，就客气地送客。'},
  {t:'今天多了：违禁品和黑市',d:'从今天起，偶尔有人带违禁品来，也有人专门来买。利润很高，风险也最大：买家可能是便衣，卖一次风声就大涨。<br>不想碰就客气地送走，没有任何损失。碰了，立场会变黑，黑市会对你开放。'},
  {t:'今天多了：街坊和朋友',d:'星港有二十位街坊和六位朋友，从今天起会陆续上门。公道地对待他们，关系会变好，会带来各种好处。<br>朋友上门有时会先说一件事，下面给你几句回话，各有各的结果，没有标准答案。街坊熟了，偶尔会透露过几天的行情，记在行情板上。<br>底部多了「人物」页，记着你见过的人。'},
@@ -4967,18 +4993,21 @@ function gs(k){if(!G.gs)G.gs={};G.gs[k]=(G.gs[k]||0)+1;goalCheck();}
 function goalCheck(){
   const g=goalNow();if(!g||G.goalDone===G.day)return;
   if(g.ok(G.gs||{})){
-    G.goalDone=G.day;G.cash+=g.pay;log(`完成今天的目标，街坊送来红包 +${fmt(g.pay)}`,'g');
+    /* 硬核带引导：照样教，但不发红包 */
+    G.goalDone=G.day;
+    if(G.diff==='hard'){setTimeout(()=>{toast('完成今天的目标！','good');if(G)renderHud();},900);return;}
+    G.cash+=g.pay;log(`完成今天的目标，街坊送来红包 +${fmt(g.pay)}`,'g');
     setTimeout(()=>{toast(`完成今天的目标！街坊送来红包 ${fmt(g.pay)}`,'good');sfx.big();if(G)renderHud();},900);
   }
 }
 function guideCard(){
   const g=guideOn()&&GUIDE[G.day];if(!g)return '';
   const goal=GOALS[G.day];
-  return `<div class="gcard"><b>${g.t}</b><p>${g.d}</p>${goal?`<p class="gg">今天的目标：${goal.t}<em>完成有红包 ${fmt(goal.pay)}</em></p>`:''}</div>`;
+  return `<div class="gcard"><b>${g.t}</b><p>${g.d}</p>${goal?`<p class="gg">今天的目标：${goal.t}${G.diff==='hard'?'':`<em>完成有红包 ${fmt(goal.pay)}</em>`}</p>`:''}</div>`;
 }
 function goalSheet(){
   const g=GUIDE[G.day],goal=goalNow();if(!g)return;
-  openSheet('goal',g.t,`<div class="help"><p>${g.d}</p>${goal?`<p><b>今天的目标：</b>${goal.t}。${G.goalDone===G.day?'已经完成了。':'完成有红包 '+fmt(goal.pay)+'。'}</p>`:''}</div><div class="sub">以前几天讲过的内容，都可以在「更多 → 帮助」里再看。</div>`);
+  openSheet('goal',g.t,`<div class="help"><p>${g.d}</p>${goal?`<p><b>今天的目标：</b>${goal.t}。${G.goalDone===G.day?'已经完成了。':G.diff==='hard'?'硬核难度没有红包。':'完成有红包 '+fmt(goal.pay)+'。'}</p>`:''}</div><div class="sub">以前几天讲过的内容，都可以在「更多 → 帮助」里再看。</div>`);
 }
 
 /* 第一天的三位教学客人 */
@@ -5008,6 +5037,11 @@ function tutCust(i){
   return c;
 }
 
+/* 还债最后一天：打烊前弹出来问一次 */
+function dueSheet(){
+  const ok=G.cash>=G.debt,more=moreCust();
+  openSheet('due','今天是还债的最后一天',`<div class="big num">${fmt(G.debt)}<small>还没还的债</small></div><div class="help"><p>你现在有现金 <b>${fmt(G.cash)}</b>。${ok?'够还。还清以后，这家店就完全是你的了。':`还差 <b>${fmt(G.debt-G.cash)}</b>。打烊的时候还不上，这家店就没了。${more?'今天还有客人没来，可以再做几笔生意。':''}`}</p></div><div class="row col">${ok?btn('duePay',`还清 ${fmt(G.debt)}`,'good grow'):btn('dueBack',more?'再做几笔生意':'回柜台','grow')}${ok?btn('dueBack','先不还，回柜台','sm'):btn('dueClose','还不上了，打烊','sm')}</div>`);
+}
 /* ---------- 指着点的引导 ---------- */
 let COACH=null;
 function coachOff(){COACH=null;const t=$('#tour');t.classList.remove('show','act');}
@@ -5025,6 +5059,7 @@ function coachGroup(){
       ||(d>=2&&tip('night','[data-act=goMarket]','晚上只能去一个地方','集市里有商行：货卖不掉、仓库放不下，点「卖出」那一栏，按六成价卖给商行；也能买带鉴定书的真货，第二天加价卖出去。不想去就直接回家睡觉。'))
       ||null;
   }
+  if(UI.tab==='inv'&&d>=2&&$('.igrid .cell:not(.empty)'))return tip('grid','.igrid','库存是一格一格摆的','每格是一件货：图、名字、等级和大约值多少。右上角的小字是记号：锁＝在保险箱里，橱＝摆在橱窗，禁＝违禁品，假＝假货，证＝有鉴定书。点一格，看详情和能做的事。');
   if(UI.tab!=='counter')return null;
   if(d===1){
     const g=G.g1||0;
@@ -5074,7 +5109,13 @@ function coachGroup(){
     return null;
   }
   if(c&&!c.done){
-    if(d>=5&&c.dlg){const r=tip('dlg','.rep','回一句话','对方多说了一句。下面是你能回的话，选一句试试：回对了对方会让价，回错了对方会不耐烦。拿不准就点最下面的「不回」，接着谈价。');if(r)return r;}
+    if(d>=5&&c.dlg){
+      const clue=c.dlg.opts.some(o=>o.k==='tell'||o.k==='wrong');
+      const r=clue?tip('dlgq','.rep','对方的话里有线索','留意对方刚才说的那句话。下面三句问话只有一句对得上：问对了对方会让价，问错了对方会不耐烦。拿不准就点最下面的「不回」，接着谈价。')
+        :tip('dlg','.rep','回一句话','下面是你能说的话，选一句试试。说对了对方会让价，说错了对方会不耐烦；哪句管用，要看对方是什么样的人。拿不准就点最下面的「不回」，接着谈价。');
+      if(r)return r;}
+    if(d>=2&&$('[data-act=pitchPick]')){const r=tip('pitch','[data-act=pitchPick]','推销','对方想要的货你没有。可以从库存里挑一件别的推给对方，只有一次机会：动心了照常谈价，不动心就走，没有别的损失。');if(r)return r;}
+    if(d>=9&&$('[data-act=report]')){const r=tip('report','[data-act=report]','举报','对方带来的是违禁品。除了收下和送客，还可以举报：不花钱，有一小笔赏金，声望和立场上升；代价是带违禁品上门的人会少一阵子。');if(r)return r;}
     if(d>=4&&it&&sellSide(c)){const r=tip('scan','#icard [data-act=scan]','鉴定','拿不准真假就点「鉴定」，每天次数有限。结果是一个把握，比如「75% 真」，意思是这样的货四件里有三件是真的。');if(r)return r;}
     if(d>=2&&it&&sellSide(c)&&!it.gKnown){const r=tip('grade','#icard','等级和估价是个区间',`这件货标着「${gTxt(gRange(it))}」：真实等级就在这个区间里。「约 ${fmt(aboutVal(it))}」是它大概值多少，收价比这个数低才有赚头。滑块已经放在一个稳妥的价上；被拒绝的话，对话框里会写还差多远。`);if(r)return r;}
     return null;
@@ -5231,7 +5272,8 @@ const ACT={
   debtInfo:()=>infoSheet('debtInfo'),cashInfo:()=>infoSheet('cashInfo'),order:()=>infoSheet('order'),
   sound:()=>{SET.mute=!SET.mute;saveSet();if(G)render();if(ovKind()==='title')showTitle();if(sheetKind==='settings')settingsSheet();},
   next:()=>{if(G.cust&&!G.cust.done)return;nextCustomer();const c=G.cust;if(c){teach(c.type);if(c.item&&c.item.ban)teach('ban');}},
-  close:()=>{if(G.cust&&!G.cust.done)return toast('先把这位客人招待完','warn');closeShop();teach('night');},
+  close:()=>{if(G.cust&&!G.cust.done)return toast('先把这位客人招待完','warn');if(G.debt>0&&!G.freed&&G.day>=G.debtDue)return dueSheet();closeShop();teach('night');},
+  duePay:()=>{closeSheet();repay(G.debt);},dueBack:()=>closeSheet(),dueClose:()=>{closeSheet();closeShop();},
   reply:a=>reply(+a),noReply:()=>{const c=G.cust;if(c&&c.dlg){c.dlg=null;sfx.click();render();}},pstep:a=>stepOnce(+a),pnum:()=>numSheet(),numKey:a=>numKey(a),numOk:()=>numOk(),
   deed:()=>deedToggle(),goal:()=>goalSheet(),cx:a=>codexDetail(a),
   offer:()=>offerToSeller(UI.price),ask:()=>priceToBuyer(UI.price),decline,
@@ -5274,9 +5316,10 @@ const ACT={
   freedOk:()=>{hideOverlay();render();},
   newGame:a=>showSetup(+a),
   load:a=>{if(!loadSlot(+a))return toast('读不出这个存档','bad');hideOverlay();UI.tab='counter';render();if(G.pend)showPend();},
-  setDiff:a=>{SETUP.diff=a;setupRender();},setProf:a=>{if(originOpen(a)){SETUP.prof=a;setupRender();}},setBag:a=>{SETUP.bag=a;setupRender();},
+  /* 硬核默认不带新手引导；想带可以自己勾上 */
+  setDiff:a=>{SETUP.diff=a;SETUP.tut=a==='hard'?false:SET.tut!==false;setupRender();},setupFull:()=>{SETUP.simple=0;setupRender();},setProf:a=>{if(originOpen(a)){SETUP.prof=a;setupRender();}},setBag:a=>{SETUP.bag=a;setupRender();},
   backTitle:showTitle,
-  start:()=>{SETUP.tut=!!$('#tutChk')?.checked;SET.diff=SETUP.diff;SET.tut=SETUP.tut;saveSet();newGame(SETUP);hideOverlay();UI.tab='counter';showMorning([]);},
+  start:()=>{const chk=$('#tutChk');if(chk)SETUP.tut=!!chk.checked;SET.diff=SETUP.diff;if(SETUP.diff!=='hard')SET.tut=SETUP.tut;saveSet();META.started=1;saveMeta();newGame(SETUP);hideOverlay();UI.tab='counter';showMorning([]);},
   closeSheet,
   tutOff:()=>{if(G){G.tut=false;save();closeSheet();render();toast('新手引导关掉了，所有内容都开放了','warn');}},
 };
