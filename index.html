@@ -746,6 +746,7 @@ button.cc:active .ibox{border-color:var(--cyan)}
 .rp small{display:block;font-size:11px;color:var(--dim);font-weight:500}
 .rp:disabled{opacity:.42}
 .rep .note{margin:0}
+.ch[data-mood=angry] .hb{display:none}
 
 </style>
 </head>
@@ -1101,11 +1102,11 @@ const SPECIES=[
 ];
 function drawChar(look,mood='neutral',cls=''){
   const K=look.kit&&KITS[look.kit]||null;
-  const sp=SPECIES[K?K.sp:look.sp],[h,cs,cl]=K&&K.col?K.col:[sp.h+look.hj,sp.s,sp.l],hs=`${h} ${cs}%`;
+  const sp=K&&K.hu?HUMAN:SPECIES[K?K.sp:look.sp],[h,cs,cl]=K&&K.col?K.col:[sp.h+look.hj,sp.s,sp.l],hs=`${h} ${cs}%`;
   const su=K&&K.suit?K.suit:[look.sh,38,32];
   const k={c:`hsl(${hs} ${cl}%)`,d:`hsl(${hs} ${cl-17}%)`,l:`hsl(${hs} ${Math.min(94,cl+15)}%)`,
     acc:K&&K.acc?K.acc:`hsl(${h+165} 75% 62%)`,suit:`hsl(${su[0]} ${su[1]}% ${su[2]}%)`,suitL:`hsl(${su[0]} ${su[1]+7}% ${Math.min(96,su[2]+23)}%)`,hat:K?!!K.nocrest:look.hat===1||look.hat===2};
-  const p=sp.draw(k),[mx,my,w]=p.M,mc=p.mc||'#0a1024',bc=p.brow||'#0a1024';
+  const p=sp.draw(k,K),[mx,my,w]=p.M,mc=p.mc||'#0a1024',bc=p.brow||'#0a1024';
   const hd=Math.min(w*.9,13),ad=Math.min(w*.55,10);
   const mouth=`<g fill="none" stroke="${mc}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
    <path class="mo mo-neutral" d="M${mx-w} ${my}Q${mx} ${my+3} ${mx+w} ${my}"/>
@@ -1166,6 +1167,7 @@ function ibox(it,cls='',night){
 /* 人物：衣着四档 */
 function charSvg(look,mood,rich,cls=''){
   let s=drawChar(look,mood,cls);
+  if(look.kit&&KITS[look.kit]&&KITS[look.kit].hu)return s; /* 人类朋友的衣着已经画全了 */
   const acc=rich===0?`<rect x="62" y="204" width="16" height="14" rx="2" fill="#6b5a4a" stroke="#0a1024" stroke-width="2" transform="rotate(-8 70 211)"/><rect x="122" y="210" width="13" height="12" rx="2" fill="#7a6a52" stroke="#0a1024" stroke-width="2" transform="rotate(10 128 216)"/>`
     :rich===2?`<path d="M88 178l12 7 12-7v13l-12-7-12 7z" fill="#e0354b" stroke="#0a1024" stroke-width="2"/>`
     :rich===3?`<path d="M68 194Q100 222 132 194" stroke="#0a1024" stroke-width="7" fill="none"/><path d="M68 194Q100 222 132 194" stroke="#ffc857" stroke-width="4" fill="none"/><circle cx="100" cy="208" r="6" fill="#7df3ff" stroke="#0a1024" stroke-width="2"/>`:'';
@@ -1296,6 +1298,76 @@ const KITS={
  aqin:{sp:7,col:[302,72,66],b:p=>KH.phones(p,'#ffe066')+KF.star(p)+KP.guitar()},
  kuaizui:{sp:2,col:[26,82,62],suit:[35,30,34],b:p=>KH.flat(p,'#7a5a3a')+KF.glasses(p,'#0a1024')+KF.pencil(p)+KP.note()},
 };
+
+/* ==== 01human.js ==== */
+/* 六位朋友是人类：只有他们用这套画法，路人和街坊都不用 */
+const HFACE={
+ oval:'M100 40C140 40 146 76 142 104C138 132 118 148 100 148C82 148 62 132 58 104C54 76 60 40 100 40Z',
+ round:'M100 42C146 42 153 80 149 108C145 138 122 151 100 151C78 151 55 138 51 108C47 80 54 42 100 42Z',
+ square:'M100 40C138 40 145 70 143 104C142 130 126 147 108 149H92C74 147 58 130 57 104C55 70 62 40 100 40Z'};
+const hTorso=(col,w=68)=>`<path d="M${100-w} 236Q${104-w} 176 100 168Q${96+w} 176 ${100+w} 236Z" fill="${col}" ${OL}/>`;
+const hBrow=(col,th=5,tilt=0)=>`<g class="hb" stroke="${col}" stroke-width="${th}" stroke-linecap="round" fill="none"><path d="M70 ${84+tilt}Q80 ${79} 90 ${83-tilt}"/><path d="M110 ${83-tilt}Q120 ${79} 130 ${84+tilt}"/></g>`;
+const HUMAN={n:'人类',draw:(k,K)=>{
+  const u=K.hu,ex=u.face==='round'?6:0;
+  return {body:(u.back?u.back(k):'')+u.cloth(k)+`<rect x="88" y="136" width="24" height="38" rx="8" fill="${k.d}" ${OL}/>`
+    +(u.collar?u.collar(k):'')
+    +`<circle cx="${56-ex}" cy="102" r="10" fill="${k.c}" ${OL}/><circle cx="${144+ex}" cy="102" r="10" fill="${k.c}" ${OL}/>`
+    +`<path d="${HFACE[u.face]}" fill="${k.c}" ${OL}/><path d="M99 108q-5 9 2 11" fill="none" stroke="${k.d}" stroke-width="3.5" stroke-linecap="round"/>`,
+   eyes:[80,120].map(x=>`<g class="eye"><ellipse cx="${x}" cy="98" rx="6.5" ry="8.5" fill="#1a1626"/><circle cx="${x-2}" cy="94.5" r="2.4" fill="#fff"/></g>`).join(''),E:[[80,98,9],[120,98,9]],M:[100,129,10],hat:44,sw:[154,64]};
+}};
+Object.assign(KITS,{
+ /* 木水：码头话事人。黑发后梳、络腮短须、眉上一道疤，黑大衣配暗红衬衫，金链子，耳朵上别着一根没点的陀巴寇 */
+ mushui:{sp:0,col:[26,46,60],hu:{face:'square',
+   cloth:()=>hTorso('#17151f',76)+`<path d="M82 170L100 210L118 170Z" fill="#8a1f2f" ${OL}/><path d="M84 168L64 192L96 222L100 208Z" fill="#2c2838" ${OL}/><path d="M116 168L136 192L104 222L100 208Z" fill="#2c2838" ${OL}/>`,
+   collar:()=>`<path d="M86 176Q100 200 114 176" fill="none" stroke="#0a1024" stroke-width="7"/><path d="M86 176Q100 200 114 176" fill="none" stroke="#ffc857" stroke-width="3.5" stroke-dasharray="5 3"/>`},
+  a:p=>`<path d="M54 94C46 46 74 24 102 26C136 26 156 50 146 94C141 68 126 57 100 57C76 57 61 68 54 94Z" fill="#17151f" ${OL}/><path d="M74 42Q98 31 126 43M68 54Q98 40 132 54" stroke="#4a4660" stroke-width="3" fill="none" stroke-linecap="round"/>`
+    +`<path d="M58 106C59 138 80 153 100 153C120 153 141 138 142 106C139 126 130 139 116 144Q100 148 84 144C70 139 61 126 58 106Z" fill="#17151f" ${O2}/>`
+    +KF.stache({...p,M:[100,125,9]},'#17151f')+hBrow('#17151f',6.5,2)+`<path d="M71 72L79 90" stroke="#b8405c" stroke-width="3.5" stroke-linecap="round"/>`,
+  b:()=>`<g transform="translate(150 80) rotate(-24)"><rect x="-3.5" y="-17" width="7" height="27" rx="3" fill="#f4f1e6" ${O2}/><rect x="-3.5" y="3" width="7" height="7" rx="2" fill="#c98a4b" ${O2}/></g><circle cx="52" cy="116" r="6" fill="none" stroke="#0a1024" stroke-width="6"/><circle cx="52" cy="116" r="6" fill="none" stroke="#ffc857" stroke-width="3"/>`},
+ /* 福妮：港口巡警。警帽、短发、板正的制服，肩章、警徽、哨子 */
+ funi:{sp:0,col:[28,50,70],hu:{face:'oval',
+   back:()=>`<path d="M55 104C50 62 68 46 100 46C132 46 150 62 145 104L139 70H61Z" fill="#3a2a1e" ${OL}/>`,
+   cloth:()=>hTorso('#24418f',72)+`<path d="M100 196V236" stroke="#0a1024" stroke-width="2.5" opacity=".5"/>`,
+   collar:()=>`<path d="M84 166L100 186L116 166L124 180L100 200L76 180Z" fill="#2c4fa8" ${OL}/><path d="M96 188h8l3 28-7 8-7-8z" fill="#12204f" ${O2}/>`},
+  a:()=>`<path d="M54 60C48 12 152 12 146 60Z" fill="#2c4fa8" ${OL}/><path d="M53 50H147V63H53Z" fill="#12204f" ${OL}/><path d="M60 63Q100 55 140 63Q150 77 100 74Q50 77 60 63Z" fill="#0c1533" ${OL}/><path transform="translate(100 34)" d="M0 -12l3.5 7.4 8 1-5.9 5.7 1.5 8-7.1-4-7.1 4 1.5-8-5.9-5.7 8-1z" fill="#ffc857" ${O2}/>`+hBrow('#3a2a1e',5.5,-1),
+  b:()=>KW.epaul()+KW.badge(130,214)+`<path d="M84 180Q66 200 72 214" fill="none" stroke="#f4f1e6" stroke-width="2.5"/><rect x="64" y="212" width="16" height="9" rx="4" fill="#c9d3f5" ${O2}/>`},
+ /* 小汤圆：星港首富。圆脸、整齐的偏分、金丝圆眼镜，米白西装配红领结，金表链 */
+ tangyuan:{sp:0,col:[30,62,80],hu:{face:'round',
+   cloth:()=>hTorso('#f4ecd8',76)+`<path d="M82 170L100 216L118 170Z" fill="#fff" ${OL}/><path d="M84 168L62 194L96 228L100 214Z" fill="#e6d7ae" ${OL}/><path d="M116 168L138 194L104 228L100 214Z" fill="#e6d7ae" ${OL}/><path d="M124 204l12 -3l2 12l-13 2z" fill="#e0354b" ${O2}/><path d="M72 222Q84 232 96 224" fill="none" stroke="#d9a520" stroke-width="3" stroke-linecap="round"/>`,
+   collar:()=>`<path d="M100 180l-16 -10v20zM100 180l16 -10v20z" fill="#e0354b" ${O2}/><circle cx="100" cy="180" r="5" fill="#e0354b" ${O2}/>`},
+  a:p=>`<path d="M48 92C40 44 72 26 104 28C140 28 162 52 152 94C148 72 138 62 120 59C100 64 80 62 64 72C56 78 52 84 48 92Z" fill="#1c1a24" ${OL}/><path d="M120 33Q113 46 120 59" stroke="#4a4660" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M70 50Q88 40 108 44" stroke="#4a4660" stroke-width="3" fill="none" stroke-linecap="round"/>`+KF.blush(p,'#ff9aa8')+hBrow('#1c1a24',4.5,-2),
+  b:p=>KF.glasses(p,'#d9a520')},
+ /* 唐心：汉堡店老板。栗色头发盘成丸子头，红底白点的头巾，橙红衬衫配围裙，围裙上别着一枚汉堡胸针 */
+ tangxin:{sp:0,col:[24,64,77],hu:{face:'oval',
+   back:()=>`<circle cx="100" cy="24" r="21" fill="#8a4a2a" ${OL}/><path d="M50 106C40 52 70 34 100 34C130 34 160 52 150 106C152 132 146 150 137 160L132 100H68L63 160C54 150 48 132 50 106Z" fill="#8a4a2a" ${OL}/>`,
+   cloth:()=>hTorso('#e8643c',66),
+   collar:()=>`<path d="M84 166L100 186L116 166L125 178L100 200L75 178Z" fill="#fff" ${OL}/>`},
+  a:p=>`<path d="M55 94C50 54 76 37 100 37C124 37 150 54 145 94C138 72 124 62 110 63C96 76 74 76 55 94Z" fill="#8a4a2a" ${OL}/>`
+    +`<path d="M56 68Q100 42 144 68L143 80Q100 54 57 80Z" fill="#e0354b" ${OL}/><circle cx="74" cy="64" r="2.8" fill="#fff"/><circle cx="92" cy="57" r="2.8" fill="#fff"/><circle cx="110" cy="57" r="2.8" fill="#fff"/><circle cx="128" cy="64" r="2.8" fill="#fff"/>`
+    +`<g transform="translate(142 62) rotate(25)"><path d="M0 0l-15 -9v18zM0 0l15 -9v18z" fill="#e0354b" ${O2}/><circle cx="0" cy="0" r="4.5" fill="#e0354b" ${O2}/></g>`
+    +KF.blush(p,'#ff8fa0')+hBrow('#6b3820',4,-2)+KF.lashes(p),
+  b:()=>`<path d="M80 200L90 174M120 200L110 174" stroke="#0a1024" stroke-width="9" stroke-linecap="round"/><path d="M80 200L90 174M120 200L110 174" stroke="#fff6e6" stroke-width="5" stroke-linecap="round"/><path d="M74 198h52l6 40H68z" fill="#fff6e6" ${OL}/>`
+    +`<path d="M87 216a13 10 0 0 1 26 0z" fill="#e8a04a" ${O2}/><path d="M86 218h28" stroke="#58c46a" stroke-width="3.5" stroke-linecap="round"/><rect x="87" y="220" width="26" height="5" rx="2" fill="#6b3a1e" ${O2}/><rect x="88" y="225" width="24" height="6" rx="3" fill="#e8a04a" ${O2}/>`
+    +`<circle cx="50" cy="114" r="3.5" fill="#ffc857" ${O2}/><circle cx="150" cy="114" r="3.5" fill="#ffc857" ${O2}/>`},
+ /* 大盘鸡：跑船的。晒黑的皮肤、红毛线帽上架着风镜、胡茬，海魂衫外面套一件旧工装外套，脖子上系红领巾 */
+ dapanji:{sp:0,col:[22,50,55],hu:{face:'square',
+   back:()=>`<path d="M53 106C48 74 58 58 70 54L67 100ZM147 106C152 74 142 58 130 54L133 100Z" fill="#2a2018" ${OL}/>`,
+   cloth:()=>hTorso('#f4f1e6',72)+`<path d="M76 186H124M70 198H130M66 210H134M63 222H137" stroke="#24418f" stroke-width="5.5"/><path d="M28 236Q32 180 88 168L76 236Z" fill="#5d6b3a" ${OL}/><path d="M172 236Q168 180 112 168L124 236Z" fill="#5d6b3a" ${OL}/><rect x="40" y="210" width="20" height="14" rx="3" fill="#4a5630" ${O2}/>`,
+   collar:()=>`<path d="M80 166Q100 182 120 166L117 182Q100 194 83 182Z" fill="#e0354b" ${OL}/><path d="M100 186l-8 18h16z" fill="#e0354b" ${OL}/>`},
+  a:()=>`<path d="M53 68C46 12 154 12 147 68Z" fill="#e0354b" ${OL}/><rect x="49" y="58" width="102" height="17" rx="7" fill="#a8243a" ${OL}/><path d="M66 60v13M83 59v15M100 59v15M117 59v15M134 60v13" stroke="#0a1024" stroke-width="2" opacity=".45"/>`
+    +`<path d="M56 42H144" stroke="#3a2d24" stroke-width="9" stroke-linecap="round"/><circle cx="82" cy="40" r="13" fill="#ffb347" ${OL}/><circle cx="118" cy="40" r="13" fill="#ffb347" ${OL}/><path d="M76 35l5 -4M112 35l5 -4" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/>`
+    +hBrow('#2a2018',6,1)+[[70,128],[76,137],[85,143],[96,146],[108,146],[118,142],[126,136],[131,127],[80,130],[122,129]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.7" fill="#2a2018" opacity=".6"/>`).join(''),
+  b:()=>''},
+ /* 小玉米：鉴定所学徒。玉米黄的齐耳短发、绿叶发夹、大圆眼镜、雀斑，米色工作服配绿领巾，脖子上挂着放大镜，耳朵上夹着铅笔 */
+ xiaoyumi:{sp:0,col:[32,62,79],sc:.95,hu:{face:'oval',
+   back:()=>`<path d="M47 120C36 56 68 28 100 28C132 28 164 56 153 120C151 131 142 135 136 130L132 90H68L64 130C58 135 49 131 47 120Z" fill="#f2c94c" ${OL}/>`,
+   cloth:()=>hTorso('#efe4c8',66)+`<rect x="114" y="208" width="24" height="20" rx="3" fill="#e0d2aa" ${O2}/><path d="M122 208v-12M130 208v-9" stroke="#0a1024" stroke-width="4" stroke-linecap="round"/><path d="M122 208v-12" stroke="#4de1ff" stroke-width="2" stroke-linecap="round"/><path d="M130 208v-9" stroke="#ffc857" stroke-width="2" stroke-linecap="round"/>`,
+   collar:()=>`<path d="M80 166Q100 184 120 166L118 182L100 202L82 182Z" fill="#3fbf7f" ${OL}/>`},
+  a:p=>`<path d="M55 96C48 52 76 34 100 34C124 34 152 52 145 96C141 82 135 73 127 69C122 78 112 81 104 71C98 81 84 83 78 71C68 75 60 84 55 96Z" fill="#f2c94c" ${OL}/><path d="M124 54Q138 42 146 56Q134 66 124 54Z" fill="#3fbf7f" ${O2}/><path d="M126 55l16 1" stroke="#0a1024" stroke-width="1.6" opacity=".5"/>`
+    +hBrow('#b8902a',4,-2)+[[68,116],[74,121],[66,123],[126,121],[132,116],[134,123]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.9" fill="#c98a4b" opacity=".75"/>`).join(''),
+  b:p=>KF.glasses(p,'#5a3a1a')+KF.pencil(p)+`<path d="M86 176Q84 204 96 212" fill="none" stroke="#5a3a1a" stroke-width="2.5"/><path d="M114 176Q116 204 104 212" fill="none" stroke="#5a3a1a" stroke-width="2.5"/><circle cx="100" cy="216" r="11" fill="#1d1b33" ${OL}/><circle cx="100" cy="216" r="6.5" fill="#7df3ff"/><circle cx="97.5" cy="213.5" r="2" fill="#fff"/>`},
+ _sil:{sp:0,col:[230,10,40],hu:{face:'oval',cloth:()=>hTorso('#333a55',70)},a:()=>`<path d="M55 94C48 46 76 30 100 30C124 30 152 46 145 94C139 70 124 60 100 60C76 60 61 70 55 94Z" fill="#333a55" ${OL}/>`},
+});
 
 /* ==== 01art2.js ==== */
 /* 新货物的图 */
@@ -2269,7 +2341,7 @@ function banW(){
   const dark=clamp(-G.align/100,0,1);
   return t=>{const tier=t.tier;return tier===0?1:tier===1?.12+.6*dark:.02+.35*dark;};
 }
-const banShare=()=>!GD('ban')?0:clamp(.04-G.align*.005,.015,.45)*(G.prof==='excop'?.6:1)*(evFx().banCheap?1.8:1);
+const banShare=()=>!GD('ban')?0:clamp(.04-G.align*.005,.015,.45)*(G.prof==='excop'?.6:1)*(evFx().banCheap?1.8:1)*(1-Math.min(.6,.2*snitchN()));
 /* 一天最多来几位带违禁品或找违禁品的客人：还债期一位，立场偏黑两位，还清以后三位 */
 const banCap=()=>G.freed?3:G.align<=-30?2:1;
 
@@ -3858,13 +3930,14 @@ function panel(c){
   if(c.type==='buy'&&!c.item){
     const n=sellable(c).length;
     if(c.dlg)return replyBox(c);
+    if(!n&&canPitch(c))return `<div class="row">${btn('pitchPick',`${ic('chat')}推销别的<small>库存里没有对方要的货</small>`,'pri grow')}${btn('decline','没有，请回','sm')}</div>`;
     return `<div class="row">${btn('showPick',`${ic('box')}拿货给对方看<small>${n?n+' 件合适':'库存里没有合适的'}</small>`,'pri grow','',!n)}${btn('decline','没有，请回','sm')}</div>`;
   }
   /* 对方多说了一句：先回话（或者选不回），再定价 */
   if(c.dlg)return replyBox(c);
   const sell=sellSide(c);
   const main=sell?btn('offer',`出价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow'):btn('ask',`要价 <b class="num" id="pBtn">${fmt(UI.price)}</b>`,'good grow');
-  const extra=c.type==='pawn'?btn('buyout','买断','sm','',!!c.used.buyout):sell?'':btn('showPick','换一件','sm');
+  const extra=c.type==='pawn'?btn('buyout','买断','sm','',!!c.used.buyout):sell?(canReport(c)?btn('report','举报','sm warn'):''):c.pitched?'':btn('showPick','换一件','sm');
   /* 一键成交：照对方现在的价 */
   const quick=`<button class="qk" data-act="quick">${c.type==='pawn'?'照对方要的数借出':sell?'照对方开的价收':'照对方出的价卖'} <b class="num">${fmt(sell?c.ask:c.offer)}</b></button>`;
   return `${priceRow()}<div class="row">${main}${extra}${btn('decline','送客','sq')}</div>${quick}`;
@@ -3929,7 +4002,7 @@ function invActs(it){
 /* ---------- 人物页 ---------- */
 function pagePeople(){
   let h=`<div class="pghead"><b>人物</b><span>见过的人都记在这里</span></div><h3>${ic('heart')}朋友</h3><div class="pgrid">`;
-  h+=MAINS.map(m=>{const p=G.people[m.id];if(!p.met)return `<div class="pcard dim">${charSvg({sp:0,hj:0,sh:0,bd:0,hat:0},'neutral',1,'sil')}<b>？？？</b><span>还没见过</span></div>`;
+  h+=MAINS.map(m=>{const p=G.people[m.id];if(!p.met)return `<div class="pcard dim">${charSvg({sp:0,hj:0,sh:0,bd:0,hat:0,kit:'_sil'},'neutral',1,'sil')}<b>？？？</b><span>还没见过</span></div>`;
     const lv=feelLv(p.feel);return `<button class="pcard" data-act="person" data-a="${m.id}">${charSvg(lookOf(m.id,m.look),'happy',m.rich)}<b>${m.n}</b><span>${FEEL[lv][1]}</span><i class="bar"><i style="width:${clamp(p.feel)}%"></i></i></button>`;}).join('');
   h+=`</div>`;
   const met=FIXED.filter(f=>G.people[f.id].met);
@@ -4160,7 +4233,7 @@ function codexPeople(){
   const cell=(id,svg,name,sub)=>`<button class="cc on" data-act="cxp" data-a="${id}"><div class="pbox">${svg}</div><b>${name}</b><span>${sub}</span></button>`;
   const sil=`<div class="cc"><div class="pbox">${charSvg(SILLOOK,'neutral',1,'sil')}</div><b>？？？</b></div>`;
   let h=cxTabs()+`<div class="sub">跨存档保留。见过一次，就记下样子和名字；发现了真实身份、摸清了脾气，也会记在这里。点一位看详情。</div>`;
-  h+=`<h3>朋友（${MAINS.filter(m=>META.met[m.id]).length}/${MAINS.length}）</h3><div class="cgrid">`+MAINS.map(m=>META.met[m.id]?cell(m.id,charSvg(lookOf(m.id,m.look),'happy',m.rich),m.n,FEEL[META.feel[m.id]||0][1]):sil).join('')+`</div>`;
+  h+=`<h3>朋友（${MAINS.filter(m=>META.met[m.id]).length}/${MAINS.length}）</h3><div class="cgrid">`+MAINS.map(m=>META.met[m.id]?cell(m.id,charSvg(lookOf(m.id,m.look),'happy',m.rich),m.n,FEEL[META.feel[m.id]||0][1]):sil.replace(/<svg[\s\S]*<\/svg>/,charSvg({sp:0,hj:0,sh:0,bd:0,hat:0,kit:'_sil'},'neutral',1,'sil'))).join('')+`</div>`;
   h+=`<h3>街坊（${FIXED.filter(f=>META.met[f.id]).length}/${FIXED.length}）</h3><div class="cgrid">`+FIXED.map(f=>META.met[f.id]?cell(f.id,charSvg(lookOf(f.id),'neutral',f.showRich??f.rich),f.n,cxIdKnown(f)?f.real:'身份：？'):sil).join('')+`</div>`;
   h+=`<div class="sub">朋友从街上认识，街坊会自己上门。带新手引导开局的话，他们第十天起才陆续出现。</div>`;
   openSheet('codex','图鉴',h);
@@ -4228,6 +4301,7 @@ const HELP=[
  ['行情和传闻','<p>顶上的「行情」按钮打开行情板：每类货今天是平常价的百分之几、最近七天怎么走。一波涨跌通常持续三到六天。</p><p>涨的品类，来找它的客人多、出价高，商行也跟着贵，适合卖；跌的品类收起来便宜，适合囤着等涨。货卡上的 ▲▼ 就是这件货所在品类今天的涨跌。</p><p>和街坊做过几次买卖以后，他们偶尔会透露过几天的行情，记在行情板上。消息不一定准：行情板会写这个人以前说准过几次。墨镜卖的消息和唐心听来的消息是准的。</p>'],
  ['朋友的事','<p>六位朋友上门时，有时会先说一件事，下面给你几句回话。没有标准答案：有的选择涨感情，有的赚钱，有的有风险。说完以后，朋友接着照常和你做买卖，这件事不占当天的客人名额。</p><p>答应下来的事会留下记录：木水寄存的箱子、借给小玉米的货在库存页最下面；小汤圆和唐心托你找的货，显示在顶上那一条里，在库存里点那件货就能交。</p>'],
  ['集市和扩建','<p>晚上去集市，页面上有「买进」「卖出」两栏。卖出栏里列着你能出手的货：商行按真实价值的六成收，每件货后面写着这样卖是赚是亏。</p><p>上门的货会跟着你的身家走：钱和货越多，来的货越值钱。</p><p>扩建和升级要交物资。等级没看准的货也可以交：当场验，够了收下，不够退回，还顺便知道了它的等级。悬赏和委托也是这样验。</p><p>还清债务的头一周，房东免租。</p>'],
+ ['推销和举报','<p>买家想要的货你没有时，可以点「推销别的」，从库存里挑一件推给对方，每位客人只有一次机会。动心的话照常谈价，但出的价比主动来买的人低一些；不动心就走了。话多、天真、好赌的人容易动心，正在涨的品类也更好推。</p><p>违禁品也能推销，卖得出好价，但有风险：对方可能翻脸去举报，当晚海关就上门；也可能撞上便衣。看着越体面、越守规矩的人越危险。朋友里只有木水会要，大盘鸡只要陀巴寇，其他朋友不碰，提了还会不高兴。</p><p>有人带违禁品来卖时，除了收和送客，还可以点「举报」：不花钱，有一小笔赏金，声望和立场上升，风声变松。代价是带违禁品上门的人会少一阵子，木水那边的感情也会掉一点。木水本人不能举报。</p>'],
  ['基本玩法','<p>谈不拢、客气地送客都不掉声望；出价离谱把人气走才掉。</p><p>白天开门，客人一个个进来：有人卖货给你，有人来买货，有人来当东西借钱。拖滑块定价，或者点「−」「+」微调，也可以点价格数字直接输入；然后点「出价」或「要价」。对方的耐心看表情，表情越难看越快要走。</p><p>晚上打烊后选一个地方去：集市（商行和黑市）或者拾荒。然后回家睡觉，深夜可能有搜查和小偷。</p>'],
  ['等级和估价','<p>货分 D、C、B、A、S 五级，B 是标准价；A 两倍，S 五倍以上，极少数到一百倍。传奇货是 SSR，至少一亿。</p><p>等级一眼看不准，只能看到一个区间（比如 C–A），区间一定包含真实等级。放大镜升级能把区间收窄。鉴定仪二级以上能鉴定出准确等级。</p>'],
  ['真假和鉴定','<p>鉴定一次，会告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。这个数字是算数的：显示 75% 的货，四件里有三件是真的。贵货更难认。</p><p>没把握的可以送鉴定所（白天在库存里送），等两三天出鉴定书，任何买家都认。传奇货自己鉴定不了，只能送鉴定所。送赃物去会被扣下。</p>'],
@@ -4578,6 +4652,7 @@ function fevMorning(news){
   for(const l of due){
     if(l.k==='thief')G.queue.push({special:'thief',id:l.id});
     else if(l.k==='needy')G.queue.push({special:'needy'});
+    else if(l.k==='mswarn')news.push({i:'mask',c:'warn',t:'木水',d:'木水托人带了句话：「你点了码头上的人。我不为难你，路是你自己选的。」'});
     else if(l.k==='ship'){
       const it=sureItem({cat:l.cat,gw:[0,.15,.5,.3,.05],w:fitW(wealth())}),p=niceRound(faceVal(it)*.8);
       if(G.cash<p||freeSlots()<it.size){addFeel('dapanji',-1);news.push({i:'alert',c:'bad',t:'大盘鸡',d:`大盘鸡把「${it.name}」送来了，可是你${G.cash<p?'钱不够':'仓库放不下'}，他只好带回去。`});}
@@ -4611,6 +4686,82 @@ function investClose(out){
   const g=G.cash-(G.cash0??G.cash);
   if(g>0){const p=Math.round(g*v.rate);G.cash-=p;v.paid+=p;out.push({i:'bank',c:'',t:'小汤圆的分成',d:`今天现金多了 ${fmt(g)}，按约定分给小汤圆 ${fmt(p)}。`});}
   if(G.day>=v.to){out.push({i:'bank',c:'good',t:'入股到期',d:`小汤圆的入股到期了，前后一共分给他 ${fmt(v.paid)}。以后赚的都是你自己的。`});G.invest=null;}
+}
+
+/* ==== 11pitch.js ==== */
+/* 推销：买家想要的货你没有时，可以推销一件别的；举报：有人带违禁品来卖时，可以叫巡警 */
+const PITCHP={naive:.5,chatty:.45,gambler:.4,greedy:.3,desperate:.25,impatient:.2,shrewd:.2,stubborn:.12};
+const pitchList=c=>G.inv.filter(i=>!i.safe&&!i.lab&&!wants(c,i)&&(!i.ban||GD('ban')));
+const canPitch=c=>!!c&&c.type==='buy'&&!c.item&&!c.pitched&&!c.done&&c.tutI==null&&!(guideOn()&&G.day<=1)&&sellable(c).length===0&&pitchList(c).length>0;
+function pitchSheet(){
+  const c=G.cust;if(!canPitch(c))return;
+  const l=pitchList(c).sort((a,b)=>(a.ban?1:0)-(b.ban?1:0)),hasBan=l.some(i=>i.ban);
+  openSheet('pitch','推销哪一件',`<div class="sub">对方不是冲这些货来的，推销只有一次机会。动心的话照常谈价，但出的价比主动来买的人低一些；不动心就走了，没有别的损失。话多、天真、好赌的人容易动心，正在涨的品类也更好推。</div>${hasBan?`<div class="note bad">${ic('alert')}推销违禁品有风险：对方可能翻脸去举报，当晚海关就上门；也可能撞上便衣。看着越体面、越守规矩的人越危险。</div>`:''}`
+    +l.map(it=>`<div class="invrow"><div class="top">${ibox(it)}<div class="ib"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><span class="ic-r">${itemInfo(it)}</span><span>${it.ban?'<em class="cost bad">违禁品</em>':''}${it.cost?`<em class="cost">收价 ${fmt(it.cost/(it.qty||1))}</em>`:''}</span></div>${btn('pitch','推销','sm '+(it.ban?'warn':'pri'),it.id)}</div></div>`).join(''));
+}
+/* 正经货：动心的可能 */
+function pitchP(c,it){
+  let p=(PITCHP[c.pers]??.3)+.05*(c.rich||0)+(G.prof==='talker'?.1:0);
+  p*=clamp(G.mk[it.cat]||1,.8,1.3);
+  if(c.kind==='fixed'||c.kind==='reg')p+=clamp((per(c.pid)?.rel||0)/200,-.1,.2);
+  if(c.kind==='main')p+=.15;
+  return clamp(p,.05,.85);
+}
+/* 违禁品：yes 想要 / no 不要但不声张 / report 去举报 / friend 朋友不碰 */
+function pitchBan(c,it){
+  if(c.kind==='main'){const b=MAIN[c.pid].ban;return b==='yes'||b==='toba'&&it.sub==='陀巴寇'?'yes':'friend';}
+  const f=FIX[c.pid],p=f?G.people[c.pid]:null,al=p&&p.al!=null?p.al:0;
+  let yes=.12+(c.pers==='gambler'?.15:c.pers==='desperate'?.1:0)+(c.trans?.05:0)+clamp(-al/100,0,1)*.4+clamp(-G.align/100,0,1)*.1;
+  if(it.sub==='陀巴寇'&&(c.addict||p&&p.addict))yes+=.5;
+  if(f&&f.exp.includes(BAN))yes+=.4;
+  if(chance(clamp(yes,.03,.9)))return 'yes';
+  const rep=.25+(al>20?.3:0)+((c.shownRich??c.rich)>=2?.15:0)+(c.pers==='stubborn'?.1:0)-(c.pers==='desperate'||c.pers==='gambler'?.1:0)-(al<0?.2:0);
+  return chance(clamp(rep,.03,.8))?'report':'no';
+}
+function pitch(id){
+  const c=G.cust,it=invItem(id);if(!canPitch(c)||!it||wants(c,it))return;
+  c.pitched=1;closeSheet();gs('pitch');
+  const cat=c.want===BAN?(c.wantSub||'那种货'):c.want==='any'?'别的':c.want==='item'?'那一件':c.want;
+  if(it.ban){
+    const r=pitchBan(c,it);
+    if(r==='yes'){
+      c.want=BAN;c.wantSub=it.sub;c.payMul=.9;
+      /* 也可能是便衣装作有兴趣 */
+      if(c.kind==='rand'&&chance(copP()*.5)){c.cop=1;c.know=1;}
+      showItem(id);
+      if(!c.done&&c.item){c.line='（压低了声音）'+c.line;render();}
+    }
+    else if(r==='friend'){addFeel(c.pid,-3);c.line='这种东西别跟我提。就当我没听见。';c.result=`${c.name}不碰违禁品，脸色不太好看。`;sfx.bad();finish('left');}
+    else if(r==='report'){
+      G.forceRaid=1;heatUp(15);addRep(-2,'向客人推销违禁品');if(c.pid&&FIX[c.pid])addRel(c.pid,-15);
+      c.line='你……你卖这个？我这就去告诉海关！';c.angry=1;
+      c.result='对方翻脸了，说要去举报。今晚海关多半会上门，把不该有的东西收好。';log('推销违禁品，被人举报了','r');sfx.bad();finish('left');
+    }
+    else{heatUp(3);c.line=pick(['……我什么都没听见。','这个我不碰，你自己也小心点。','别，我可不想惹麻烦。']);c.result='对方不碰违禁品，走了。没有声张。';sfx.click();finish('left');}
+    return;
+  }
+  if(chance(pitchP(c,it))){
+    c.want='item';c.wantId=it.id;c.payMul=.85;
+    showItem(id);
+    if(!c.done&&c.item){c.line=pick(['嗯……这个倒可以看看。','本来没想买这个，不过——'])+c.line;render();}
+  }
+  else{c.line=pick([`不用了，我只想要${cat}。`,'这个我用不上。','算了，下回再来看看。']);c.result='对方对这件货没兴趣，走了。';sfx.click();finish('left');}
+}
+
+/* 举报：木水和其他朋友没有这个选项 */
+const canReport=c=>!!c&&c.type==='sell'&&!!c.item&&!!c.item.ban&&!c.done&&c.kind!=='main'&&GD('ban');
+const snitchN=()=>Math.max(0,(G.snitch||0)-Math.floor((G.day-(G.snitchDay||0))/7));
+function reportSeller(){
+  const c=G.cust;if(!canReport(c))return;const it=c.item;
+  const pay=Math.max(20,niceRound(Math.min(faceVal(it)*.08,wealth()*.05))),ms=mainLv('mushui');
+  G.cash+=pay;addRep(2,'举报卖违禁品的人');align(4,'举报卖违禁品的人');heatUp(-8);
+  if(mainLv('funi')>=0)addFeel('funi',3);
+  G.snitch=snitchN()+1;G.snitchDay=G.day;
+  if(ms>=0){addFeel('mushui',ms>=2?-6:-3);if(!G.msWarn){G.msWarn=1;later({day:G.day+1,k:'mswarn'});}}
+  if(c.pid&&FIX[c.pid])addRel(c.pid,-40);
+  c.line=pick(['你——！算你狠。','……行，我记住你这家店了。']);c.angry=1;
+  c.result=`你叫来了巡警，${c.name}连人带货被带走了。赏金 ${fmt(pay)}，声望和立场上升，风声松了一些。带违禁品上门的人会少一阵子${ms>=0?'，码头那边也不会高兴':''}。`;
+  log(`举报卖违禁品的人 +${fmt(pay)}`,'g');gs('report');sfx.good();finish('left');
 }
 
 /* ==== 11guide.js ==== */
@@ -4943,6 +5094,7 @@ const ACT={
   retireAsk:()=>openSheet('retire','退休',`<div class="help"><p>退休后这一局就结束了，评分记进名人堂。现在的评分大约是 <b>${score()}</b>。</p></div><div class="row">${btn('closeSheet','再想想','grow')}${btn('retire','退休','warn grow')}</div>`),
   retire:()=>{closeSheet();retire();},
   toTitle:()=>{if(G&&!G.over)save();closeSheet();showTitle();},
+  pitchPick:()=>pitchSheet(),pitch:a=>pitch(+a),report:()=>reportSeller(),
   mktTab:a=>{MKT=a;render();},fev:a=>fevAct(a),board:()=>boardSheet(),
   goMarket:()=>{G.night.go='market';MKT='buy';if(!G.shop||G.shop.day!==G.day)stockShops();render();},
   scav:a=>scavStart(a),scavTake:a=>scavTake(+a),scavDrop:a=>scavDrop(+a),scavMore:()=>scavRound(),scavHome,
