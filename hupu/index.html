@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0b1126">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>星港当铺</title>
+<title>灰港当铺</title>
 <style>
 :root{
   --bg0:#04060d;--card:#121a36;--line:#2b3970;--text:#e8edff;--dim:#8d9bc8;
@@ -463,7 +463,7 @@ h3{margin:20px 0 8px;font-size:14px;color:var(--cyan);letter-spacing:1px;display
 .mcard.lock{border-style:dashed;border-color:#2b3970}.mcard.lock>.ic{color:var(--dim)}.mcard.lock b{color:var(--dim)}
 .invrow .top>.btn{flex:none}
 
-/* ===== 星港当铺 新增 ===== */
+/* ===== 灰港当铺 新增 ===== */
 :root{--cyan:#5fd4e8;--pink:#e86fc3}
 #app{background:linear-gradient(180deg,#14162e,#0a0b1a)}
 #hud{padding:calc(6px + var(--sat)) 10px 6px;gap:6px}
@@ -813,6 +813,7 @@ button.cc:active .ibox{border-color:var(--cyan)}
 .lbrow.top1 .lbrk{color:#ffd54a;font-size:18px}.lbrow.top2 .lbrk{color:#d8e1f2;font-size:17px}.lbrow.top3 .lbrk{color:#e2a36b;font-size:16px}
 .lbrow.top1 .lbava{width:42px;height:42px;box-shadow:0 0 0 2px #ffd54a}
 .lbava{position:relative;overflow:hidden}.lbava img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cost.risk{color:#ffb35c;display:block}
 
 </style>
 </head>
@@ -882,7 +883,7 @@ button.cc:active .ibox{border-color:var(--cyan)}
           </g>
         </svg>
         <div class="cone"></div>
-        <div class="signbox neon">星港当铺</div>
+        <div class="signbox neon">灰港当铺</div>
         <div id="deedWall"></div>
         <div id="chWrap"></div>
         <div id="plateL"></div>
@@ -2044,7 +2045,7 @@ const STARS=[null,
  {n:'扩建门面',cost:4000,req:[{c:'any',g:2,n:3,distinct:1}],d:'三个不同品类的货，各一件 B 级以上'},
  {n:'贵宾室',cost:40000,req:[{c:'any',g:3,n:3,distinct:1}],d:'三个不同品类的货，各一件 A 级以上'},
  {n:'保险金库',cost:600000,req:[{c:'古董',g:3,n:1},{c:'珠宝',g:3,n:1},{c:'any',g:4,n:1}],d:'古董、珠宝各一件 A 级以上，再加任意一件 S 级'},
- {n:'星港第一当铺',cost:12000000,req:[{c:'any',g:4,n:3,distinct:1,legend2:1}],d:'三个不同品类的 S 级各一件；一件传奇可以顶两件 S'},
+ {n:'灰港第一当铺',cost:12000000,req:[{c:'any',g:4,n:3,distinct:1,legend2:1}],d:'三个不同品类的 S 级各一件；一件传奇可以顶两件 S'},
 ];
 
 /* 出身：两好一坏 */
@@ -2070,7 +2071,7 @@ const DEBT_DAYS=14;
 /* 称号：按做过的事给 */
 const TITLES={
  t_paid:'还清债务',t_fast:'一周内还清债务',t_first:'第一天就还清债务',t_s:'收到第一件 S 级货',t_legend:'得到第一件传奇',t_legend5:'得到五件传奇',
- t_star3:'开起贵宾室（三星）',t_star5:'星港第一当铺（五星）',t_rich:'资产过一亿',t_tycoon:'超过小汤圆，成为星港首富',
+ t_star3:'开起贵宾室（三星）',t_star5:'灰港第一当铺（五星）',t_rich:'资产过一亿',t_tycoon:'超过小汤圆，成为星港首富',
  t_clean:'连续十天没被查出东西',t_dark:'立场黑到底',t_law:'立场白到底',t_reform:'把阿灰带上正道',t_friend:'有了第一位至交',t_friends:'六位都是至交',
  t_scav:'拾荒十五次',t_bm:'卖出十件特殊货',t_turn:'上交五件失物或特殊货',t_pawn:'收当二十次',t_lab:'送鉴定所十次',t_codex:'图鉴里见过五十种货',
 };
@@ -2240,7 +2241,7 @@ function exportText(n){
 }
 function importText(n,txt){
   try{
-    txt=String(txt).trim();if(!txt.startsWith('HG1:'))return '这段文字不是星港当铺的存档。';
+    txt=String(txt).trim();if(!txt.startsWith('HG1:'))return '这段文字不是灰港当铺的存档。';
     const o=JSON.parse(decodeURIComponent(escape(atob(txt.slice(4)))));
     if(!o||!o.s||o.s.v!==1)return '存档版本不对。';
     ls.set(SLOTK(n),JSON.stringify(o.s));
@@ -3301,7 +3302,9 @@ function tellAct(i){
     case 'fake':
       if(c.knowsFake){c.ask=Math.max(1,niceRound(c.ask*.4));c.min=Math.max(1,Math.round(c.min*.35));it.auth=0;it.authLv=9;c.line=say(L.tellOk.fake,p$());}
       else{c.ask=Math.max(1,niceRound(c.ask*.8));c.line=say(['啊？我也不知道……那 {p}？'],p$());}
-      if(c.pid&&FIX[c.pid]){G.people[c.pid].hits++;checkReveal(c.pid);}break;
+      if(c.pid&&FIX[c.pid]){G.people[c.pid].hits++;checkReveal(c.pid);}
+      if(CLEAN&&it.auth===0)return fakeOut();
+      break;
     case 'addict':if(!sell){upMax(1.3,1);c.addictPushed=1;}c.line=say(L.tellOk.addict,p$());break;
     case 'cop':
       c.line=pick(L.tellOk.cop)+' 对方咳了一声，走了。';c.result='你识破了海关便衣。';
@@ -3322,6 +3325,7 @@ function fairNote(ratio,c){
   return 0;
 }
 function dealBuy(price){
+  if(CLEAN&&G.cust&&G.cust.item&&G.cust.item.auth===0)return fakeOut();
   const c=G.cust,it=c.item;
   if(price>G.cash){toast('现金不够','bad');return;}
   if(c.type!=='pawn'&&freeSlots()<it.size){toast('仓库满了，先清理库存','bad');return;}
@@ -3697,6 +3701,7 @@ function morningChores(news){
     news.push({i:'scan',c:it.fake?'bad':'good',t:'鉴定所',d:`「${it.name}」的鉴定书出来了：${it.fake?'假货':'真品'}${it.legend?'':'，'+GN[it.g]+' 级'}。${it.fake?'':'拿给客人看，能卖足价。'}`});
     if(!it.fake&&it.g===4)title('t_s');
   }
+  cleanFakes(news);
   /* 代卖、外运 */
   for(const x of [...G.consign]){G.consign=G.consign.filter(y=>y!==x);const pay=Math.round(faceVal(x.it)*1.3);G.cash+=pay;news.push({i:'cart',c:'good',t:'唐心代卖',d:`「${x.it.name}」在唐心店里卖掉了，得 ${fmt(pay)}。`});}
   for(const x of [...G.smug]){G.smug=G.smug.filter(y=>y!==x);
@@ -3707,6 +3712,15 @@ function morningChores(news){
     const age=G.day-s.day;if(age<1){continue;}
     if(age>3){G.sales=G.sales.filter(x=>x!==s);continue;}
     let hit=null;
+    if(CLEAN&&s.fake){
+      if(s.fkDay==null)s.fkDay=chance(.8)?s.day+ri(1,3):0;
+      if(s.fkDay&&G.day>=s.fkDay){
+        const pay=Math.round(s.price*3);G.cash-=pay;addRep(-5,'卖出的假货被发现');if(s.pid){s.pid in MAIN?addFeel(s.pid,-15):addRel(s.pid,-25);}
+        news.push({i:'angry',c:'bad',t:'假货被发现',d:`买「${s.name}」的客人发现是假货。按「假一赔三」，退回货款再加赔偿，一共赔了 ${fmt(pay)}。声望 −5。`});
+        log(`「${s.name}」是假货，假一赔三 −${fmt(pay)}`,'r');G.sales=G.sales.filter(x=>x!==s);
+      }
+      continue;
+    }
     /* 退货规则：承诺了包退，客人才能来退，退钱的同时货一定还回来；没承诺的只掉声望 */
     const back=x=>{if(!s.it)return;const it={...s.it,id:uidNext(),qty:1,...x};addItem(it);};
     if(s.fake&&s.know<2&&chance(s.know===1?.5:.35)){
@@ -3944,7 +3958,7 @@ function yuLook(id){
 }
 function yuCert(id){
   const it=invItem(id);if(!it||mainLv('xiaoyumi')<3||it.cert)return;
-  if(CLEAN&&it.fake){it.auth=0;it.authLv=9;toast('小玉米看了半天：「这件是假的，我开不了。」','warn');render();return;}
+  if(CLEAN&&it.fake){it.auth=0;it.authLv=9;toast('小玉米看了半天：「这件是假的，我开不了。」','warn');afterInv();return;}
   const c=niceRound(faceVal(it)*.1);if(G.cash<c)return toast('钱不够','bad');
   G.cash-=c;it.cert=1;it.fakeCert=it.fake?1:0;align(it.fake?-6:0,'让小玉米给假货开鉴定书');
   toast('小玉米开了一张鉴定书','warn');afterInv();
@@ -4226,7 +4240,7 @@ function render(){
     pg.dataset.k=k;pg.scrollTop=keep;}
   coachSync();
 }
-function afterInv(){save();render();if(sheetKind&&SHEETS[sheetKind])SHEETS[sheetKind](sheetArg);}
+function afterInv(){cleanFakes();save();render();if(sheetKind&&SHEETS[sheetKind])SHEETS[sheetKind](sheetArg);}
 
 /* ---------- 顶栏 ---------- */
 function renderHud(){
@@ -4308,7 +4322,7 @@ function itemInfo(it){
 function icard(it,c){
   const tags=tagsOf(it);
   const scanBtn=GD('scan')&&canScan(it)&&!it.legend&&G.scans>0&&!c.done?`<button class="btn sm" data-act="scan" data-a="${it.id}">${ic('scan')}鉴定<small>剩${G.scans}次</small></button>`:'';
-  const mine=c.type==='buy'&&it.cost?`<em class="cost">你的收价 ${fmt(it.cost/(it.qty||1))}</em>`:'';
+  const mine=(c.type==='buy'&&it.cost?`<em class="cost">你的收价 ${fmt(it.cost/(it.qty||1))}</em>`:'')+(CLEAN&&c.type==='buy'&&!c.done&&it.auth!==4&&!it.cert?'<em class="cost risk">没鉴定过：要是假的，八成会被发现，假一赔三</em>':'');
   return `${ibox(it)}<div class="ic-b"><b>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}</b><div class="ic-r">${itemInfo(it)}</div><div>${tags}${mine}</div></div>${scanBtn}`;
 }
 function tagsOf(it){
@@ -4634,7 +4648,7 @@ function showTitle(){
     const s=slotInfo(n);
     if(!s)return `<div class="slot"><b>存档 ${n}</b><span>空</span><div class="row">${btn('newGame','新的一局','pri sm grow',n)}</div></div>`;
     return `<div class="slot"><b>存档 ${n}</b><span>${ORIGINS[s.prof]?.n||''} · ${DIFFS[s.diff]?.n||''} · 第 ${s.day} 天 · ${s.over?'已结束':fmt(s.cash)}</span><div class="row">${s.over?'':btn('load','继续','pri sm grow',n)}${btn('newGame','重新开始','sm',n)}${btn('exportSlot','导出','sm',n)}</div></div>`;};
-  showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('store')}</div><h1>星港当铺</h1><p class="pp sub">${CLEAN?'眼力就是本钱。':'黑白之间，自己选路。'}</p></div>${cloudBanner(bad)}${[1,2,3].map(slot).join('')}${lbShow()?`<div class="row">${btn('rank','排行榜','pri grow')}</div>`:''}<div class="row">${btn('importAsk','导入存档','sm grow')}${btn('hall','名人堂','sm grow')}${btn('sound',SET.mute?'打开声音':'关掉声音','sm grow')}</div><p class="sub center">${CS.on&&!bad.length?'存档存在你的虎扑账号里，换手机登录同一个账号也能接着玩。':CS.on?'':'存档存在这台手机的浏览器里，清理浏览器数据会丢。玩得久的话，记得在「设置和存档」里导出备份。'}</p></div>`,'title');
+  showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('store')}</div><h1>灰港当铺</h1><p class="pp sub">${CLEAN?'眼力就是本钱。':'黑白之间，自己选路。'}</p></div>${cloudBanner(bad)}${[1,2,3].map(slot).join('')}${lbShow()?`<div class="row">${btn('rank','排行榜','pri grow')}</div>`:''}<div class="row">${btn('importAsk','导入存档','sm grow')}${btn('hall','名人堂','sm grow')}${btn('sound',SET.mute?'打开声音':'关掉声音','sm grow')}</div><p class="sub center">${CS.on&&!bad.length?'存档存在你的虎扑账号里，换手机登录同一个账号也能接着玩。':CS.on?'':'存档存在这台手机的浏览器里，清理浏览器数据会丢。玩得久的话，记得在「设置和存档」里导出备份。'}</p></div>`,'title');
 }
 let SETUP={};
 function showSetup(slot){
@@ -4765,7 +4779,7 @@ const HELP=[
  ['声望、立场、风声','<p>声望是客人信不信你，决定来什么样的人。立场是守法还是犯法，决定特殊货多不多、夜市开不开。风声是海关盯你多紧，决定搜查和便衣多不多。点顶栏的数字可以看详细说明。</p>'],
  ['特殊货和失物','<p>特殊货有三类：武器、星烟、医疗样本。利润高，但在柜台卖一次风声就涨一大截。带特殊货上门的卖家、专找特殊货的买家都是额外多来的，每天最多三位，不占正常客人的名额，不想碰就客气地送走。星烟分一包、一条、一箱，可以拆开零卖，有人会上瘾。</p><p>失物刚偷来的最烫手，收价极低，拿着和卖出去都危险；放几天就凉了。失主可能找上门；每天早上有失窃通告，上交能领赏。工作台二级能洗白失物。</p><p>保险箱里的东西搜查和小偷都找不到，卖的时候可以直接从保险箱里拿给客人看。夜市收得便宜，只是个安全的出路；想赚得多要在柜台卖，那就得担风险。</p>'],
  ['人物','<p>六位朋友各管一块玩法，感情越好给的好处越大。二十位街坊各有各的身份，有的一开始看不出真面目。处得好的随机客人可能变成熟客。</p>'],
- ['升级和扩建','<p>前一两级只要钱，再往上还要交物资：某一类、某个等级以上的货。物资可以分几次交。还清债务后可以扩建门面，五星是星港第一当铺。</p>'],
+ ['升级和扩建','<p>前一两级只要钱，再往上还要交物资：某一类、某个等级以上的货。物资可以分几次交。还清债务后可以扩建门面，五星是灰港第一当铺。</p>'],
  ['拾荒','<p>晚上可以去拾荒。每轮翻出三件，挑着装进包；包满了可以换。前几轮安全，再往后每多搜一轮都可能出事。头灯决定夜里看得清多少。</p>'],
  ['日历和大事','<p>一周 7 天、一季 4 周、一年四季。有的大事每年固定日子来，有的随机。大事会改变行情和规则，比如边境冲突时武器翻倍。</p>'],
  ['图鉴和地契','<p>图鉴分「货物」和「人物」两栏。人物一栏记着见过的朋友和街坊，发现的真实身份、摸清的脾气也记在里面。</p><p>「更多」里的图鉴跨存档保留。一件货经手过一次就记下名字和样子；确认过等级的真货会点亮对应的等级，并记下标准价，以后再遇到这种货，心里就有数了。</p><p>还清开局的债务时，债主会把抵押的地契送回来。地契是非卖品，不占库存，不算进资产；在「库存」页挂到墙上，每天多来一位客人。</p>'],
@@ -5645,7 +5659,7 @@ function coachBlocks(el){
 }
 
 /* ---------- 还清债务的纪念：地契（非卖品） ---------- */
-const DEED={n:'星港当铺的地契',d:'开局那笔债，押的就是这家店。债还清了，地契回到你手里。不卖，也没人买得起。'};
+const DEED={n:'灰港当铺的地契',d:'开局那笔债，押的就是这家店。债还清了，地契回到你手里。不卖，也没人买得起。'};
 const DEED_ART='<rect x="13" y="7" width="38" height="50" rx="3" fill="#f1e3bd" stroke="#8a6a2f" stroke-width="2"/><path d="M20 17h24M20 24h24M20 31h24M20 38h13" stroke="#8a6a2f" stroke-width="2" stroke-linecap="round"/><circle cx="40" cy="46" r="7" fill="#c8413a"/><path d="M36.5 46h7M40 42.5v7" stroke="#f6d9c9" stroke-width="1.6" stroke-linecap="round"/>';
 const deedSvg=()=>`<svg class="isv" viewBox="0 0 64 64">${DEED_ART}</svg>`;
 function giveDeed(){
@@ -5685,18 +5699,21 @@ if(CLEAN){
   const H=(t,body)=>{const i=HELP.findIndex(h=>h[0]===t);if(i<0)return;if(body==null)HELP.splice(i,1);else HELP[i]=[body[0],body[1]];};
   H('新手引导',['新手引导','<p>开局勾了「新手引导」，还债的这段日子就是教程：第一天一步一步教收货和卖货，之后每天早上多开放一样东西（等级、行情、假货、对话、当品、拾荒、升级、保险箱、街坊），第十天起全部开放。还清债务，或者在提示里关掉引导，没讲到的内容会立刻全部开放。</p>']);
   H('推销和举报',['推销','<p>买家想要的货你没有时，可以点「推销别的」，从库存里挑一件推给对方，每位客人只有一次机会。动心的话照常谈价，但出的价比主动来买的人低一些；不动心就走了。话多、天真、爱碰运气的人容易动心，正在涨的品类也更好推。</p>']);
-  H('包退和退货',['包退和退货','<p>卖货时如果你承诺了「包退」，对方肯多出一些钱，但三天之内可能来退：货是假的、你把货夸过了头，或者对方单纯反悔。退货时钱全额退，货一定回到库存。</p><p>没承诺包退，就没有人来退货。卖出去的假货被发现、夸货夸过了头，对方不会来要钱，但会到处说：声望会掉；卖的是假货的话，接下来两天还会少来客人。</p><p>已经确认是假的货不能再拿给客人，只能扔掉。</p>']);
+  H('包退和退货',['包退和退货','<p>卖货时如果你承诺了「包退」，对方肯多出一些钱，但三天之内可能来退：你把货夸过了头，或者对方单纯反悔。（假货不走包退，按下面的假一赔三。）退货时钱全额退，货一定回到库存。</p><p>没承诺包退，就没有人来退货。夸货夸过了头，对方不会来要钱，但会到处说，声望会掉。</p><p>假货的规矩：柜台上认出是假的，店里不收，对方拿走；库存里认出是假的（自己鉴定、鉴定所、商行验货），当场销毁，收价认赔；没认出来卖出去了，八成会在一到三天内被发现，按「假一赔三」赔给对方（卖价的三倍），声望 −5。</p>']);
   H('福妮、塞钱和打点',['福妮','<p>福妮是港口的巡警。他上门时可以：聊几句（感情越好说得越多）、请他喝茶、请他帮个忙（到「朋友」后每周一次：查一位街坊的底细，或者追回一件被偷的货）。</p><p>和他处好关系：熟人以后官方悬赏的报酬更高；朋友以后打烊时会告诉你今晚有没有小偷；至交以后被偷的货几乎都能追回来。</p>']);
   H('基本玩法',['基本玩法','<p>谈不拢、客气地送客都不掉声望；出价离谱把人气走才掉。</p><p>白天开门，客人一个个进来：有人卖货给你，有人来买货，有人来当东西借钱。拖滑块定价，或者点「−」「+」微调，也可以点价格数字直接输入；然后点「出价」或「要价」。对方的耐心看表情，表情越难看越快要走。</p><p>晚上打烊后选一个地方去：集市（商行）或者拾荒。然后回家睡觉，深夜可能有小偷。</p>']);
-  H('真假和鉴定',['真假和鉴定','<p>鉴定一次，会告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。这个数字是算数的：显示 75% 的货，四件里有三件是真的。贵货更难认。</p><p>没把握的可以送鉴定所（白天在库存里送），等两三天出鉴定书，任何买家都认。传奇货自己鉴定不了，只能送鉴定所。</p>']);
+  H('真假和鉴定',['真假和鉴定','<p>鉴定一次，会告诉你这件是真货的把握：100% 真、75%、50%、25%、100% 假。这个数字是算数的：显示 75% 的货，四件里有三件是真的。贵货更难认。</p><p>没把握的可以送鉴定所（白天在库存里送），等两三天出鉴定书，任何买家都认。传奇货自己鉴定不了，只能送鉴定所。</p><p>认出来的假货当场销毁；没鉴定过就卖出去的货，万一是假的，八成会被发现，要假一赔三。拿不准的货，先鉴定再卖。</p>']);
   H('看人',['看人','<p>柜台上只看得到衣着、说的话和表情。性格、懂不懂行、急不急，都要从说话里判断。客人走后会告诉你他是什么样的人。</p><p>不懂行的卖家可能贱卖好货，也可能把破烂当宝；很懂行的人要价准、骗不了。</p>']);
   H('对话',['对话','<p>客人的话里有时藏着线索：「我等着用钱」是急，「我也不懂这个」是不懂行，「别拿鉴定仪照它」是心虚。线索不会另外标出来，要自己听。这时下面会出现三句问话，只有一句对得上对方刚才说的：问对了对方会让价，问错了对方会不耐烦。拿不准就点「不回」，接着谈价。差不多一半的客人不多说话，只谈价。</p><p>每句话前面的小字是它的意思。收货时会遇到：挑毛病（说货不好）、哭穷、晾一晾（不说话等对方让）、套近乎、最后一口价。卖货时会遇到：夸货（最高只能说到 A 级，说过头了客人事后会回来闹）、说实话、包退、亮鉴定书、套近乎、晾一晾。</p><p>哪句管用，取决于对方是什么样的人：比如急着用钱的人经不起晾，倔的人不吃挑毛病那一套，话多的人喜欢套近乎。有的破绽是装出来的，点破了对方会生气。回完以后，对话框里会写这句有没有管用。</p>']);
   H('声望、立场、风声',['声望','<p>声望是客人信不信你，决定来什么样的人：声望高，带假货来的卖家少，买家肯多出一些钱。点顶栏的数字可以看详细说明。</p>']);
   H('特殊货和失物',null);
   H('日历和大事',['日历和大事','<p>一周 7 天、一季 4 周、一年四季。有的大事每年固定日子来，有的随机。大事会改变行情和客流，比如寒潮时衣服和能源都涨价。</p>']);
-  H('借贷和结束',['借贷和结束','<p>还清债务后可以借钱给熟人、向银行借钱。每周日交租金，现金是负数、一周补不上就破产。手头没钱没货的时候，可以去拾荒捡点东西卖。卖出的假货被发现要全额退款。任何时候可以在「更多」里退休，结算评分。</p>']);
+  H('借贷和结束',['借贷和结束','<p>还清债务后可以借钱给熟人、向银行借钱。每周日交租金，现金是负数、一周补不上就破产。手头没钱没货的时候，可以去拾荒捡点东西卖。卖出去的假货被发现要假一赔三。任何时候可以在「更多」里退休，结算评分。</p>']);
   delete TEACH.stolen;delete TEACH.ban;
+  {const g=GUIDE.find(x=>x&&x.t==='今天多了：假货和鉴定');if(g)g.d+='<br>假货的规矩：柜台上认出来就不收；库存里认出来当场销毁；没认出来卖出去，八成会被发现，要假一赔三。';}
   ORIGINS.excop.good=['福妮从熟人起步','开局声望高一些'];
+  /* 解锁用的称号被删掉的出身，改用「有了第一位至交」解锁 */
+  Object.values(ORIGINS).forEach(o=>{if(o.unlock&&!TITLES[o.unlock])o.unlock='t_friend';});
   SCENES.funi[1]='福妮看了看四周：「最近夜里小偷多。哪晚不太平，打烊前我跟你说一声。」';
   delete ROLES.addict;delete ROLES.thief;delete ROLES.fence;
   L.re.coinS=['爽快点，一口价。'];L.re.coinB=['爽快点，一口价。'];L.tac.coinNo=['别闹了，好好谈。'];
@@ -5706,6 +5723,25 @@ if(CLEAN){
   delete L.tellAct.stolen;delete L.tellAct.addict;
   /* 少了「来路干净吗」以后，卖家那边补一句中性的问话，保证每次有三句可选 */
   L.tellAct.heir='这是家里传下来的吧？';
+}
+
+/* 虎扑版假货规则 */
+/* 柜台上认出是假货：店里不收，对方拿走（不掉声望） */
+function fakeOut(){
+  const c=G&&G.cust;if(!CLEAN||!c||c.done||!c.item||c.item.auth!==0||!(c.type==='sell'||c.type==='pawn'))return false;
+  c.line=pick(['……被你看出来了。是仿的，那我拿走了。','行吧，算我没来过。东西我拿走。']);c.result='这是假货，店里不收。对方把东西拿走了。';c.flash='';
+  sfx.click();finish('left');render();return true;
+}
+/* 库存里认出是假货：直接销毁，认赔 */
+function cleanFakes(news){
+  if(!CLEAN||!G)return;
+  const fk=G.inv.filter(i=>i.auth===0&&!i.legend);
+  for(const it of fk){
+    removeItem(it);const loss=Math.round(it.cost||0);
+    const msg=`「${it.name}」是假货，已经销毁${loss?`，亏了 ${fmt(loss)}`:''}。`;
+    log(msg,'r');
+    if(news)news.push({i:'alert',c:'bad',t:'假货销毁',d:msg});else setTimeout(()=>{try{toast(msg,'bad');}catch(e){}},400);
+  }
 }
 
 /* ==== 11rank.js ==== */
@@ -5836,6 +5872,7 @@ function doScan(id){
   if(it.stolen){teach('stolen');if(it.from&&FIX[it.from]){G.people[it.from].hits++;checkReveal(it.from);}}
   if(it.fake&&it.auth===0&&it.from&&FIX[it.from]){G.people[it.from].hits++;checkReveal(it.from);}
   checkNotice(it);
+  if(G.cust&&G.cust.item===it&&fakeOut())return;
   if(G.cust&&G.cust.item===it)render();else afterInv();
 }
 function wb(fn,id){const it=invItem(id);if(!it)return;const r=fn(it);if(r.err)return toast(r.err,'warn');toast(r.text,r.cls||'');log(r.text,r.cls==='good'?'g':'r');afterInv();}
@@ -5916,7 +5953,7 @@ window.addEventListener('resize',()=>{if(G&&COACH)coachShow();});
 
 /* 启动 */
 window.addEventListener('error',e=>{try{toast('出错了：'+e.message,'bad')}catch(x){}});
-const loadingCard=()=>showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('store')}</div><h1>星港当铺</h1><p class="pp sub">正在读取存档……</p></div></div>`,'title');
+const loadingCard=()=>showOverlay(`<div class="scroll"><div class="title"><div class="logo">${ic('store')}</div><h1>灰港当铺</h1><p class="pp sub">正在读取存档……</p></div></div>`,'title');
 async function bootGame(only){
   if(!cloudApi()){showTitle();return;}
   loadingCard();
