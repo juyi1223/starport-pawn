@@ -1758,7 +1758,10 @@ const REPT=[
  {min:0,n:'臭名远扬',s:1,shady:.32,fake:.24,gw:[.36,.36,.22,.05,.01],buy:.88,know:.1},
 ];
 /* 每类货在不同声望下出现的权重（日用、中档、高档） */
-const TIERW=[[.6,.33,.07],[.55,.36,.09],[.45,.42,.13],[.35,.45,.2],[.25,.45,.3]];
+/* 品种看星级：星级越高，中档和高档的品类越常见（日用、中档、高档的权重）。只是概率，不是规定死的 */
+const TIERW=[[.6,.33,.07],[.5,.38,.12],[.4,.42,.18],[.3,.44,.26],[.22,.43,.35]];
+/* 等级也看星级（D、C、B、A、S 的权重）。和声望无关 */
+const STARGW=[[.25,.36,.31,.07,.01],[.2,.34,.34,.1,.02],[.15,.3,.36,.15,.04],[.12,.25,.36,.2,.07],[.1,.2,.35,.25,.1]];
 
 /* 主要角色：感情 0–100，25 熟人，55 朋友，85 至交 */
 const FEEL=[[0,'认识'],[25,'熟人'],[55,'朋友'],[85,'至交']];
@@ -2371,6 +2374,23 @@ const wealth=()=>Math.max(0,G.cash)+sum(G.inv,i=>Math.round(tv(i)*(i.qty||1)*.6)
 const FITC=.14,FITS=.85,FITLO=.06,FITP=.7;
 const fitW=W=>t=>{const x=Math.log(t.mid*.85/Math.max(20,W*FITC));return Math.exp(-x*x/(2*FITS*FITS));};
 const stockN=()=>G.inv.filter(i=>!i.lab).length;
+/* 老交情的街坊：卖给你便宜一成，买你的多出一成 */
+const oldPal=c=>c.kind==='fixed'&&((per(c.pid)||{}).rel||0)>=60;
+/* 街坊常来卖什么、买什么（身份没揭开的按表面身份说不清） */
+function habitOf(f){
+  const R=ROLES[f.role];if(!R)return null;
+  if(f.role==='broker')return {sell:'不卖货',buy:'不买货，只卖消息'};
+  if(f.role==='reporter')return {sell:'不卖货',buy:'不买货，爱打听'};
+  const cats=R.cats==='any'?'什么都有':R.cats==='fav'?f.fav:R.cats==='tier0'?'服饰、食物饮品、工具这些日用货':R.cats.join('、');
+  let sell=R.sell>=.2?cats:'很少卖货';
+  if(f.role==='thief')sell+='（多半是偷来的，便宜）';
+  if(f.role==='forger')sell+='（多半是仿的）';
+  if(f.role==='fence')sell+='（不少是赃物）';
+  if(f.role==='granny')sell+='（偶尔捡到好东西）';
+  if(R.ban)sell+=R.banSub?`，有时带${R.banSub}`:'，有时带违禁品';
+  let buy=R.buyFav?`${f.fav}，要 B 级以上，出价比别人高两成半`:R.buyBan?R.buyBan:R.buyStolen?'赃物':R.sell<.9?'看上什么买什么':'几乎不买东西';
+  return {sell,buy};
+}
 /* 保证砍到底价一定买得起：对方的底价不超过现金的九成。传奇、通告上的货、教学客人除外 */
 function fitCash(c){
   if(!c||c.type!=='sell'&&c.type!=='pawn'||!c.item||c.item.legend||c.item.notice||c.tutI!=null)return;
@@ -2391,11 +2411,12 @@ const shownRich=c=>c.showRich!=null?c.showRich:clamp(c.rich+(chance(.12)?ri(-1,1
 /* 货从哪来：卖家带什么 */
 function sellerItem(c,o={}){
   const R=repT(),fx=evFx(),trans=c.trans;
-  let tw=[...(trans?TIERW[2]:TIERW[R.s-1])];
-  if(G.star>=3)tw=[tw[0]*.7,tw[1],tw[2]*1.6];
+  /* 货值不看声望：品种和等级看星级，价钱看身家。声望只管真假和赃物，立场管违禁品 */
+  const si=clamp(G.star,1,5)-1;
+  let tw=[...TIERW[si]];
   if(fx.estate){tw[2]*=3;}
   if(guideOn()&&G.day<=1)tw=[1,0,0];
-  let gw=trans?GP:R.gw;
+  let gw=STARGW[si];
   if(o.sLuck)gw=gw.map((x,i)=>i===4?x*5:x);
   /* 引导期：假货、赃物到了那一天才出现 */
   const fk=GD('fake')?1:0,st=GD('stolen')?1:0;
@@ -2463,6 +2484,7 @@ function priceSeller(c){
   if(it.fake&&c.knowsFake){min*=.6;}
   if(c.rich>=2)min*=1.05;
   if(c.pid&&per(c.pid)&&(per(c.pid).rel||0)>=25)min*=.93;
+  if(oldPal(c)){ask*=.9;min*=.9;}
   if(c.pid==='mushui'&&mainLv('mushui')>=2){ask=sv*1.05;min=sv*.85;}
   if(evFx().banCheap&&it.ban){ask*=.75;min*=.65;}
   c.ask=Math.max(2,niceRound(ask));c.min=Math.max(1,Math.min(c.ask,Math.round(min)));
@@ -2489,6 +2511,7 @@ function priceBuyer(c,it){
   const bv=buyerValue(c,it);
   c.bv=bv;
   let mx=bv*rand(...P.buy)*repT().buy;
+  if(oldPal(c))mx*=1.1;
   if(c.urgent)mx*=1.15;
   if(c.addict&&it.sub==='陀巴寇')mx*=1+.35*c.addict;
   if(c.payMul)mx*=c.payMul;
@@ -4195,6 +4218,9 @@ function personSheet(id){
   }else if(f){
     h+=`<div class="pbig">${charSvg(lookOf(id),'neutral',f.showRich??p.rich)}<div><b>${f.n}</b><span>${roleKnown(id)?f.real:f.face}</span><span>关系：${relWord(p.rel||0)}</span></div></div>`;
     h+=`<div class="kv"><span>性格</span><span>${p.known.pers||p.seen>=3?PERS[f.pers].n:'还没摸清'}</span><span>懂行</span><span>${p.known.know||p.seen>=3?KNOWN[f.know]+(f.exp.length?'（'+f.exp.join('、')+'）':''):'还没摸清'}</span><span>来过</span><span>${p.seen||0} 次</span>${p.toba&&!p.addict?`<span>陀巴寇</span><span>买过 ${p.toba} 次</span>`:''}${p.addict?`<span>陀巴寇</span><span>${['','有点上瘾','上瘾了','瘾很重'][Math.min(3,p.addict)]}${p.toba?`，买过 ${p.toba} 次`:''}</span>`:''}</div>`;
+    {const hb=roleKnown(id)||!f.hide?habitOf(f):null,pal=(p.rel||0)>=60;
+      h+=`<div class="kv"><span>常来卖</span><span>${hb?hb.sell:'还不清楚，身份揭开后才知道'}</span><span>常来买</span><span>${hb?hb.buy:'还不清楚'}</span></div>`;
+      h+=`<p class="perk ${pal?'on':''}">${ic(pal?'heart':'lock')}<b>老交情</b>　${pal?'卖给你便宜一成，买你的多出一成，偶尔顺手送件小东西':'关系处到「老交情」：卖给你便宜一成，买你的多出一成，偶尔送件小东西'}</p>`;}
     if(id==='ahui'&&roleKnown(id)&&(p.rel||0)>=25)h+=`<h3>向阿灰订货</h3><div class="sub">说一类货，他过两天会带一件来（多半是偷的）。</div><div class="chips">${CATS.map(c=>`<button class="chip" data-act="orderThief" data-a="${c}">${c}</button>`).join('')}</div>`;
   }else{
     h+=`<div class="pbig">${charSvg(p.look,'neutral',p.rich)}<div><b>${esc(p.n)}</b><span>熟客</span><span>关系：${relWord(p.rel||0)}</span>${p.addict?`<span>陀巴寇：${['','有点上瘾','上瘾了','瘾很重'][Math.min(3,p.addict)]}</span>`:p.toba?`<span>买过 ${p.toba} 次陀巴寇</span>`:''}</div></div>`;
@@ -4397,7 +4423,7 @@ const SHEETS={
   num:()=>{},goal:()=>goalSheet(),
 };
 function infoSheet(k){
-  if(k==='rep'){const t=repT();openSheet('info','声望',`<div class="big num">${G.rep}<small>${t.n}</small></div><div class="help"><p>声望是客人信不信你。它决定<b>来什么样的人</b>：声望高，正经货主和讲究的买家多，好货多，但坑人的代价大；声望低，急着脱手的人多，赃物、假货、低等级的货多，要价也低，坑人的代价小。过路客不看声望，声望再差也照常来。</p></div><h3>最近的变化</h3>${G.repLog.map(l=>`<div class="logrow ${l.d>0?'g':'r'}">${l.d>0?'+':''}${l.d}　${esc(l.why)}</div>`).join('')||'<div class="empty">还没有。</div>'}`);}
+  if(k==='rep'){const t=repT();openSheet('info','声望',`<div class="big num">${G.rep}<small>${t.n}</small></div><div class="help"><p>声望是客人信不信你，它决定<b>来的是什么样的人</b>：声望高，带假货和赃物来的卖家少，买家肯多出一些钱，懂行的客人也多；声望低，反过来。</p><p>货值不值钱和声望无关。四样东西各管各的，而且都只是概率，不是规定死的：</p><ul><li><b>声望</b>：真货假货、是不是赃物</li><li><b>立场</b>：违禁品来得多不多</li><li><b>星级</b>：来的是什么品类，等级高不高</li><li><b>身家</b>（现金加库存）：货的价钱大小</li></ul></div><h3>最近的变化</h3>${G.repLog.map(l=>`<div class="logrow ${l.d>0?'g':'r'}">${l.d>0?'+':''}${l.d}　${esc(l.why)}</div>`).join('')||'<div class="empty">还没有。</div>'}`);}
   else if(k==='align'){openSheet('info','立场',`<div class="big num">${G.align}<small>${alName()}</small></div><div class="help"><p>立场是守法还是犯法，和声望是两回事。收、卖违禁品和明知的赃物、行贿会变黑；上交、拒绝便衣、把赃物还给失主会变白。</p><p>立场越黑，带违禁品上门的人越多，贵的违禁品也越常见；黑市开放的层数也看立场（−15 一层，−40 两层，−70 三层）。立场在 +30 以上时，被查出东西罚款减半。</p></div><h3>最近的变化</h3>${G.alLog.map(l=>`<div class="logrow ${l.d>0?'g':'r'}">${l.d>0?'+':''}${l.d}　${esc(l.why)}</div>`).join('')||'<div class="empty">还没有。</div>'}`);}
   else if(k==='heat'){openSheet('info','风声',`<div class="big num">${G.heat}<small>${heatWord(G.heat)}</small></div><div class="help"><p>风声是海关盯你盯得多紧，满值 100。在柜台卖违禁品 +20，卖烫手的赃物最多 +10，黑市买卖一次 +4。每天自然回落 5，前一天完全没碰这类生意回落 10。</p><p>风声越高，找违禁品的客人里便衣越多，打烊和深夜的搜查也越多。搜查只查保险箱外面的违禁品和赃物，罚款按货值算，风声越高罚得越重。搜查一次没查到，风声会松一些。</p></div><div class="kv"><span>今晚被查的可能</span><span>约 ${pct(raidBase())}</span><span>便衣的可能</span><span>约 ${pct(copP())}</span></div>`);}
   else if(k==='debtInfo'){openSheet('info',G.freed?'周租':'债务',G.freed?`<div class="help"><p>每周日交一次租金和维护费：${fmt(rentOf())}。店越大、升级越多，租金越高。现金是负数的话，七天内补不上就破产。</p></div>`:`<div class="help"><p>你欠了 ${fmt(G.debt)}，要在 ${dateStr(G.debtDue)} 打烊前还清。在「店铺」页随时可以还。还清以后，这家店就完全是你的，可以扩建、借贷，一直经营下去。</p></div>`);}
@@ -4873,6 +4899,13 @@ function fevMorning(news){
   for(const n of G.notices){
     if(!n.funi||n.chk||G.day-n.day<4)continue;n.chk=1;
     if(n.seen&&!n.turned&&!G.inv.some(i=>i.id===n.id)&&chance(.3)){addFeel('funi',-10);news.push({i:'alert',c:'bad',t:'福妮',d:`福妮听说通告上的「${n.name}」经过你的手又卖了出去。他什么也没说，但很失望。`});}
+  }
+  /* 老交情的街坊偶尔顺手送件小东西 */
+  if(GD('people'))for(const f of FIXED){
+    const p=G.people[f.id];if(!p||p.gone||(p.rel||0)<60||!chance(.04))continue;
+    const it=sureItem({gw:[0,.3,.5,.2,0],w:fitW(wealth()*.35)});if(freeSlots()<it.size)continue;
+    it.cost=0;addItem(it);news.push({i:'box',c:'good',t:f.n,d:`${f.n}顺路送来一件「${it.name}」（${GN[it.g]} 级），说是谢你平日的照顾。`});
+    break;
   }
   G.promos=(G.promos||[]).filter(p=>p.to>=G.day);
   if(G.watch&&G.watch.to<G.day)G.watch=null;
