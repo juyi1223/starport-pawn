@@ -967,6 +967,36 @@ h3::after{content:'';flex:1;height:1px;margin-left:6px;background:linear-gradien
 .wnrow b{display:block;font-size:14px}.wnrow span{display:block;font-size:12.5px;color:#b9c4f0;line-height:1.55}
 .lbold{display:flex;justify-content:flex-end;margin:-2px 0 4px}
 .lbold button{background:none;border:0;color:#9fb0e8;font:inherit;font-size:12px;text-decoration:underline;padding:4px 2px}
+/* 品类小标签（柜台、拿货、推销、商行） */
+.ctag{display:inline-flex;align-items:center;height:18px;padding:0 7px;margin-left:6px;border-radius:9px;font:inherit;font-size:11px;font-weight:700;vertical-align:2px;
+  color:var(--c);background:#0b1128;background:color-mix(in srgb,var(--c) 18%,#0b1128);border:1px solid var(--c);line-height:1}
+.ctag:active{transform:scale(.95)}
+.mname .ctag{margin-left:0;margin-right:4px}
+.wantline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px;padding:4px 2px}
+.wantline .ic{width:18px;height:18px;color:var(--gold)}
+.wantline .ctag{height:24px;font-size:14px;padding:0 10px;margin-left:0}
+.wantline small{color:var(--dim);font-size:11px;width:100%}
+.catlist{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.catit{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:12px;background:#141d42;border:1px solid #26336a;text-align:center}
+.catit .isv{width:44px;height:44px}.catit b{font-size:12.5px}.catit span{font-size:10.5px;color:#ffd98a}
+/* 商行卡片：单买价和整批价 */
+.mprice2{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
+.mprice2 small{display:block;font-size:10.5px;color:var(--dim)}
+.mprice2 b{font-size:16px;color:#e8edff}
+.mprice2 .bulk{text-align:right}.mprice2 .bulk b{font-size:18px;color:#ffc857}.mprice2 .bulk small:last-child{display:inline;margin-left:2px}
+.mrule{margin:2px 0 6px;font-size:12px;line-height:1.55}
+/* 意见反馈、掌柜交流 */
+.fblab{display:block;font-size:13px;color:#c3cdf2;margin:8px 0 4px}
+.fbta{width:100%;box-sizing:border-box;min-height:120px;resize:vertical;border-radius:12px;border:1px solid #2c3a72;background:#0f1634;color:var(--text);font:inherit;font-size:15px;padding:10px;line-height:1.5}
+.fbta:focus{outline:2px solid #4de1ff88;border-color:#4de1ff}
+.fbcnt{text-align:right;font-size:11.5px;color:var(--dim);margin-top:3px}.fbcnt .over{color:#ff7a93;font-weight:800}
+.bbslist{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.bbsrow{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:10px;border-radius:12px;background:linear-gradient(180deg,#161f48,#11183a);border:1px solid #2c3a74;color:var(--text);font:inherit}
+.bbsrow:active{transform:scale(.99)}
+.bbsrow>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bbsrow b{font-size:14px;line-height:1.4}.bbsrow .sum{font-size:12px;color:#b9c4f0;line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.bbsrow .meta{font-size:11px;color:var(--dim)}
+.irow{margin-top:6px}
 
 </style>
 </head>
@@ -1752,6 +1782,59 @@ smg:`<path d="M52 28h8" stroke="#0a1024" stroke-width="4"/><path d="M6 24h40l6 4
 sniper:`<path d="M4 34h44l12-2v4l-12 2-20 2-4 12h-6l2-12H8l-4 6z" fill="#3f4a6a" ${S}/><rect x="20" y="22" width="18" height="7" rx="3" fill="url(#gDark)" ${S}/><path d="M24 29v5M34 29v5" stroke="#0a1024" stroke-width="2"/>`,
 });
 
+/* ==== 01art3.js ==== */
+/* 第九轮新货的图（64×64，和原来的画法一致：深色描边、渐变填色、一道高光） */
+Object.assign(ART,{
+/* 服饰 */
+n_socks:`<path d="M14 6h14v26l10 10a8 8 0 0 1-11 11L14 41z" fill="#b98cff" ${S}/><path d="M14 13h14M14 20h14" stroke="#7a52c8" stroke-width="3"/><path d="M36 6h14v26l10 10a8 8 0 0 1-11 11L36 41z" fill="#ffc857" ${S} transform="translate(-4 4)"/><path d="M32 17h14M32 24h14" stroke="#c98a1f" stroke-width="3"/>`,
+n_shades:`<path d="M6 24h52" stroke="#0a1024" stroke-width="3.5" stroke-linecap="round"/><path d="M8 24h20v6a9 9 0 0 1-18 0z" fill="url(#gDark)" ${S}/><path d="M36 24h20v6a9 9 0 0 1-18 0z" fill="url(#gDark)" ${S}/><path d="M28 26q4-3 8 0" fill="none" ${S}/><path d="M13 27l5 6M41 27l5 6" stroke="#4de1ff" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>`,
+n_pants:`<path d="M16 6h32l4 52H37l-5-30-5 30H12z" fill="#6f8bd8" ${S}/><path d="M16 12h32" stroke="#0a1024" stroke-width="2.2"/><rect x="38" y="20" width="9" height="8" rx="1.5" fill="#5672c0" ${S}/><path d="M18 38l7-1 1 6-7 1z" fill="#ffc857" ${S}/><path d="M22 8v4M42 8v4" stroke="#ffc857" stroke-width="2"/>`,
+n_suit:`<circle cx="32" cy="17" r="13" fill="#eef3ff" ${S}/><path d="M23 17a9 8 0 0 1 18 0v2a9 6 0 0 1-18 0z" fill="url(#gCyan)" ${S}/><path d="M14 58V38a10 10 0 0 1 10-10h16a10 10 0 0 1 10 10v20z" fill="#eef3ff" ${S}/><rect x="25" y="36" width="14" height="10" rx="2" fill="#ff7a5d" ${S}/><path d="M28 41h8" stroke="#fff" stroke-width="2"/><path d="M26 14q2-3 5-3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+/* 食物饮品 */
+n_biscuit:`<rect x="8" y="18" width="48" height="32" rx="5" fill="#e8584c" ${S}/><rect x="14" y="10" width="30" height="20" rx="4" fill="#f2b877" ${S} transform="rotate(-10 29 20)"/><g fill="#a8642d"><circle cx="22" cy="18" r="1.6"/><circle cx="30" cy="16" r="1.6"/><circle cx="37" cy="15" r="1.6"/><circle cx="25" cy="23" r="1.6"/></g><path d="M14 34h36" stroke="#fff3da" stroke-width="3" stroke-linecap="round"/>`,
+n_noodle:`<path d="M10 24h44l-5 32H15z" fill="#ffc857" ${S}/><path d="M10 24h44" stroke="#0a1024" stroke-width="2.2"/><path d="M16 22q4-8 8 0t8 0 8 0 8 0" fill="none" stroke="#fff3da" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="40" r="8" fill="#e8584c" ${S}/><path d="M28 40h8M32 36v8" stroke="#fff" stroke-width="2"/><path d="M44 6l-6 18M50 8l-8 16" stroke="#7a3b2e" stroke-width="3" stroke-linecap="round"/>`,
+n_jam:`<rect x="16" y="20" width="32" height="36" rx="7" fill="#d0414f" ${S}/><rect x="13" y="10" width="38" height="11" rx="3" fill="#f4e7c3" ${S}/><path d="M13 15h38" stroke="#c84a4a" stroke-width="2.4" stroke-dasharray="4 3"/><rect x="21" y="30" width="22" height="14" rx="3" fill="#fff3da" ${S}/><circle cx="32" cy="37" r="3.5" fill="#ff7a93"/><path d="M20 26v22" stroke="#fff" stroke-width="2.5" opacity=".45" stroke-linecap="round"/>`,
+n_caviar:`<ellipse cx="32" cy="44" rx="24" ry="9" fill="url(#gMetal)" ${S}/><path d="M8 36v8a24 9 0 0 0 48 0v-8" fill="url(#gMetal)" ${S}/><ellipse cx="32" cy="36" rx="24" ry="9" fill="#1a1d2e" ${S}/><g fill="#3a3f5e"><circle cx="24" cy="35" r="2.4"/><circle cx="30" cy="38" r="2.4"/><circle cx="36" cy="34" r="2.4"/><circle cx="41" cy="37" r="2.4"/><circle cx="29" cy="32" r="2.4"/></g><circle cx="23.5" cy="34.3" r=".8" fill="#fff"/><circle cx="35.5" cy="33.3" r=".8" fill="#fff"/><path d="M44 10l1.4 3.6 3.6 1.4-3.6 1.4L44 20l-1.400-3.600L39 15l3.600-1.400z" fill="#ffc857" stroke="#0a1024" stroke-width="1"/>`,
+/* 工具 */
+n_driver:`<g transform="rotate(40 32 32)"><rect x="26" y="2" width="12" height="24" rx="5" fill="#e8584c" ${S}/><path d="M30 6v16M34 6v16" stroke="#a3302a" stroke-width="2"/><rect x="29.5" y="26" width="5" height="26" fill="url(#gMetal)" ${S}/><path d="M29.5 52h5l-2.5 8z" fill="url(#gMetal)" ${S}/></g>`,
+n_tape:`<rect x="8" y="16" width="34" height="34" rx="9" fill="#ffc857" ${S}/><circle cx="25" cy="33" r="8" fill="url(#gDark)" ${S}/><circle cx="25" cy="33" r="2.5" fill="#ffc857"/><path d="M42 40h16v8H42z" fill="#fff3da" ${S}/><path d="M46 40v3M50 40v4M54 40v3" stroke="#0a1024" stroke-width="1.5"/><rect x="12" y="10" width="10" height="7" rx="2" fill="#e8584c" ${S}/>`,
+n_meter:`<rect x="14" y="6" width="36" height="52" rx="7" fill="#ffc857" ${S}/><rect x="19" y="11" width="26" height="16" rx="3" fill="#cfeedd" ${S}/><path d="M22 24q10-10 20 0" fill="none" stroke="#3a7a5a" stroke-width="1.6"/><path d="M32 25l5-9" stroke="#e8584c" stroke-width="2.2" stroke-linecap="round"/><circle cx="32" cy="40" r="7" fill="url(#gDark)" ${S}/><path d="M32 40l4-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="22" cy="52" r="2.5" fill="#e8584c" ${S}/><circle cx="42" cy="52" r="2.5" fill="#1a1d2e" ${S}/>`,
+n_cutter:`<rect x="6" y="22" width="34" height="18" rx="5" fill="url(#gMetal)" ${S}/><rect x="40" y="26" width="10" height="10" rx="2" fill="url(#gDark)" ${S}/><path d="M50 31h12" stroke="#ff5d7a" stroke-width="4" stroke-linecap="round"/><path d="M50 31h12" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><path d="M14 40l-3 16h10l4-16z" fill="url(#gDark)" ${S}/><circle cx="18" cy="31" r="4" fill="url(#gCyan)" ${S}/><path d="M28 28h8" stroke="#ff7ad9" stroke-width="2.4" stroke-linecap="round"/>`,
+/* 艺术 */
+n_card:`<rect x="8" y="14" width="48" height="34" rx="3" fill="#fff3da" ${S} transform="rotate(-6 32 31)"/><rect x="12" y="19" width="22" height="22" rx="2" fill="#4de1ff" ${S} transform="rotate(-6 32 31)"/><circle cx="21" cy="28" r="4" fill="#ffc857" transform="rotate(-6 32 31)"/><path d="M38 24h12M38 30h12M38 36h9" stroke="#9a8a62" stroke-width="2" stroke-linecap="round" transform="rotate(-6 32 31)"/><rect x="44" y="16" width="7" height="8" fill="#e8584c" stroke="#0a1024" stroke-width="1.3" transform="rotate(-6 32 31)"/>`,
+n_papercut:`<rect x="8" y="8" width="48" height="48" rx="4" fill="#e8584c" ${S}/><path d="M32 14l5 10 11 1-8 8 3 11-11-6-11 6 3-11-8-8 11-1z" fill="#fff3da" stroke="#a3302a" stroke-width="1.5"/><circle cx="32" cy="31" r="4" fill="#e8584c"/><path d="M14 50h36" stroke="#fff3da" stroke-width="2.5" stroke-dasharray="3 3"/>`,
+n_figurine:`<ellipse cx="32" cy="56" rx="16" ry="4" fill="url(#gClay)" ${S}/><path d="M18 56c0-16 4-26 14-26s14 10 14 26z" fill="url(#gClay)" ${S}/><circle cx="32" cy="20" r="12" fill="#f2b877" ${S}/><path d="M26 19q2 2 4 0M34 19q2 2 4 0" fill="none" stroke="#0a1024" stroke-width="1.8" stroke-linecap="round"/><path d="M28 25q4 3 8 0" fill="none" stroke="#0a1024" stroke-width="1.8" stroke-linecap="round"/><circle cx="25" cy="23" r="2" fill="#ff7a93" opacity=".7"/><circle cx="39" cy="23" r="2" fill="#ff7a93" opacity=".7"/>`,
+n_tapestry:`<rect x="6" y="6" width="52" height="5" rx="2.5" fill="url(#gGold)" ${S}/><path d="M10 11h44v40l-5 6-5-6-5 6-5-6-5 6-5-6-5 6-4-6z" fill="url(#gNebula)" ${S}/><path d="M14 40q9-18 18-6t18-12" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/><g fill="#fff"><circle cx="18" cy="20" r="1.4"/><circle cx="44" cy="18" r="1.6"/><circle cx="34" cy="26" r="1.2"/><circle cx="24" cy="44" r="1.2"/></g>`,
+/* 生物 */
+n_mush:`<path d="M10 30a22 16 0 0 1 44 0z" fill="#c8794a" ${S}/><path d="M24 30h16v20a8 6 0 0 1-16 0z" fill="#f4e7c3" ${S}/><g fill="#f4e7c3"><circle cx="22" cy="22" r="3"/><circle cx="34" cy="18" r="2.5"/><circle cx="44" cy="25" r="2.2"/></g><path d="M16 26q4-10 14-12" stroke="#fff" stroke-width="2.2" fill="none" opacity=".5" stroke-linecap="round"/>`,
+n_shell:`<path d="M32 56L8 28a24 22 0 0 1 48 0z" fill="url(#gPearl)" ${S}/><path d="M32 56L18 16M32 56V9M32 56l14-40M32 56L10 26M32 56l22-30" stroke="#9f86cc" stroke-width="1.8"/><path d="M24 56h16" stroke="#0a1024" stroke-width="2.2" stroke-linecap="round"/>`,
+n_fly:`<rect x="6" y="6" width="52" height="52" rx="4" fill="#f4e7c3" ${S}/><path d="M32 18v30" stroke="#0a1024" stroke-width="3" stroke-linecap="round"/><path d="M31 24C22 12 10 16 12 26s14 8 19 2zM33 24c9-12 21-8 19 2s-14 8-19 2z" fill="url(#gPink)" ${S}/><path d="M31 32c-8 0-14 6-10 12s10 0 10-6zM33 32c8 0 14 6 10 12s-10 0-10-6z" fill="#4de1ff" ${S}/><circle cx="20" cy="22" r="2" fill="#fff"/><circle cx="44" cy="22" r="2" fill="#fff"/>`,
+n_fossil:`<path d="M8 46l6-26 22-10 20 12 2 24-16 10H18z" fill="#c9b49a" ${S}/><path d="M18 38q10-14 24-10" fill="none" stroke="#7a6248" stroke-width="2.4" stroke-linecap="round"/><path d="M24 34l-3-6M29 31l-2-7M34 29l-1-7M39 28l1-6M24 34l-1 6M29 31l1 7M34 29l2 7M39 28l3 6" stroke="#7a6248" stroke-width="1.8" stroke-linecap="round"/><circle cx="44" cy="27" r="2.5" fill="#7a6248"/><path d="M14 24q6-8 14-10" stroke="#fff" stroke-width="2" fill="none" opacity=".5" stroke-linecap="round"/>`,
+/* 电器 */
+n_flash:`<g transform="rotate(-35 32 32)"><rect x="24" y="18" width="16" height="38" rx="5" fill="url(#gDark)" ${S}/><path d="M20 6h24l-4 14H24z" fill="url(#gMetal)" ${S}/><ellipse cx="32" cy="6" rx="12" ry="3" fill="url(#gCyan)" ${S}/><rect x="29" y="28" width="6" height="8" rx="2" fill="#ff5d7a" ${S}/></g><path d="M50 4l10-2M52 12l10 2M46 0l4-6" stroke="#ffe066" stroke-width="2.5" stroke-linecap="round"/>`,
+n_calc:`<rect x="14" y="6" width="36" height="52" rx="6" fill="url(#gDark)" ${S}/><rect x="19" y="11" width="26" height="12" rx="2" fill="#cfeedd" ${S}/><path d="M24 17h16" stroke="#3a7a5a" stroke-width="2"/><g fill="#aab7dd" stroke="#0a1024" stroke-width="1.2"><rect x="19" y="28" width="7" height="6" rx="1.5"/><rect x="28.5" y="28" width="7" height="6" rx="1.5"/><rect x="19" y="37" width="7" height="6" rx="1.5"/><rect x="28.5" y="37" width="7" height="6" rx="1.5"/><rect x="19" y="46" width="7" height="6" rx="1.5"/><rect x="28.5" y="46" width="7" height="6" rx="1.5"/></g><rect x="38" y="28" width="7" height="24" rx="1.5" fill="#ff7a5d" stroke="#0a1024" stroke-width="1.2"/>`,
+n_drone:`<path d="M14 18h36" stroke="#0a1024" stroke-width="2.2"/><path d="M12 14h12M40 14h12" stroke="#0a1024" stroke-width="3" stroke-linecap="round"/><path d="M18 14v8M46 14v8" stroke="#0a1024" stroke-width="2.4"/><rect x="20" y="22" width="24" height="14" rx="6" fill="url(#gMetal)" ${S}/><circle cx="32" cy="42" r="6" fill="url(#gDark)" ${S}/><circle cx="32" cy="42" r="2.8" fill="url(#gCyan)"/><path d="M22 36l-6 10M42 36l6 10" stroke="#0a1024" stroke-width="2.4" stroke-linecap="round"/><circle cx="26" cy="29" r="1.8" fill="#58e6a0"/>`,
+n_transl:`<rect x="16" y="8" width="32" height="48" rx="8" fill="url(#gMetal)" ${S}/><rect x="21" y="14" width="22" height="18" rx="3" fill="#0f3352" ${S}/><path d="M24 20h8M24 25h14" stroke="#4de1ff" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="44" r="6" fill="url(#gCyan)" ${S}/><path d="M52 18a10 10 0 0 1 0 14M56 14a16 16 0 0 1 0 22" stroke="#4de1ff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M12 18a10 10 0 0 0 0 14" stroke="#ff7ad9" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+/* 能源 */
+n_candle:`<path d="M32 4c4 6 5 9 2 13a3 3 0 0 1-5-1c-1-4 1-7 3-12z" fill="#ffc857" ${S}/><path d="M32 17v4" stroke="#0a1024" stroke-width="2"/><rect x="22" y="21" width="20" height="30" rx="3" fill="#fff3da" ${S}/><path d="M26 21q0 6 2 8" stroke="#e8d9b5" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="54" rx="18" ry="5" fill="url(#gMetal)" ${S}/>`,
+n_flint:`<path d="M10 40l10-20 18-6 14 12-6 22-24 4z" fill="#8f9bb5" ${S}/><path d="M20 20l6 14 12-20M26 34l-4 18M26 34l20 14" stroke="#5d6886" stroke-width="1.8" fill="none"/><path d="M50 8l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffe066" stroke="#0a1024" stroke-width="1"/><path d="M42 14l4-4M46 18l5-1" stroke="#ff9d5d" stroke-width="2.2" stroke-linecap="round"/>`,
+n_panel:`<path d="M10 14h44l-6 30H4z" fill="#3f73e0" ${S}/><path d="M24.6 14l-4.6 30M39.3 14l-6.6 30M8 24h45M6 34h45" stroke="#1d3f8f" stroke-width="1.6"/><path d="M28 44v10M18 54h20" stroke="#0a1024" stroke-width="3" stroke-linecap="round"/><path d="M14 18l6 0" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/><circle cx="54" cy="8" r="4" fill="#ffe066" ${S}/>`,
+n_nuke:`<rect x="16" y="10" width="32" height="46" rx="6" fill="url(#gDark)" ${S}/><rect x="24" y="5" width="16" height="7" rx="2" fill="url(#gMetal)" ${S}/><circle cx="32" cy="33" r="11" fill="#ffe066" ${S}/><path d="M32 33l-6-9a10 10 0 0 1 12 0zM32 33l11 2a10 10 0 0 1-6 9zM32 33l-5 11a10 10 0 0 1-6-9z" fill="#1a1d2e"/><circle cx="32" cy="33" r="2.5" fill="#ffe066" stroke="#1a1d2e" stroke-width="1.2"/><rect x="16" y="48" width="32" height="4" fill="#58e6a0" opacity=".8"/>`,
+/* 乐器 */
+n_whistle:`<path d="M10 26h28a14 14 0 1 1-14 14H10z" fill="url(#gMetal)" ${S}/><circle cx="38" cy="40" r="6" fill="url(#gDark)" ${S}/><path d="M10 26v10" stroke="#0a1024" stroke-width="2.2"/><path d="M14 26v-6" stroke="#0a1024" stroke-width="2.2"/><circle cx="14" cy="17" r="3.5" fill="none" stroke="#e8584c" stroke-width="2.4"/><path d="M48 18q5-3 8 2M50 12q7-4 11 3" stroke="#4de1ff" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+n_tamb:`<circle cx="32" cy="32" r="22" fill="#f4e7c3" ${S}/><circle cx="32" cy="32" r="22" fill="none" stroke="#c8794a" stroke-width="6"/><circle cx="32" cy="32" r="22" fill="none" ${S}/><g fill="url(#gGold)" stroke="#0a1024" stroke-width="1.4"><circle cx="32" cy="10" r="3.5"/><circle cx="54" cy="32" r="3.5"/><circle cx="32" cy="54" r="3.5"/><circle cx="10" cy="32" r="3.5"/><circle cx="47.5" cy="16.5" r="3.5"/><circle cx="16.5" cy="47.5" r="3.5"/></g><path d="M22 26q4-6 10-7" stroke="#fff" stroke-width="2.2" fill="none" opacity=".6" stroke-linecap="round"/>`,
+n_flute:`<g transform="rotate(-35 32 32)"><rect x="2" y="27" width="60" height="10" rx="5" fill="#d9c082" ${S}/><path d="M10 27v10M54 27v10" stroke="#7a3b2e" stroke-width="2.5"/><g fill="#0a1024"><circle cx="20" cy="32" r="1.8"/><circle cx="27" cy="32" r="1.8"/><circle cx="34" cy="32" r="1.8"/><circle cx="41" cy="32" r="1.8"/><circle cx="48" cy="32" r="1.8"/></g><path d="M6 29h50" stroke="#fff" stroke-width="1.5" opacity=".5"/></g>`,
+n_harp:`<path d="M14 58V10q24-4 30 10t12 38z" fill="none" stroke="#0a1024" stroke-width="7" stroke-linejoin="round"/><path d="M14 58V10q24-4 30 10t12 38z" fill="none" stroke="url(#gGold)" stroke-width="3.5" stroke-linejoin="round"/><path d="M20 14v44M26 13v45M32 13v45M38 16v42M44 22v36M50 34v24" stroke="#f4e7c3" stroke-width="1.3"/><path d="M10 58h48" stroke="#0a1024" stroke-width="3" stroke-linecap="round"/>`,
+/* 古董 */
+n_mirror:`<circle cx="32" cy="28" r="22" fill="url(#gGold)" ${S}/><circle cx="32" cy="28" r="16" fill="#b9801f" ${S}/><circle cx="32" cy="28" r="12" fill="#e8d2a0"/><path d="M24 20q4-5 10-5" stroke="#fff" stroke-width="2.5" fill="none" opacity=".8" stroke-linecap="round"/><path d="M26 50h12l2 10H24z" fill="#b9801f" ${S}/><path d="M20 9l3 3M44 9l-3 3M11 28h3M50 28h3" stroke="#7a5212" stroke-width="2" stroke-linecap="round"/>`,
+n_snuff:`<rect x="26" y="4" width="12" height="7" rx="2" fill="#58e6a0" ${S}/><path d="M29 11h6v4c9 3 14 12 14 22 0 12-8 21-17 21s-17-9-17-21c0-10 5-19 14-22z" fill="#eef3ff" ${S}/><path d="M22 34q5-6 10 0t10 0M21 42q5-5 11 0t11 0" stroke="#3f73e0" stroke-width="2" fill="none"/><path d="M27 46l3-6 4 6" stroke="#e8584c" stroke-width="1.8" fill="none"/><path d="M21 26q2-5 7-7" stroke="#fff" stroke-width="2" fill="none" opacity=".8" stroke-linecap="round"/>`,
+n_ding:`<path d="M14 18h36l-4 24H18z" fill="#4f7a5e" ${S}/><path d="M10 18h44" stroke="#0a1024" stroke-width="3.5" stroke-linecap="round"/><path d="M18 18v-8h6v8M40 18v-8h6v8" fill="none" ${S}/><path d="M20 42l-4 16M32 42v16M44 42l4 16" stroke="#0a1024" stroke-width="5" stroke-linecap="round"/><path d="M20 42l-4 16M32 42v16M44 42l4 16" stroke="#4f7a5e" stroke-width="2.4" stroke-linecap="round"/><path d="M20 26h24M22 32l4 4 4-4 4 4 4-4 4 4" stroke="#8fd1a8" stroke-width="1.6" fill="none"/>`,
+/* 珠宝 */
+n_brace:`<ellipse cx="32" cy="34" rx="22" ry="16" fill="none" stroke="#0a1024" stroke-width="2"/><g stroke="#0a1024" stroke-width="1.6"><circle cx="10" cy="34" r="4.5" fill="#ff7ad9"/><circle cx="14" cy="23" r="4.5" fill="#4de1ff"/><circle cx="24" cy="18" r="4.5" fill="#ffc857"/><circle cx="36" cy="18" r="4.5" fill="#58e6a0"/><circle cx="48" cy="22" r="4.5" fill="#b98cff"/><circle cx="54" cy="33" r="4.5" fill="#ff7ad9"/><circle cx="49" cy="45" r="4.5" fill="#4de1ff"/><circle cx="38" cy="50" r="4.5" fill="#ffc857"/><circle cx="26" cy="50" r="4.5" fill="#58e6a0"/><circle cx="15" cy="45" r="4.5" fill="#b98cff"/></g>`,
+n_pin:`<path d="M14 58L44 18" stroke="#0a1024" stroke-width="5.5" stroke-linecap="round"/><path d="M14 58L44 18" stroke="url(#gGold)" stroke-width="2.5" stroke-linecap="round"/><circle cx="46" cy="16" r="8" fill="#ff7ad9" ${S}/><circle cx="46" cy="16" r="3" fill="#fff3da"/><path d="M50 26q2 8-2 14M42 24q-1 7 2 12" stroke="#ffc857" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="48" cy="41" r="2.5" fill="#4de1ff" stroke="#0a1024" stroke-width="1.2"/><circle cx="44" cy="37" r="2.5" fill="#4de1ff" stroke="#0a1024" stroke-width="1.2"/>`,
+n_crown:`<path d="M8 46L4 16l15 12 13-20 13 20 15-12-4 30z" fill="url(#gGold)" ${S}/><rect x="8" y="46" width="48" height="10" rx="2" fill="url(#gGold)" ${S}/><circle cx="32" cy="36" r="5" fill="#e8584c" ${S}/><circle cx="18" cy="38" r="3.5" fill="#4de1ff" ${S}/><circle cx="46" cy="38" r="3.5" fill="#58e6a0" ${S}/><g fill="#fff3da" stroke="#0a1024" stroke-width="1.2"><circle cx="4" cy="15" r="3"/><circle cx="32" cy="7" r="3"/><circle cx="60" cy="15" r="3"/></g><path d="M14 51h36" stroke="#b9801f" stroke-width="2" stroke-dasharray="3 3"/>`,
+});
+
 /* ==== 02data.js ==== */
 /* 数据：品类、货物、等级、特殊货、传奇 */
 const CATS=['服饰','食物饮品','工具','艺术','生物','电器','能源','乐器','古董','珠宝'];
@@ -1773,6 +1856,10 @@ const ITEMS=[
  I('pack','背包','服饰',40,160,1,'pack','夹层里说不定还有东西。'),
  I('coat','外套','服饰',60,240,1,'coat','口袋多得数不过来。'),
  I('cape','披风','服饰',120,480,1,'cape','风一吹，人就显得很有故事。'),
+ I('socks','袜子','服饰',5,20,1,'n_socks','一双，花纹不一样，但都很暖和。'),
+ I('shades','墨镜','服饰',20,80,1,'n_shades','戴上以后，谁都看不清你在想什么。'),
+ I('pants','工装裤','服饰',25,100,1,'n_pants','膝盖打过补丁，口袋还能用。'),
+ I('suit','宇航服','服饰',300,1200,2,'n_suit','头盔上有一道划痕，还能用。'),
  I('candy','糖果','食物饮品',5,20,1,'candy','一整罐，彩色的。'),
  I('can','罐头','食物饮品',6,24,1,'can','保质期写着「永久」。'),
  I('coffee','咖啡','食物饮品',12,48,1,'coffee','跑船的人靠它熬过长夜。'),
@@ -1780,12 +1867,20 @@ const ITEMS=[
  I('tea','茶叶','食物饮品',25,100,1,'tea','闻一下就想起老家。'),
  I('honey','蜂蜜','食物饮品',30,120,1,'honey','据说是太空蜂酿的。'),
  I('wine','老酒','食物饮品',120,480,1,'wine','瓶身上积了一层灰，越灰越值钱。'),
+ I('biscuit','饼干','食物饮品',4,16,1,'n_biscuit','一盒，压碎了一半。'),
+ I('noodle','泡面','食物饮品',6,24,1,'n_noodle','跑船的人一箱一箱地买。'),
+ I('jam','果酱','食物饮品',15,60,1,'n_jam','某颗星球上的果子做的，酸得很。'),
+ I('caviar','鱼子酱','食物饮品',300,1200,1,'n_caviar','一小罐，够买一箱泡面。'),
  I('wrench','扳手','工具',12,48,1,'wrench','拧过的螺丝比你见过的星星还多。'),
  I('compass','指南针','工具',20,80,1,'compass','在太空里指的方向很玄学。'),
  I('lens','放大镜','工具',20,80,1,'lens','鉴定师吃饭的家伙。'),
  I('torch','焊枪','工具',60,240,1,'torch','一按就喷出蓝色的火。'),
  I('scope','望远镜','工具',80,320,1,'scope','能看见对面空间站的窗户。'),
  I('micro','显微镜','工具',150,600,1,'micro','镜片磨得很亮。'),
+ I('driver','螺丝刀','工具',6,24,1,'n_driver','头是磁铁的，螺丝掉不了。'),
+ I('tape','卷尺','工具',10,40,1,'n_tape','拉出来能有十米长。'),
+ I('meter','万用表','工具',40,160,1,'n_meter','指针还在跳。'),
+ I('cutter','激光切割器','工具',400,1600,1,'n_cutter','切钢板像切豆腐。'),
  I('poem','诗集','艺术',60,240,1,'scroll','手抄本，页边写满了批注。'),
  I('frame','相框','艺术',60,240,1,'frame','照片里的人在笑。'),
  I('mbox','八音盒','艺术',150,600,1,'mbox','拧三圈，放一首没人会唱的歌。'),
@@ -1793,29 +1888,49 @@ const ITEMS=[
  I('vase','花瓶','艺术',400,1600,1,'vase','底下有个看不清的落款。'),
  I('paint','油画','艺术',1500,6000,2,'paint','画的是一场日落，颜色还很鲜。'),
  I('statue','雕塑','艺术',3000,12000,3,'cryst','很重，搬进门要两个人。'),
+ I('card','明信片','艺术',20,80,1,'n_card','背面写着一句没寄出去的话。'),
+ I('papercut','剪纸','艺术',40,160,1,'n_papercut','一刀剪出来的，没有接口。'),
+ I('figurine','陶偶','艺术',80,320,1,'n_figurine','笑眯眯的，摸起来凉凉的。'),
+ I('tapestry','挂毯','艺术',800,3200,2,'n_tapestry','织着一整条星河。'),
  I('moss','苔藓瓶','生物',60,240,1,'moss','晚上会发一点点光。'),
  I('plant','盆栽','生物',80,320,1,'plant','你跟它说话，它好像会转过来。'),
  I('seed','种子','生物',120,480,1,'seed','一小袋，标签上写着「别种在屋里」。'),
  I('jelly','水母','生物',600,2400,1,'jelly','泡在罐子里，慢慢地游。'),
  I('spice','香料','生物',1200,4800,1,'amber','一小撮就能让整条街都闻到。'),
  I('egg','龙蛋','生物',6000,24000,2,'egg','摸上去是温的。'),
+ I('mush','蘑菇干','生物',30,120,1,'n_mush','泡开了能长回原来的样子。'),
+ I('shell','贝壳','生物',40,160,1,'n_shell','放在耳边，能听见别的星球的海。'),
+ I('fly','蝴蝶标本','生物',150,600,1,'n_fly','翅膀上的颜色一辈子不会褪。'),
+ I('fossil','化石','生物',3000,12000,2,'n_fossil','一条没人见过的鱼。'),
  I('radio','收音机','电器',60,240,1,'radio','偶尔能收到不知道哪来的台。'),
  I('phones','耳机','电器',80,320,1,'band','戴上就听不见外面的吵闹。'),
  I('proj','投影仪','电器',200,800,1,'holo','能把星图投满一整面墙。'),
  I('console','游戏机','电器',300,1200,1,'console','存档还在，最高分是别人的。'),
  I('camera','相机','电器',600,2400,1,'camera','里面还有一卷没洗的胶卷。'),
  I('robot','机器人','电器',4000,16000,2,'robot','开机时会说「早上好」，不管几点。'),
+ I('flash','手电筒','电器',20,80,1,'n_flash','照得很远，拍两下才亮。'),
+ I('calc','计算器','电器',30,120,1,'n_calc','按键都磨亮了，账算得一清二楚。'),
+ I('drone','无人机','电器',800,3200,1,'n_drone','飞得比鸟还稳。'),
+ I('transl','翻译器','电器',1500,6000,1,'n_transl','能听懂七十二种外星话，偶尔翻错。'),
  I('sail','太阳帆','能源',120,480,1,'sail','叠起来只有巴掌大。'),
  I('fuel','燃料罐','能源',200,800,1,'fuel','别放在太阳底下。'),
  I('batt','电池','能源',400,1600,1,'batt','满电的，指示灯一直亮着。'),
  I('gen','发电机','能源',1500,6000,2,'core','嗡嗡响，够一家小店用一年。'),
  I('cube','能量块','能源',6000,24000,1,'dark','拿在手里会微微发麻。'),
+ I('candle','蜡烛','能源',10,40,1,'n_candle','停电的时候最值钱。'),
+ I('flint','打火石','能源',20,80,1,'n_flint','在没有氧气的地方也能打出火。'),
+ I('panel','太阳能板','能源',80,320,2,'n_panel','折起来能塞进背包。'),
+ I('nuke','核电池','能源',3000,12000,1,'n_nuke','外壳上贴着黄色的警告标。'),
  I('harm','口琴','乐器',80,320,1,'harm','吹出来的声音有点走调，但很好听。'),
  I('drum','鼓','乐器',150,600,2,'drum','敲一下，整条街都知道你开门了。'),
  I('trumpet','小号','乐器',300,1200,1,'trumpet','擦得锃亮。'),
  I('guitar','吉他','乐器',600,2400,2,'guitar','琴箱上贴满了贴纸。'),
  I('violin','小提琴','乐器',2500,10000,1,'violin','琴盒里垫着丝绒。'),
  I('piano','钢琴','乐器',6000,24000,3,'piano','搬进来的时候拆了半扇门。'),
+ I('whistle','哨子','乐器',10,40,1,'n_whistle','一吹，整条街的狗都抬头。'),
+ I('tamb','铃鼓','乐器',30,120,1,'n_tamb','摇起来哗啦啦的。'),
+ I('flute','笛子','乐器',50,200,1,'n_flute','竹子做的，有一个孔被虫蛀过。'),
+ I('harp','竖琴','乐器',1500,6000,2,'n_harp','弦一碰就响很久。'),
  I('ticket','旧船票','古董',1200,4800,1,'ticket','开往一个已经不存在的港口。'),
  I('coin','硬币','古董',2000,8000,1,'coin','一面是皇帝，一面是看不懂的字。'),
  I('bowl','瓷碗','古董',4000,16000,1,'bowl','薄得能透光。'),
@@ -1823,12 +1938,18 @@ const ITEMS=[
  I('map','旧地图','古董',15000,60000,1,'map','上面画着一条没人走过的航线。'),
  I('clock','老座钟','古董',40000,160000,2,'clock','整点会响，响得很认真。'),
  I('watch','怀表','古董',150000,600000,1,'watch','走了几百年没停过。'),
+ I('mirror','铜镜','古董',800,3200,1,'n_mirror','照出来的人比本人好看一点。'),
+ I('snuff','鼻烟壶','古董',1500,6000,1,'n_snuff','瓶子里画着一整座城。'),
+ I('ding','青铜鼎','古董',60000,240000,2,'n_ding','三条腿，刻满了看不懂的字。'),
  I('brooch','胸针','珠宝',1200,4800,1,'brooch','别在领口，整个人都亮了。'),
  I('earring','耳环','珠宝',2500,10000,1,'earring','一对，晃起来会响。'),
  I('ring','戒指','珠宝',8000,32000,1,'ring','内圈刻着两个名字的缩写。'),
  I('neck','项链','珠宝',20000,80000,1,'neck','每颗珠子都一样圆。'),
  I('gem','宝石','珠宝',80000,320000,1,'gem','对着光转一圈，颜色会变。'),
  I('diamond','钻石','珠宝',500000,2000000,1,'diamond','大得不像真的。'),
+ I('bracelet','手链','珠宝',600,2400,1,'n_brace','一串小珠子，戴久了会变色。'),
+ I('hairpin','发簪','珠宝',1000,4000,1,'n_pin','插上它，头发就不会乱。'),
+ I('crown','王冠','珠宝',200000,800000,1,'n_crown','戴上去脖子会酸。'),
  /* 特殊货 */
  I('toba1','星烟（一包）',BAN,50,150,1,'toba','一包，二十支。',{sub:'星烟',ban:1,unit:'包',pk:1}),
  I('toba10','星烟（一条）',BAN,400,1200,1,'toba','一条十包，封口完好。',{sub:'星烟',ban:1,unit:'条',pk:10}),
@@ -7370,17 +7491,19 @@ invGrid=function(){
    老玩家（以前开过局、或者有存档）第一次打开新版，标题页上弹一次「这一版的新东西」，看过就不再弹。
    新玩家不弹，直接记成看过。看过的版本号记在跨存档记录里（虎扑版跟着云存档走，换手机也不会重复弹）。
    老玩家以前收过的传奇，按标准难度一次性算进传奇收藏积分。 */
-const WN_VER=8;
+const WN_VER=9;
 const WN_ITEMS=[
   ['bag','拾荒','沉船墓地和'+(CLEAN?'废船坞':'封锁区')+'改成九个一样的箱子，开一个风险涨一截，随时可以收手；箱子里的货更值钱。垃圾场前三轮安全。'],
-  ['cart','商行批发','晚上的集市里能进商行批货，像逛网店一样搜索、分类、筛选、排序。'],
+  ['cart','商行','晚上的集市里能进商行，像逛网店一样搜索、分类、排序。单买一件贵，整批买便宜；店面星级越高，货越多。'],
+  ['box','新货','每个品类都添了三四样新货，一共 38 样，便宜的、贵的都有。'],
+  ['sign','品类标签','卖货、拿货给客人看的时候，货名旁边标着品类；点一下能看这一类都有哪些货。'],
   ['chat','客人的心事','每位客人有一件心事，常在第一句话里漏出来。说中了对方让一大步；同一招别老用。'],
   ['heart','朋友的心愿','朋友会直接说想要什么，从库存里送过去，感情涨得快，还有回礼。'],
   ['hammer','拍卖行','每周五晚上开场，古董和珠宝 B 级以上带鉴定书就能送拍，不会亏。'],
   ['sign','早报新闻','还清开局的债以后，早报里有新闻，有真有假，要自己判断。'],
   ...(CLEAN?[['mask','仿品','认出来的假货变成 F 级仿品，只有上门要仿品的人会买。']]:[]),
   ['box','仓库','保险箱单独一块；每件货标着来路（收的、捡的、批的……）；一键整理。顶栏多了货值和合计。'],
-  ...(CLEAN?[['trophy','排行榜','按难度分开，新增还债速度榜和传奇收藏榜；「更多」里能晒战绩发到虎扑。']]:[]),
+  ...(CLEAN?[['trophy','排行榜','按难度分开，新增还债速度榜和传奇收藏榜；「更多」里能晒战绩发到虎扑。'],['chat','掌柜交流','「更多」里能看这个游戏话题下的帖子、发帖，分享给朋友，加到桌面，给开发者提意见。']]:[]),
   ['star','开局','不用再选包袱了。'],
 ];
 function wnSheet(){
@@ -7430,6 +7553,238 @@ if(CLEAN){
 {const n0=newGame;newGame=function(...a){if((META.wnVer||0)<WN_VER&&!META.started&&![1,2,3].some(n=>ls.get(SLOTK(n)))){META.wnVer=WN_VER;META.lgSeeded=1;saveMeta();}return n0.apply(this,a);};}
 /* 本地版开机时标题页可能在这个文件加载之前就画好了：补查一次 */
 try{if(!G&&$('#overlay')&&$('#overlay').dataset.k==='title')wnCheck();}catch(e){}
+
+/* ==== 13r9a.js ==== */
+/* ==== 第九轮：商行改版 ====
+   单买一件按零售价（比面值贵一成到两成），整批买按批发价（面值的七到八五成）。
+   便宜的货一摞多，越贵越少。店面星级越高，商行上的货种类越多、每样越多，也会上更贵的货。
+   古董、珠宝这种高档货永远不上商行。批发价、零售价都跟着当天行情走。 */
+const MART_TOP=[0,200,600,2400,6000,12000];      /* 每个星级能上的最贵的货（B 级价格的上限） */
+const MART_SKU=[0,8,11,14,17,20];                /* 每个星级上几种货 */
+const martPool=()=>{const s=Math.max(1,Math.min(5,G.star||1));return NORMAL.filter(t=>CTIER[t.c]<=1&&t.c!=='珠宝'&&t.c!=='古董'&&t.v[1]<=MART_TOP[s]);};
+function martQty(it){
+  const f=faceVal(it),s=Math.max(1,Math.min(5,G.star||1)),m=1+.15*(s-1);
+  const [a,b]=f<=60?[6,10]:f<=300?[4,7]:f<=1500?[3,5]:f<=6000?[2,3]:[1,2];
+  return Math.max(1,Math.round(ri(a,b)*m));
+}
+function mart9Price(it){
+  const off=(CLEAN&&mainLv('mushui')>=1?.95:1)*(evFx().mart?.92:1),f=faceVal(it);
+  it.wp=Math.max(1,niceRound(f*rand(.7,.85)*off));          /* 批发价（每件） */
+  it.rp=Math.max(it.wp+1,niceRound(f*rand(1.1,1.2)*off));    /* 零售价（单买一件） */
+}
+stockShops=function(){
+  const s=Math.max(1,Math.min(5,G.star||1)),pool=martPool();
+  const n=Math.min(pool.length,MART_SKU[s]+(evFx().mart?2:0)),gw=s>=3?[.35,.4,.22,.03,0]:[.4,.4,.2,0,0];
+  const picked=[],left=[...pool];
+  while(picked.length<n&&left.length){const t=wpick(left,x=>Math.pow(x.v[1],-.35));picked.push(t);left.splice(left.indexOf(t),1);}
+  const goods=picked.map(t=>{
+    const it=makeItem({t,gw,shop:1});
+    it.cert=1;it.gKnown=1;it.auth=4;it.authLv=9;it.fake=false;it.stolen=false;it.ws=1;it.qty=martQty(it);mart9Price(it);
+    return it;
+  });
+  const bm=[];const B=BM[bmLv()];
+  if(B)for(let i=0;i<B.n;i++){const it=makeItem({ban:1,sub:pick(B.subs),w:banW()});it.fake=chance(.15);it.pt=.85;it.shop=1;bm.push(it);}
+  const keep=G.shop&&G.shop.day===G.day?G.shop:null;
+  G.shop={day:G.day,goods,bm:keep?keep.bm:bm,bmSold:keep?keep.bmSold:0,restock:keep?keep.restock:0};
+};
+/* all=1：整批（剩下的全部，按批发价）；否则单买一件（零售价） */
+martBuy=function(id,all){
+  const it=G.shop&&G.shop.goods.find(x=>x.id==id);if(!it)return;
+  if(it.rp==null)mart9Price(it);   /* 旧存档里的货 */
+  const n=all?it.qty:1,u=all&&n>1?it.wp:it.rp,p=u*n;
+  if(G.cash<p)return toast('钱不够','bad');
+  const need=n>1?Math.ceil(n/2)*(it.size||1):(it.size||1);
+  if(freeSlots()<need)return toast(`仓库放不下，要空出 ${need} 格`,'bad');
+  G.cash-=p;
+  const got=JSON.parse(JSON.stringify(it));got.id=uidNext();got.qty=n;got.cost=p;delete got.shop;delete got.wp;delete got.rp;
+  if(n===1)delete got.ws;else got.ws=1;
+  got.mart=1;got.day=G.day;
+  addItem(got);
+  it.qty-=n;if(it.qty<=0)G.shop.goods=G.shop.goods.filter(x=>x!==it);
+  log(`在商行${n>1?'整批':'单买'}「${it.name}」×${n} −${fmt(p)}`,'r');sfx.coin();if(typeof gs==='function')gs('mart');afterInv();
+};
+martCard=function(it){
+  if(it.rp==null)mart9Price(it);
+  const all=it.wp*it.qty,bulk=it.qty>1;
+  return `<div class="mkc"><div class="mtop">${ibox(it)}<div class="mname"><b>${esc(it.name)}</b><span>${catTag(it.cat)} ${gBadge(it)}</span></div></div>
+  <div class="mprice2"><div><small>单买</small><b>${fmt(it.rp)}</b></div>${bulk?`<div class="bulk"><small>整批价</small><b>${fmt(it.wp)}</b><small>/件</small></div>`:''}</div>
+  <div class="mmeta"><span>剩 ${it.qty} 件</span><span class="dim">值 ${fmt(faceVal(it))}</span>${trendTag(it)}</div>
+  <div class="mbtns">${btn('martBuy','单买 1 件','sm',it.id,G.cash<it.rp)}${bulk?btn('martBuyAll',`整批 ${it.qty} 件<small>${fmt(all)}</small>`,'sm pri',it.id,G.cash<all):''}</div></div>`;
+};
+/* 排序按批发价；底部说明换成新规则 */
+{const f0=martFiltered;martFiltered=function(){const l=f0();if(MQ.sort==='lo')l.sort((a,b)=>a.wp-b.wp);else if(MQ.sort==='hi')l.sort((a,b)=>b.wp-a.wp);return l;};}
+{const h0=martHtml;martHtml=function(){
+  const s=Math.max(1,Math.min(5,G.star||1));
+  return h0().replace('<span class="dim">每两件占一格</span>','<span class="dim">整批便宜，单买贵；整批每两件占一格</span>')
+    .replace('<div class="msearch">',`<div class="sub mrule">单买一件按零售价；整批买下剩下的全部，按批发价，便宜两三成。便宜的货一摞多，贵的少。店面 ${s} 星：上 ${MART_SKU[s]} 种货，最贵到 ${fmt(MART_TOP[s])} 左右${s<5?'，店面升星后种类和数量都会变多':''}。古董、珠宝不上商行。</div><div class="msearch">`);
+};}
+/* 集市入口的说明 */
+{const m2=marketHtml;marketHtml=function(){return m2().replace(/可以搜、分类、按价格和涨跌排。/,'整批买便宜，可以搜、分类、排序。');};}
+/* 帮助和引导里商行的说法换成新规则 */
+{
+  const i=HELP.findIndex(h=>h[0]==='集市和扩建');
+  if(i>=0)HELP[i]=[HELP[i][0],HELP[i][1].replace(/<p><b>商行批发<\/b>：.*?<\/p>/,'<p><b>商行批发</b>：集市里点「进商行批货」，进一个像购物网站的页面，可以搜索、按类别和等级筛选、排序。单买一件按零售价，比面值贵一两成；把剩下的整批买下，按批发价，是面值的七到八五成。便宜的货一摞多，贵的少。店面星级越高，上的货种类越多、每样越多，也会有更贵的货；古董、珠宝不上商行。价钱跟着行情走。整批的货一叠只占一半格子。每天能看一段视频让商行补一次货。</p>')];
+  const d=GDAY.market;if(d&&GUIDE[d])GUIDE[d]={...GUIDE[d],d:GUIDE[d].d.replace('晚上的集市里有个「商行批发」：低中档货一次几件，价钱是面值的七到九成。','晚上的集市里有个「商行」：单买一件贵，整批买便宜。')};
+}
+
+/* ==== 13r9b.js ==== */
+/* ==== 第九轮：卖货时标出品类 ====
+   新手分不清「八音盒」算艺术还是乐器。柜台上（客人手里的货、要买的人想要的品类）、「拿哪件给对方看」、推销、商行里，
+   货名旁边都标一个彩色的品类小标签；点标签能看这一类都有哪些货。仓库里不标（有分类整理）。 */
+const catTag=c=>c&&CATCOL[c]&&c!==BAN?`<button class="ctag" style="--c:${CATCOL[c]}" data-act="catInfo" data-a="${esc(c)}">${esc(c)}</button>`:'';
+function catInfo(c){
+  if(!CATS.includes(c))return;
+  const l=catItems(c).slice().sort((a,b)=>a.v[1]-b.v[1]);
+  openSheet('info',`${c}类的货`,`<div class="sub">${TIERN[CTIER[c]]}。下面是这一类所有的货，从便宜到贵；后面是 B 级大概的价钱。</div>
+  <div class="catlist">${l.map(t=>`<div class="catit">${itemSvg({k:t.k,cat:t.c,name:t.n})}<b>${esc(t.n)}</b><span class="num">${fmt(t.v[0])}–${fmt(t.v[1])}</span></div>`).join('')}</div>`);
+}
+ACT.catInfo=a=>catInfo(a);
+/* 柜台上的货卡：名字后面加品类 */
+{const f=icard;icard=function(it,c){return f(it,c).replace(/(<div class="ic-b"><b>[^<]*<\/b>)/,`$1${catTag(it.cat)}`);};}
+/* 来买货的人：没拿货之前，柜台上写清楚他要哪一类 */
+{const r=renderCounter;renderCounter=function(){r();const c=G.cust,el=$('#icard');
+  if(c&&!c.done&&c.type==='buy'&&!c.item&&el&&CATS.includes(c.want))el.innerHTML=`<div class="wantline">${ic('cart')}<span>想要：</span>${catTag(c.want)}<small>点标签看这一类有哪些货</small></div>`;};}
+/* 「拿哪件给对方看」和推销：每件货标品类 */
+{const p=SHEETS.pick;SHEETS.pick=function(){p();document.querySelectorAll('#sheetBody .invrow .ib>b').forEach(b=>{const row=b.closest('.invrow'),id=row&&row.querySelector('[data-act="show"]');const it=id&&invItem(id.dataset.a);if(it&&!b.querySelector('.ctag'))b.insertAdjacentHTML('beforeend',catTag(it.cat));});};}
+{const p=pitchSheet;pitchSheet=function(...a){const r=p.apply(this,a);document.querySelectorAll('#sheetBody .invrow .ib>b').forEach(b=>{const row=b.closest('.invrow'),btnEl=row&&row.querySelector('[data-a]');const it=btnEl&&invItem(btnEl.dataset.a);if(it&&!b.querySelector('.ctag'))b.insertAdjacentHTML('beforeend',catTag(it.cat));});return r;};}
+
+/* ==== 13r9c.js ==== */
+/* ==== 第九轮：虎扑里的互动（只在虎扑版、而且接口在的时候出现） ====
+   分享给朋友（social.share）、添加到桌面（addToDesktop）、意见反馈（公共反馈服务）、掌柜交流（本游戏话题下的帖子，可以发帖）。
+   投票、评分、抽卡、PK 要先在平台上建好对应的活动；AI 对话要运营配好模板，这些这一版先不接。 */
+const SDK=()=>{try{return window.ColorboxAI||null;}catch(e){return null;}};
+const has=(p)=>{try{let o=SDK();for(const k of p.split('.')){o=o&&o[k];}return typeof o==='function';}catch(e){return false;}};
+const shareOn=()=>CLEAN&&(has('social.share')||has('bridge.device.share'));
+const deskOn=()=>CLEAN&&has('addToDesktop');
+const fbOn=()=>CLEAN&&has('cloud.request')&&has('auth.getUserInfo');
+const bbsOn=()=>CLEAN&&has('request.bbs.getTagThreadList')&&has('bbsConfig.get');
+Object.assign(TRK_ACT,{shareGame:'更多-分享好友',fbOpen:'更多-意见反馈',bbsOpen:'更多-掌柜交流',bbsPost:'掌柜交流-发帖'});
+
+/* ---------- 分享给朋友 ---------- */
+async function shareGame(){
+  const S=SDK();let link='';try{link=String(document.URL||'');}catch(e){}
+  if(!(link.startsWith('https:')||link.startsWith('http:')))return toast('这里分享不了，在虎扑 App 里试试','warn');
+  const d=G?pstData():null;
+  const p={title:'灰港当铺：在星港开一家当铺，看人、验货、砍价',link,
+    text:d?`我在${d.diff}难度玩到第 ${d.day} 天，身家 ${fmt(d.worth)}。你的眼力能比我强吗？`:'低价收，高价卖，真假要靠眼力。来比比谁的身家高。'};
+  if(PST.url)p.imageUrl=PST.url;
+  try{
+    if(S.social&&typeof S.social.share==='function')await S.social.share(p);
+    else await S.bridge.device.share(p);
+  }catch(e){toast('分享没打开，稍后再试','warn');}
+}
+/* ---------- 添加到桌面 ---------- */
+async function addDesk(){
+  let r=null;try{r=await SDK().addToDesktop();}catch(e){return toast('添加到桌面失败，请稍后重试','warn');}
+  if(!r)return;
+  if(r.code!==200)return toast(r.message||'添加到桌面失败，请稍后重试','warn');
+  const d=r.data||{};
+  if(d.alreadyAdded===true)return toast('已经添加过了，请勿重复添加','');
+  const br=d.bridgeResult;
+  if(br&&br.result===false)return toast(br.errorMsg||'添加到桌面失败，请稍后重试','warn');
+  if(br&&br.result===true&&d.platform==='android')toast('已添加到桌面','good');
+}
+/* ---------- 意见反馈 ---------- */
+const FEEDBACK={apiBase:'https://feedback-public-d8fnf79rd0e395c3-1252166086.ap-shanghai.app.tcloudbase.com/api',envId:'feedback-public-d8fnf79rd0e395c3',applicationId:'app_608527d964'};
+const FB={busy:0};
+const fbLen=v=>Array.from(String(v||'').trim()).length;
+function fbSheet(){
+  openSheet('info','意见反馈',`<div class="sub">哪里不好玩、哪里看不懂、遇到了问题，都可以写给开发者。</div>
+  <label class="fblab" for="fbTa">你想说的话</label>
+  <textarea id="fbTa" class="fbta" rows="6" maxlength="2200" placeholder="比如：拾荒的箱子风险太高了……"></textarea>
+  <div class="fbcnt"><span id="fbN">0</span> / 2000</div>
+  <div class="sub" id="fbMsg" aria-live="polite"></div>
+  <div class="row">${btn('fbSend','提交反馈','pri grow')}</div>`);
+}
+document.addEventListener('input',e=>{if(e.target.id!=='fbTa')return;const n=fbLen(e.target.value),el=$('#fbN');if(el){el.textContent=n;el.className=n>2000?'over':'';}});
+async function fbSend(){
+  if(FB.busy)return;
+  const ta=$('#fbTa'),msg=t=>{const m=$('#fbMsg');if(m)m.textContent=t;};
+  const content=ta?ta.value.trim():'',n=fbLen(content);
+  if(n<1||n>2000)return msg('请输入 1–2000 个字的反馈内容');
+  FB.busy=1;const b=document.querySelector('[data-act="fbSend"]');if(b){b.disabled=true;b.textContent='正在提交…';}
+  try{
+    const u=await SDK().auth.getUserInfo();
+    if(!u||u.code!==200||!u.data||u.data.islogin!==1)throw new Error('请先登录虎扑再提交反馈');
+    const data={applicationId:FEEDBACK.applicationId,content};
+    const nick=typeof u.data.nickname==='string'?u.data.nickname.trim():'';if(nick)data.nickname=nick;
+    const av=(typeof u.data.avatar==='string'&&u.data.avatar.trim())||(typeof u.data.userHeadUrl==='string'&&u.data.userHeadUrl.trim())||'';
+    if(av.startsWith('https://'))data.avatarUrl=av;
+    const r=await SDK().cloud.request({url:FEEDBACK.apiBase+'/feedback',method:'POST',data,envId:FEEDBACK.envId,auth:true});
+    if(r&&r.statusCode===201&&r.code===0){if(ta)ta.value='';const el=$('#fbN');if(el)el.textContent='0';msg('谢谢！反馈已经收到了。');toast('反馈已提交','good');}
+    else if(r&&r.statusCode===401)throw new Error('登录状态失效了，请重新登录后再提交');
+    else if(r&&r.statusCode===413)throw new Error('反馈太长了，精简一下再提交');
+    else if(r&&r.statusCode===429)throw new Error('提交太频繁了，过一会儿再试');
+    else if(r&&r.statusCode===400)throw new Error(r.message||'反馈内容不符合要求');
+    else throw new Error('提交结果不确定，过一会儿确认没成功再试');
+  }catch(e){msg(String(e&&e.message||'没提交成功，过一会儿再试'));}
+  finally{FB.busy=0;const b2=document.querySelector('[data-act="fbSend"]');if(b2){b2.disabled=false;b2.textContent='提交反馈';}}
+}
+/* ---------- 掌柜交流：本游戏话题下的帖子 ---------- */
+const BBS={tag:null,list:[],page:0,cursor:'',more:true,busy:0,err:'',cfg:null};
+async function bbsCfg(){if(BBS.cfg)return BBS.cfg;try{const c=await SDK().bbsConfig.get();BBS.cfg=c||{};}catch(e){BBS.cfg={};}return BBS.cfg;}
+function bbsRow(p){
+  const name=esc(String(p.userName||'虎扑用户').slice(0,16)),ava=lbImgOk(p.userHeader)?`<img src="${esc(p.userHeader)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'';
+  return `<button class="bbsrow" data-act="bbsGo" data-a="${esc(String(p.tid||''))}"><span class="lbava">${esc(name.slice(0,1)||'虎')}${ava}</span><div><b>${esc(String(p.title||'（无标题）').slice(0,60))}</b>${p.summary?`<span class="sum">${esc(String(p.summary).slice(0,70))}</span>`:''}<span class="meta">${name} · ${esc(String(p.time||''))} · ${Number(p.replies)||0} 回复</span></div></button>`;
+}
+function bbsRender(){
+  const el=$('#bbsBody');if(!el||sheetKind!=='bbs')return;
+  let h='';
+  if(BBS.list.length)h+=`<div class="bbslist">${BBS.list.map(bbsRow).join('')}</div>`;
+  else if(!BBS.busy&&!BBS.err)h+='<div class="empty">话题里还没有帖子，来发第一帖吧。</div>';
+  if(BBS.err)h+=`<div class="empty">${esc(BBS.err)}</div>`;
+  if(BBS.busy)h+='<div class="empty">正在加载……</div>';
+  else if(BBS.more&&BBS.list.length&&BBS.page<5)h+=`<div class="row">${btn('bbsMore','加载更多','sm grow')}</div>`;
+  el.innerHTML=h;el.querySelectorAll('.lbava img').forEach(i=>i.addEventListener('error',()=>i.remove()));
+}
+async function bbsLoad(first){
+  if(BBS.busy)return;
+  if(first){BBS.list=[];BBS.page=0;BBS.cursor='';BBS.more=true;BBS.err='';}
+  if(!BBS.more||BBS.page>=5)return;
+  BBS.busy=1;bbsRender();
+  try{
+    const c=await bbsCfg(),tag=c&&typeof c.bbsTagId==='string'?c.bbsTagId.trim():'';
+    if(!tag){BBS.more=false;BBS.err='这个游戏的话题还没开通，可以先发帖。';return;}
+    const r=await SDK().request.bbs.getTagThreadList({tagId:tag,tabType:'1',page:BBS.page+1,lastCursor:BBS.cursor||''});
+    if(!r||r.code!==200){BBS.more=false;BBS.err=(r&&r.message)||'帖子没加载出来，稍后再试';return;}
+    const d=r.data||{},l=Array.isArray(d.list)&&d.list.length?d.list:Array.isArray(d.threads)?d.threads:[];
+    BBS.list.push(...l);BBS.page++;BBS.cursor=d.cursor||'';BBS.more=d.nextPage!==false&&l.length>0;
+  }catch(e){BBS.more=false;BBS.err='帖子没加载出来，稍后再试';}
+  finally{BBS.busy=0;bbsRender();}
+}
+function bbsSheet(){
+  openSheet('bbs','掌柜交流',`<div class="sub">这个游戏话题下的帖子：攻略、捡漏、翻车，都在这里。点一帖就能去看、去回复。</div>
+  <div class="row">${has('request.bbs.openPostEditor')?btn('bbsPost',`${ic('chat')}我也说两句`,'pri grow'):''}${G&&pstOn()?btn('posterOpen','晒战绩','grow'):''}</div><div id="bbsBody"></div>`);
+  bbsLoad(true);
+}
+async function bbsGo(tid){
+  const p=BBS.list.find(x=>String(x.tid)===String(tid));if(!p)return;
+  let url=typeof p.jumpUrl==='string'?p.jumpUrl.trim():'';
+  if(!(url.startsWith('https:')||url.startsWith('huputiyu:')))url=/^\d+$/.test(String(p.tid))?`https://bbs.hupu.com/${p.tid}.html`:'';
+  if(!url)return toast('这一帖打不开','warn');
+  try{const r=await SDK().navigate.to({url});if(r&&r.code!==200)toast(r.message||'帖子没打开','warn');}catch(e){toast('帖子没打开，稍后再试','warn');}
+}
+async function bbsPost(){
+  const p={title:'灰港当铺 · 掌柜心得',content:G?`我在${DIFFS[G.diff]?DIFFS[G.diff].n:''}难度玩到第 ${G.day} 天。`:''};
+  try{const c=await bbsCfg();if(c&&typeof c.bbsTagId==='string'&&c.bbsTagId.trim()!==''){p.topicId=c.bbsTopicId;p.tagId=c.bbsTagId;p.topicName=c.bbsTopicName;p.tagName=c.bbsTagName;}}catch(e){}
+  try{const r=await SDK().request.bbs.openPostEditor(p);if(!r||r.code!==200)toast((r&&r.message)||'发帖页没打开，稍后再试','warn');}catch(e){toast('发帖页没打开，稍后再试','warn');}
+}
+Object.assign(ACT,{shareGame:()=>shareGame(),addDesk:()=>addDesk(),fbOpen:()=>fbSheet(),fbSend:()=>fbSend(),
+  bbsOpen:()=>bbsSheet(),bbsMore:()=>bbsLoad(false),bbsGo:a=>bbsGo(a),bbsPost:()=>bbsPost()});
+
+/* ---------- 入口 ---------- */
+{const m0=pageMore;pageMore=function(){const h=m0();if(!CLEAN)return h;
+  const card=(act,icn,t,s)=>`<button class="mcard" data-act="${act}">${ic(icn)}<div><b>${t}</b><span>${s}</span></div></button>`;
+  const add=(bbsOn()?card('bbsOpen','chat','掌柜交流','看看别的掌柜的攻略和战绩'):'')+(shareOn()?card('shareGame','users','分享给朋友','发到微信、微博，喊朋友来比比'):'')
+    +(deskOn()?card('addDesk','home','添加到桌面','下次从桌面直接打开'):'')+(fbOn()?card('fbOpen','help','意见反馈','哪里不好玩，告诉开发者'):'');
+  return h.replace('<button class="mcard" data-act="help"',add+'<button class="mcard" data-act="help"');};}
+{const e0=showEnd;showEnd=function(){e0();if(!shareOn())return;const f=document.querySelector('#overlay .foot');if(f&&!f.querySelector('[data-act="shareGame"]'))f.insertAdjacentHTML('afterbegin',btn('shareGame','分享','grow'));};}
+/* 标题页：添加到桌面、掌柜交流 */
+{const t0=showTitle;showTitle=function(...a){const r=t0.apply(this,a);try{
+  const row=[bbsOn()?btn('bbsOpen','掌柜交流','sm grow'):'',deskOn()?btn('addDesk','添加到桌面','sm grow'):'',fbOn()?btn('fbOpen','意见反馈','sm grow'):''].join('');
+  const sc=document.querySelector('#overlay .scroll');if(row&&sc&&!sc.querySelector('.irow'))sc.insertAdjacentHTML('beforeend',`<div class="row irow">${row}</div>`);}catch(e){}return r;};}
+/* 海报弹层里：发帖旁边加「分享」 */
+{const p0=posterOpen;posterOpen=async function(){await p0();if(!shareOn())return;const b=document.querySelector('[data-act="posterShare"]');if(b&&!document.querySelector('[data-act="shareGame"]'))b.insertAdjacentHTML('afterend',btn('shareGame','分享给朋友','grow'));};}
 
 </script>
 </body>
